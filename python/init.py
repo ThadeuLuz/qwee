@@ -3,11 +3,13 @@ import pprint
 import pygame
 from time import sleep
 
+import gpiozero
 from gpiozero.pins.pigpio import PiGPIOPin
 import gpiozero.devices
+
 gpiozero.devices.pin_factory = PiGPIOPin
 
-from gpiozero import AngularServo
+# from gpiozero import AngularServo
 
 MAX_ANGLE = 35  # Max e min
 
@@ -15,10 +17,10 @@ AXIS_DATA = {}
 BUTTON_DATA = {}
 HAT_DATA = {}
 
-servo_l = AngularServo(4, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 7
-servo_r = AngularServo(17, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 11
-servo_f = AngularServo(27, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 13
-servo_b = AngularServo(22, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 15
+servo_l = gpiozero.AngularServo(4, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
+servo_r = gpiozero.AngularServo(17, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
+servo_f = gpiozero.AngularServo(27, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
+servo_b = gpiozero.AngularServo(22, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
 
 # Initialize joystick
 pygame.init()
@@ -27,16 +29,16 @@ joystick = pygame.joystick.Joystick(0)
 joystick.init()
 
 
-def set_all(angle=0):
-    print(angle)
-    global servo_l
-    global servo_r
-    global servo_f
-    global servo_b
-    servo_l.angle = angle
-    servo_r.angle = angle
-    servo_f.angle = angle
-    servo_b.angle = angle
+# def set_all(angle=0):
+#     print(angle)
+#     global servo_l
+#     global servo_r
+#     global servo_f
+#     global servo_b
+#     servo_l.angle = angle
+#     servo_r.angle = angle
+#     servo_f.angle = angle
+#     servo_b.angle = angle
 
 
 while True:
@@ -50,7 +52,7 @@ while True:
         elif event.type == pygame.JOYHATMOTION:
             HAT_DATA[event.hat] = event.value
 
-    # os.system('clear')
+    os.system('clear')
     pprint.pprint(BUTTON_DATA)
     pprint.pprint(AXIS_DATA)
     pprint.pprint(HAT_DATA)
