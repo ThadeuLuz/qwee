@@ -2,6 +2,10 @@ import os
 import pprint
 import pygame
 from time import sleep
+from gpiozero.pins.pigpiod import PiGPIOPin
+import gpiozero.devices
+gpiozero.devices.pin_factory = PiGPIOPin
+
 from gpiozero import AngularServo
 
 MAX_ANGLE = 35  # Max e min
@@ -35,9 +39,7 @@ def set_all(angle=0):
 
 
 while True:
-    print('Geting events')
     for event in pygame.event.get():
-        print(event)
         if event.type == pygame.JOYAXISMOTION:
             AXIS_DATA[event.axis] = round(event.value, 2)
         elif event.type == pygame.JOYBUTTONDOWN:
