@@ -1,3 +1,4 @@
+import pygame
 from time import sleep
 from gpiozero import AngularServo
 
@@ -7,6 +8,12 @@ servo_l = AngularServo(4, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 7
 servo_r = AngularServo(17, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 11
 servo_f = AngularServo(27, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 13
 servo_b = AngularServo(22, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 15
+
+# Initialize joystick
+pygame.init()
+pygame.joystick.init()
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
 
 
 def set_all(angle=0):
@@ -22,6 +29,9 @@ def set_all(angle=0):
 
 
 while True:
+    for event in pygame.event.get():
+        print(event.type)
+
     set_all(MAX_ANGLE)
     sleep(1)
     set_all()
@@ -30,24 +40,3 @@ while True:
     sleep(1)
     set_all()
     sleep(1)
-
-# import RPi.GPIO as GPIO
-# import time
-
-# GPIO.setmode(GPIO.BOARD)
-
-# GPIO.setup(11, GPIO.OUT)
-
-# p = GPIO.PWM(11, 50)
-
-# p.start(7.5)
-
-# try:
-#     while True:
-#         p.ChangeDutyCycle(7.5)  # turn towards 90 degree
-#         time.sleep(1)  # sleep 1 second
-#         p.ChangeDutyCycle(6.5)  # turn towards 0 degree
-#         time.sleep(1)  # sleep 1 second
-# except KeyboardInterrupt:
-#     p.stop()
-#     GPIO.cleanup()
