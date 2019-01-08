@@ -15,7 +15,7 @@ MAX_ANGLE = 35  # Max e min
 
 AXIS_DATA = {}
 BUTTON_DATA = {}
-HAT_DATA = {}
+# HAT_DATA = {}
 
 servo_l = gpiozero.AngularServo(4, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
 servo_r = gpiozero.AngularServo(17, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
@@ -49,13 +49,15 @@ while True:
             BUTTON_DATA[event.button] = True
         elif event.type == pygame.JOYBUTTONUP:
             BUTTON_DATA[event.button] = False
-        elif event.type == pygame.JOYHATMOTION:
-            HAT_DATA[event.hat] = event.value
+        # elif event.type == pygame.JOYHATMOTION:
+            # HAT_DATA[event.hat] = event.value
+
+    servo_l.angle = MAX_ANGLE * round(event.value, 2)
 
     os.system('clear')
-    pprint.pprint(BUTTON_DATA)
+    # pprint.pprint(BUTTON_DATA)
     pprint.pprint(AXIS_DATA)
-    pprint.pprint(HAT_DATA)
+    # pprint.pprint(HAT_DATA)
 
     # set_all(MAX_ANGLE)
     # set_all()
