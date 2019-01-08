@@ -26,10 +26,6 @@ while True:
     sleep(1)
     servo_r = 0
     sleep(1)
-    servo_r = -MAX_ANGLE
-    sleep(1)
-    servo_r = 0
-    sleep(1)
 
 # import RPi.GPIO as GPIO
 # import time
