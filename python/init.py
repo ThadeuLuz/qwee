@@ -1,3 +1,5 @@
+import os
+import pprint
 import pygame
 from time import sleep
 from gpiozero import AngularServo
@@ -42,6 +44,11 @@ while True:
             BUTTON_DATA[event.button] = False
         elif event.type == pygame.JOYHATMOTION:
             HAT_DATA[event.hat] = event.value
+
+    os.system('clear')
+    pprint.pprint(BUTTON_DATA)
+    pprint.pprint(AXIS_DATA)
+    pprint.pprint(HAT_DATA)
 
     # set_all(MAX_ANGLE)
     # set_all()
