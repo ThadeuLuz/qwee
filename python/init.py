@@ -4,6 +4,10 @@ from gpiozero import AngularServo
 
 MAX_ANGLE = 35  # Max e min
 
+AXIS_DATA = {}
+BUTTON_DATA = {}
+HAT_DATA = {}
+
 servo_l = AngularServo(4, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 7
 servo_r = AngularServo(17, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 11
 servo_f = AngularServo(27, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 13
@@ -30,13 +34,16 @@ def set_all(angle=0):
 
 while True:
     for event in pygame.event.get():
-        print(event.type)
+        if event.type == pygame.JOYAXISMOTION:
+            AXIS_DATA[event.axis] = round(event.value, 2)
+        elif event.type == pygame.JOYBUTTONDOWN:
+            BUTTON_DATA[event.button] = True
+        elif event.type == pygame.JOYBUTTONUP:
+            BUTTON_DATA[event.button] = False
+        elif event.type == pygame.JOYHATMOTION:
+            HAT_DATA[event.hat] = event.value
 
-    set_all(MAX_ANGLE)
-    sleep(1)
-    set_all()
-    sleep(1)
-    set_all(-MAX_ANGLE)
-    sleep(1)
-    set_all()
-    sleep(1)
+    # set_all(MAX_ANGLE)
+    # set_all()
+    # set_all(-MAX_ANGLE)
+    # set_all()
