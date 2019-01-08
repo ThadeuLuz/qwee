@@ -13,7 +13,15 @@ gpiozero.devices.pin_factory = PiGPIOPin
 
 MAX_ANGLE = 35  # Max e min
 
-AXIS_DATA = {}
+AXIS_DATA = {
+    'LX': 0,
+    'LY': 0,
+    'L2': -1,
+    'RX': 0,
+    'RY': 0,
+    'R2': -1
+}
+
 BUTTON_DATA = {}
 # HAT_DATA = {}
 
@@ -41,10 +49,13 @@ joystick.init()
 #     servo_b.angle = angle
 
 
+AXIS_NAME = ['LX', 'LY', 'L2', 'RX', 'RY', 'R2']
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.JOYAXISMOTION:
-            AXIS_DATA[event.axis] = round(event.value, 2)
+            name = AXIS_NAME[event.axis]
+            AXIS_DATA[name] = round(event.value, 2)
         elif event.type == pygame.JOYBUTTONDOWN:
             BUTTON_DATA[event.button] = True
         elif event.type == pygame.JOYBUTTONUP:
@@ -52,7 +63,10 @@ while True:
         # elif event.type == pygame.JOYHATMOTION:
             # HAT_DATA[event.hat] = event.value
 
-    servo_l.angle = MAX_ANGLE * round(event.value, 2)
+    servo_l.angle = MAX_ANGLE * AXIS_DATA['LX']
+    servo_r.angle = MAX_ANGLE * -AXIS_DATA['LX']
+    servo_f.angle = MAX_ANGLE * AXIS_DATA['LY']
+    servo_b.angle = MAX_ANGLE * -AXIS_DATA['LY']
 
     os.system('clear')
     # pprint.pprint(BUTTON_DATA)
