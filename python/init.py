@@ -14,7 +14,7 @@ def set_all(angle=0):
     global servo_r
     global servo_f
     global servo_b
-    console.log(angle)
+    print(angle)
     servo_l = angle
     servo_r = angle
     servo_f = angle
