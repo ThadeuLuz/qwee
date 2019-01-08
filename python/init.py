@@ -2,7 +2,8 @@ import os
 import pprint
 import pygame
 from time import sleep
-from gpiozero.pins.pigpiod import PiGPIOPin
+
+from gpiozero.pins.pigpio import PiGPIOPin
 import gpiozero.devices
 gpiozero.devices.pin_factory = PiGPIOPin
 
