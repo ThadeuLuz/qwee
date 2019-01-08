@@ -35,7 +35,9 @@ def set_all(angle=0):
 
 
 while True:
+    print('Geting events')
     for event in pygame.event.get():
+        print(event)
         if event.type == pygame.JOYAXISMOTION:
             AXIS_DATA[event.axis] = round(event.value, 2)
         elif event.type == pygame.JOYBUTTONDOWN:
@@ -45,7 +47,7 @@ while True:
         elif event.type == pygame.JOYHATMOTION:
             HAT_DATA[event.hat] = event.value
 
-    os.system('clear')
+    # os.system('clear')
     pprint.pprint(BUTTON_DATA)
     pprint.pprint(AXIS_DATA)
     pprint.pprint(HAT_DATA)
