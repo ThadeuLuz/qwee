@@ -22,9 +22,11 @@ servo_r = AngularServo(17, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 11
 
 
 while True:
-    servo_r = MAX_ANGLE
+    servo_r.angle = MAX_ANGLE
+    print(MAX_ANGLE)
     sleep(1)
-    servo_r = 0
+    servo_r.angle = 0
+    print(0)
     sleep(1)
 
 # import RPi.GPIO as GPIO
