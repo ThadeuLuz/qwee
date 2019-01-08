@@ -26,6 +26,10 @@ while True:
     sleep(1)
     set_all()
     sleep(1)
+    set_all(-MAX_ANGLE)
+    sleep(1)
+    set_all()
+    sleep(1)
 
 # import RPi.GPIO as GPIO
 # import time
