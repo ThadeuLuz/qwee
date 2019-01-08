@@ -1,79 +1,143 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# http://blog.mclemon.io/python-using-a-dualshock-4-with-pygame
+# https://rpi.science.uoit.ca/lab/servo/
+# https://gpiozero.readthedocs.io/en/stable/recipes.html
+# https://maker.pro/raspberry-pi/projects/hexapod-walker-raspberry-pi
+
 import os
 import pprint
 import pygame
 from time import sleep
+import pigpio
 
-import gpiozero
-from gpiozero.pins.pigpio import PiGPIOPin
-import gpiozero.devices
+# CONSTANTS
 
-gpiozero.devices.pin_factory = PiGPIOPin
-
-# from gpiozero import AngularServo
-
-MAX_ANGLE = 35  # Max e min
-
-AXIS_DATA = {
-    'LX': 0,
-    'LY': 0,
-    'L2': -1,
-    'RX': 0,
-    'RY': 0,
-    'R2': -1
+PINS = {
+    'servo_l': 4,
+    'servo_r': 17,
+    'servo_f': 27,
+    'servo_b': 22
 }
 
-BUTTON_DATA = {}
-# HAT_DATA = {}
+SERVO_OFFSET = {
+    'servo_l': 1500,
+    'servo_r': 1500,
+    'servo_f': 1500,
+    'servo_b': 1500
+}
+SERVO_NAMES = list(SERVO_OFFSET.keys())
+SERVO_CAL = 0
 
-servo_l = gpiozero.AngularServo(4, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
-servo_r = gpiozero.AngularServo(17, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
-servo_f = gpiozero.AngularServo(27, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
-servo_b = gpiozero.AngularServo(22, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)
+SERVO_RANGE = 250
 
-# Initialize joystick
+AXIS_NAME = ['lx', 'ly', 'l2', 'rx', 'ry', 'r2']
+BUTTON_NAME = [
+    "x",
+    "circle",
+    "triangle",
+    "square",
+    "l1",
+    "r1",
+    "l2_",
+    "r2_",
+    "share",
+    "option",
+    "home",
+    "left_stick",
+    "right_stick"
+]
+JS = {
+    'lx': 0,
+    'ly': 0,
+    'l2': -1,
+    'rx': 0,
+    'ry': 0,
+    'r2': -1,
+    'hatx': 0,
+    'haty': 0,
+    "x": False,
+    "circle": False,
+    "triangle": False,
+    "square": False,
+    "l1": False,
+    "r1": False,
+    "l2_": False,
+    "r2_": False,
+    "share": False,
+    "option": False,
+    "home": False,
+    "left_stick": False,
+    "right_stick": False
+}
+
+RUN = True
+
+# INITIALIZATION
+
+# Pigpio
+pi = pigpio.pi()
+
+# Pygame joystick
 pygame.init()
 pygame.joystick.init()
 joystick = pygame.joystick.Joystick(0)
 joystick.init()
 
 
-# def set_all(angle=0):
-#     print(angle)
-#     global servo_l
-#     global servo_r
-#     global servo_f
-#     global servo_b
-#     servo_l.angle = angle
-#     servo_r.angle = angle
-#     servo_f.angle = angle
-#     servo_b.angle = angle
+# FUNCTIONS
+
+def set_servo(servo_name, pos=0):
+    # position é entre -1 e 1. Se for outro será clampado.
+    pulse = (max(min(pos, 1), -1) * SERVO_RANGE) + SERVO_OFFSET[servo_name]
+    # clampa o resultado
+    pi.set_servo_pulsewidth(PINS[servo_name], pulse)
 
 
-AXIS_NAME = ['LX', 'LY', 'L2', 'RX', 'RY', 'R2']
+# LOOP
 
-while True:
+RUN = True
+while RUN:
     for event in pygame.event.get():
         if event.type == pygame.JOYAXISMOTION:
             name = AXIS_NAME[event.axis]
-            AXIS_DATA[name] = round(event.value, 2)
+            JS[name] = round(event.value, 2)
         elif event.type == pygame.JOYBUTTONDOWN:
-            BUTTON_DATA[event.button] = True
+            name = BUTTON_NAME[event.button]
+            JS[name] = True
         elif event.type == pygame.JOYBUTTONUP:
-            BUTTON_DATA[event.button] = False
-        # elif event.type == pygame.JOYHATMOTION:
-            # HAT_DATA[event.hat] = event.value
+            name = BUTTON_NAME[event.button]
+            JS[name] = False
+        elif event.type == pygame.JOYHATMOTION:
+            hatx_last = JS['hatx']
+            haty_last = JS['haty']
+            JS['hatx'], JS['haty'] = event.value
 
-    servo_l.angle = MAX_ANGLE * AXIS_DATA['LX']
-    servo_r.angle = MAX_ANGLE * -AXIS_DATA['LX']
-    servo_f.angle = MAX_ANGLE * AXIS_DATA['LY']
-    servo_b.angle = MAX_ANGLE * -AXIS_DATA['LY']
+    gas = JS['lx']
+    rot = JS['ly']
+    fb = JS['rx']
+    lr = JS['ry']
 
+    # Set Servos
+    set_servo('servo_l', rot + lr)
+    set_servo('servo_r', -rot + lr)
+    set_servo('servo_f', rot + fb)
+    set_servo('servo_b', -rot + fb)
+
+    # Calibrar
+    if JS['hatx'] != 0 and hatx_last == 0:
+        SERVO_CAL += JS['hatx']
+        print("Calibrando "+SERVO_NAMES[SERVO_CAL % len(SERVO_NAMES)])
+    if JS['haty'] != 0:
+        name = SERVO_NAMES[SERVO_CAL % len(SERVO_NAMES)]
+        SERVO_OFFSET[name] += JS['haty']
+
+    # Printar states
     os.system('clear')
-    # pprint.pprint(BUTTON_DATA)
-    pprint.pprint(AXIS_DATA)
-    # pprint.pprint(HAT_DATA)
+    pprint.pprint(JS)
+    pprint.pprint(JS)
 
-    # set_all(MAX_ANGLE)
-    # set_all()
-    # set_all(-MAX_ANGLE)
-    # set_all()
+    # Sair do loop e do programa
+    if JS['share'] and JS['option']:
+        RUN = False
