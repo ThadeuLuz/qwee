@@ -1,0 +1,29 @@
+{
+  "name": "qwee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ssh": "source .env && sshpass -p $PI_PASSWORD ssh pi@${PI_IP} && cd qwee",
+    "movepkg": "source .env && sshpass -p $PI_PASSWORD scp package.json pi@${PI_IP}:/home/pi/qwee",
+    "movei": "source .env && sshpass -p $PI_PASSWORD scp src/index.js pi@${PI_IP}:/home/pi/qwee/src",
+    "movepy": "source .env && sshpass -p $PI_PASSWORD scp src/init.py pi@${PI_IP}:/home/pi/qwee/src",
+    "movep": "source .env && scp src/init.py pi@${PI_IP}:/home/pi/qwee/src",
+    "move": "source .env && scp -r ./src pi@${PI_IP}:/home/pi/qwee",
+    "start": "sudo python3 src/init.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cylon": "^1.3.0",
+    "cylon-gpio": "^0.30.1",
+    "cylon-i2c": "^0.26.1",
+    "cylon-joystick": "^0.22.0",
+    "cylon-raspi": "^0.20.1",
+    "gamepad": "^1.6.0",
+    "nodemon": "^1.18.9",
+    "onoff": "^3.2.2"
+  }
+}
