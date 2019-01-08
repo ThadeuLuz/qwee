@@ -3,10 +3,10 @@ from gpiozero import AngularServo
 
 MAX_ANGLE = 35  # Max e min
 
-servo_l = AngularServo(4, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 7
+# servo_l = AngularServo(4, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 7
 servo_r = AngularServo(17, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 11
-servo_f = AngularServo(27, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 13
-servo_b = AngularServo(22, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 15
+# servo_f = AngularServo(27, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 13
+# servo_b = AngularServo(22, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 15
 
 
 # def set_all(angle=0):
