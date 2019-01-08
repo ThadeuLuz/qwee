@@ -9,26 +9,26 @@ servo_f = AngularServo(27, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 13
 servo_b = AngularServo(22, min_angle=-MAX_ANGLE, max_angle=MAX_ANGLE)  # 15
 
 
-def set_all(angle=0):
-    global servo_l
-    global servo_r
-    global servo_f
-    global servo_b
-    print(angle)
-    servo_l = angle
-    servo_r = angle
-    servo_f = angle
-    servo_b = angle
+# def set_all(angle=0):
+#     global servo_l
+#     global servo_r
+#     global servo_f
+#     global servo_b
+#     print(angle)
+#     servo_l = angle
+#     servo_r = angle
+#     servo_f = angle
+#     servo_b = angle
 
 
 while True:
-    set_all(MAX_ANGLE)
+    servo_r = MAX_ANGLE
     sleep(1)
-    set_all()
+    servo_r = 0
     sleep(1)
-    set_all(-MAX_ANGLE)
+    servo_r = -MAX_ANGLE
     sleep(1)
-    set_all()
+    servo_r = 0
     sleep(1)
 
 # import RPi.GPIO as GPIO
