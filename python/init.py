@@ -136,7 +136,6 @@ while RUN:
     # Printar states
     os.system('clear')
     pprint.pprint(JS)
-    pprint.pprint(JS)
 
     # Sair do loop e do programa
     if JS['share'] and JS['option']:
