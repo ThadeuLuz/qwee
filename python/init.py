@@ -137,7 +137,7 @@ while RUN:
     # os.system('clear')
     sys.stderr.write("\x1b[2J\x1b[H")
     pprint.pprint(JS)
-    pprint.pprint(SERVO_CAL)
+    pprint.pprint(SERVO_OFFSET)
 
     # Sair do loop e do programa
     if JS['share'] and JS['option']:
