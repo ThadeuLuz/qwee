@@ -7,11 +7,11 @@
 # https://maker.pro/raspberry-pi/projects/hexapod-walker-raspberry-pi
 
 import os
+import sys
 import pprint
 import pygame
 from time import sleep
 import pigpio
-
 # CONSTANTS
 
 PINS = {
@@ -114,16 +114,16 @@ while RUN:
             haty_last = JS['haty']
             JS['hatx'], JS['haty'] = event.value
 
-    gas = JS['lx']
-    rot = JS['ly']
-    fb = JS['rx']
+    gas = JS['ly']
+    rot = JS['lx']
     lr = JS['ry']
+    fb = JS['rx']
 
     # Set Servos
     set_servo('servo_l', rot + lr)
-    set_servo('servo_r', -rot + lr)
+    set_servo('servo_r', -rot - lr)
     set_servo('servo_f', rot + fb)
-    set_servo('servo_b', -rot + fb)
+    set_servo('servo_b', -rot - fb)
 
     # Calibrar
     if JS['hatx'] != 0 and hatx_last == 0:
@@ -131,11 +131,13 @@ while RUN:
         print("Calibrando "+SERVO_NAMES[SERVO_CAL % len(SERVO_NAMES)])
     if JS['haty'] != 0:
         name = SERVO_NAMES[SERVO_CAL % len(SERVO_NAMES)]
-        SERVO_OFFSET[name] += JS['haty']
+        SERVO_OFFSET[name] += (JS['haty'] * 5)
 
     # Printar states
-    os.system('clear')
+    # os.system('clear')
+    sys.stderr.write("\x1b[2J\x1b[H")
     pprint.pprint(JS)
+    pprint.pprint(SERVO_CAL)
 
     # Sair do loop e do programa
     if JS['share'] and JS['option']:
