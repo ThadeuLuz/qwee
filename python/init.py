@@ -173,6 +173,7 @@ while RUN:
         os.system('clear')
         pprint.pprint(JS)
         pprint.pprint(SERVO_OFFSET)
+        pprint.pprint(STATE)
 
     # Sair do loop e do programa
     if JS['share'] and JS['option']:
