@@ -71,6 +71,7 @@ RUN = True
 # INITIALIZATION
 
 buzzer = Buzzer(PINS['buzzer'])
+buzzer.beep(n=5, on_time=0.1, off_time=0.1, background=False)
 
 # Pigpio
 pi = pigpio.pi()
@@ -164,6 +165,7 @@ while RUN:
         RUN = False
 
 # Desligar o pi
+buzzer.beep(n=5, on_time=0.1, off_time=0.1, background=False)
 joystick.quit()
 pygame.quit()
 os.system('sudo shutdown -H now')
