@@ -94,13 +94,13 @@ while JS_COUNT == 0:
     JS_COUNT = pygame.joystick.get_count()
     if JS_COUNT == 0:
         print("No joystick found. Trying again in 5 seconds.")
-        buzzer.beep(n=1)
+        buzzer.beep(n=1, on_time=0.25, off_time=0, background=False)
 
         pygame.joystick.quit()
         sleep(5)
     else:
         print("Joystick found! :)")
-        buzzer.beep(n=2)
+        buzzer.beep(n=1, on_time=0.25, off_time=0.25, background=False)
 
         joystick = pygame.joystick.Joystick(0)
         joystick.init()
