@@ -94,6 +94,7 @@ while JS_COUNT == 0:
     else:
         print("Joystick found! :)")
         joystick = pygame.joystick.Joystick(0)
+        joystick.init()
 
 
 # FUNCTIONS
@@ -146,7 +147,7 @@ while RUN:
 
     # Printar states
     count += 1
-    if count % 100 == 0:
+    if count % 10 == 0:
         os.system('clear')
         pprint.pprint(JS)
         pprint.pprint(SERVO_OFFSET)
