@@ -86,7 +86,7 @@ while JS_COUNT == 0:
     print("Looking for joystick...")
     pygame.joystick.init()
     JS_COUNT = pygame.joystick.get_count()
-    if JS_COUNT == = 0:
+    if JS_COUNT == 0:
         print("No joystick found. Trying again in 5 seconds.")
         pygame.joystick.quit()
         sleep(5)
@@ -153,4 +153,4 @@ while RUN:
         RUN = False
 
 # Desligar o pi
-os.system('sudo shutdown -h now')
+# os.system('sudo shutdown -h now')
