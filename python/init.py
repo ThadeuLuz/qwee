@@ -175,4 +175,4 @@ while RUN:
         RUN = False
 
 # Desligar o pi
-# os.system('sudo shutdown -h now')
+os.system('sudo shutdown -h now')
