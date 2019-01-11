@@ -108,6 +108,7 @@ def set_servo(servo_name, pos=0):
 # LOOP
 
 RUN = True
+count = 0
 while RUN:
     for event in pygame.event.get():
         if event.type == pygame.JOYAXISMOTION:
@@ -144,10 +145,12 @@ while RUN:
         SERVO_OFFSET[name] += (JS['haty'] * 5)
 
     # Printar states
-    # os.system('clear')
-    sys.stderr.write("\x1b[2J\x1b[H")
-    pprint.pprint(JS)
-    pprint.pprint(SERVO_OFFSET)
+    count++
+    if count % 100 == = 0:
+        # os.system('clear')
+        # sys.stderr.write("\x1b[2J\x1b[H")
+        pprint.pprint(JS)
+        pprint.pprint(SERVO_OFFSET)
 
     # Sair do loop e do programa
     if JS['share'] and JS['option']:
