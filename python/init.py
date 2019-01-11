@@ -100,7 +100,7 @@ while JS_COUNT == 0:
         sleep(5)
     else:
         print("Joystick found! :)")
-        buzzer.beep(n=3, on_time=0.25, off_time=0.25, background=False)
+        buzzer.beep(n=3, on_time=0.1, off_time=0.1, background=False)
 
         joystick = pygame.joystick.Joystick(0)
         joystick.init()
