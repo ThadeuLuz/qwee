@@ -17,11 +17,12 @@ from gpiozero import Buzzer
 # CONSTANTS
 
 PINS = {
-    'servo_l': 4,  # 7
-    'servo_r': 17,  # 11
-    'servo_f': 27,  # 13
-    'servo_b': 22,  # 15
-    'buzzer':  26  # 37
+    'motor':   18,  # 12
+    'servo_l': 5,   # 29
+    'servo_r': 6,   # 31
+    'servo_f': 13,  # 33
+    'servo_b': 19,  # 35
+    'buzzer':  26   # 37
 }
 
 SERVO_OFFSET = {
@@ -107,15 +108,26 @@ while JS_COUNT == 0:
 
 
 # FUNCTIONS
+STATE = {}
+
 
 def set_servo(servo_name, pos=0):
-    # position é entre -1 e 1. Se for outro será clampado.
-    pulse = (max(min(pos, 1), -1) * SERVO_RANGE) + SERVO_OFFSET[servo_name]
-    # clampa o resultado
+    pulse = (pos * SERVO_RANGE) + SERVO_OFFSET[servo_name]
+    # clampa o resultado para um número seguro
+    pulse = max(min(pulse, 1500 + SERVO_RANGE), 1500 - SERVO_RANGE)
     pi.set_servo_pulsewidth(PINS[servo_name], pulse)
+    STATE[servo_name] = pulse
 
+
+def set_motor(pos):
+    pulse = (pos * 500) + 1500
+    # clampa o resultado para um número seguro
+    pulse = max(min(pulse, 1500 + SERVO_RANGE), 1500 - SERVO_RANGE)
+    pi.set_servo_pulsewidth(PINS['motor'], pulse)
+    STATE['motor'] = pulse
 
 # LOOP
+
 
 RUN = True
 count = 0
@@ -135,12 +147,13 @@ while RUN:
             haty_last = JS['haty']
             JS['hatx'], JS['haty'] = event.value
 
-    gas = JS['ly']
+    motor = JS['ly']
     rot = JS['lx']
     lr = JS['ry']
     fb = JS['rx']
 
     # Set Servos
+    set_motor(motor)
     set_servo('servo_l', rot + lr)
     set_servo('servo_r', -rot - lr)
     set_servo('servo_f', rot + fb)
@@ -156,7 +169,7 @@ while RUN:
 
     # Printar states
     count += 1
-    if count % 10 == 0:
+    if count % 5 == 0:
         os.system('clear')
         pprint.pprint(JS)
         pprint.pprint(SERVO_OFFSET)
