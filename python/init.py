@@ -19,11 +19,11 @@ from gpiozero import Buzzer
 
 PINS = {
     'motor': 18,  # 12
-    'servo_l': 5,  # 29
-    'servo_r': 6,  # 31
-    'servo_f': 13,  # 33
-    'servo_b': 19,  # 35
-    'buzzer': 26  # 37
+    'servo_l': 6,  # 31
+    'servo_r': 13,  # 33
+    'servo_f': 19,  # 35
+    'servo_b': 26  # 37
+    # 'servo_l': 5,  # 29
 }
 
 SERVO_OFFSET = {
