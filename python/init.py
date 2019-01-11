@@ -22,10 +22,10 @@ PINS = {
 }
 
 SERVO_OFFSET = {
-    'servo_l': 1500,
-    'servo_r': 1500,
-    'servo_f': 1500,
-    'servo_b': 1500
+    'servo_l': 1315,
+    'servo_r': 1520,
+    'servo_f': 1530,
+    'servo_b': 1460
 }
 SERVO_NAMES = list(SERVO_OFFSET.keys())
 SERVO_CAL = 0
@@ -142,3 +142,6 @@ while RUN:
     # Sair do loop e do programa
     if JS['share'] and JS['option']:
         RUN = False
+
+# Desligar o pi
+os.system('sudo shutdown -h now')
