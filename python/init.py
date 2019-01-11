@@ -120,9 +120,9 @@ def set_servo(servo_name, pos=0):
 
 
 def set_motor(pos):
-    pulse = (pos * 500) + 1500
+    pulse = (pos * 1000) + 1000
     # clampa o resultado para um número seguro
-    pulse = max(min(pulse, 1500 + SERVO_RANGE), 1500 - SERVO_RANGE)
+    pulse = max(min(pulse, 2000), 1000)
     pi.set_servo_pulsewidth(PINS['motor'], pulse)
     STATE['motor'] = pulse
 
@@ -147,17 +147,12 @@ while RUN:
             haty_last = JS['haty']
             JS['hatx'], JS['haty'] = event.value
 
-    motor = JS['ly']
-    rot = JS['lx']
-    lr = JS['ry']
-    fb = JS['rx']
-
     # Set Servos
-    set_motor(motor)
-    set_servo('servo_l', rot + lr)
-    set_servo('servo_r', -rot - lr)
-    set_servo('servo_f', rot + fb)
-    set_servo('servo_b', -rot - fb)
+    set_motor(max(-JS['ly'], 0))
+    set_servo('servo_l', JS['lx'] + JS['ry'])
+    set_servo('servo_r', -JS['lx'] - JS['ry'])
+    set_servo('servo_f', JS['lx'] + JS['rx'])
+    set_servo('servo_b', -JS['lx'] - JS['rx'])
 
     # Calibrar
     if JS['hatx'] != 0 and hatx_last == 0:
