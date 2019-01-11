@@ -22,8 +22,8 @@ PINS = {
     'servo_l': 6,  # 31
     'servo_r': 13,  # 33
     'servo_f': 19,  # 35
-    'servo_b': 26  # 37
-    'buzzer': 20,  # 38
+    'servo_b': 26,  # 37
+    'buzzer': 20  # 38
 }
 
 SERVO_OFFSET = {
