@@ -5,6 +5,7 @@
 # https://rpi.science.uoit.ca/lab/servo/
 # https://gpiozero.readthedocs.io/en/stable/recipes.html
 # https://maker.pro/raspberry-pi/projects/hexapod-walker-raspberry-pi
+# https://projects.raspberrypi.org/en/
 
 import os
 import sys
@@ -17,12 +18,12 @@ from gpiozero import Buzzer
 # CONSTANTS
 
 PINS = {
-    'motor':   18,  # 12
-    'servo_l': 5,   # 29
-    'servo_r': 6,   # 31
+    'motor': 18,  # 12
+    'servo_l': 5,  # 29
+    'servo_r': 6,  # 31
     'servo_f': 13,  # 33
     'servo_b': 19,  # 35
-    'buzzer':  26   # 37
+    'buzzer': 26  # 37
 }
 
 SERVO_OFFSET = {
@@ -38,19 +39,8 @@ SERVO_RANGE = 250
 
 AXIS_NAME = ['lx', 'ly', 'l2', 'rx', 'ry', 'r2']
 BUTTON_NAME = [
-    "x",
-    "circle",
-    "triangle",
-    "square",
-    "l1",
-    "r1",
-    "l2_",
-    "r2_",
-    "share",
-    "option",
-    "home",
-    "left_stick",
-    "right_stick"
+    "x", "circle", "triangle", "square", "l1", "r1", "l2_", "r2_", "share",
+    "option", "home", "left_stick", "right_stick"
 ]
 JS = {
     'lx': 0,
@@ -106,7 +96,6 @@ while JS_COUNT == 0:
         joystick = pygame.joystick.Joystick(0)
         joystick.init()
 
-
 # FUNCTIONS
 STATE = {}
 
@@ -126,8 +115,8 @@ def set_motor(pos):
     pi.set_servo_pulsewidth(PINS['motor'], pulse)
     STATE['motor'] = pulse
 
-# LOOP
 
+# LOOP
 
 RUN = True
 count = 0
@@ -157,7 +146,7 @@ while RUN:
     # Calibrar
     if JS['hatx'] != 0 and hatx_last == 0:
         SERVO_CAL += JS['hatx']
-        print("Calibrando "+SERVO_NAMES[SERVO_CAL % len(SERVO_NAMES)])
+        print("Calibrando " + SERVO_NAMES[SERVO_CAL % len(SERVO_NAMES)])
     if JS['haty'] != 0:
         name = SERVO_NAMES[SERVO_CAL % len(SERVO_NAMES)]
         SERVO_OFFSET[name] += (JS['haty'] * 5)
@@ -175,4 +164,6 @@ while RUN:
         RUN = False
 
 # Desligar o pi
-os.system('sudo shutdown -h now')
+joystick.quit()
+pygame.quit()
+os.system('sudo shutdown -H now')
