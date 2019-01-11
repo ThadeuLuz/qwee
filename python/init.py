@@ -79,8 +79,9 @@ RUN = True
 # Pigpio
 pi = pigpio.pi()
 
-# Pygame joystick
-# pygame.init()
+# Pygame and joystick
+pygame.init()
+
 JS_COUNT = 0
 while JS_COUNT == 0:
     print("Looking for joystick...")
