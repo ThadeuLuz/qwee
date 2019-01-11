@@ -80,14 +80,13 @@ RUN = True
 pi = pigpio.pi()
 
 # Pygame joystick
-NO_JS = True
-while NO_JS:
+# joystick = False
+pygame.init()
+pygame.joystick.init()
+while not joystick:
     try:
-        pygame.init()
-        pygame.joystick.init()
         joystick = pygame.joystick.Joystick(0)
         joystick.init()
-        NO_JS = True
         print("Joystick found! :)")
     except:
         print("No joystick found. Trying again in 5 seconds.")
