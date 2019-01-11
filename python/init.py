@@ -17,11 +17,11 @@ from gpiozero import Buzzer
 # CONSTANTS
 
 PINS = {
-    'servo_l': 4,
-    'servo_r': 17,
-    'servo_f': 27,
-    'servo_b': 22,
-    'buzzer': 37
+    'servo_l': 4,  # 7
+    'servo_r': 17,  # 11
+    'servo_f': 27,  # 13
+    'servo_b': 22,  # 15
+    'buzzer':  26  # 37
 }
 
 SERVO_OFFSET = {
