@@ -145,10 +145,9 @@ while RUN:
         SERVO_OFFSET[name] += (JS['haty'] * 5)
 
     # Printar states
-    count++
-    if count % 100 == = 0:
-        # os.system('clear')
-        # sys.stderr.write("\x1b[2J\x1b[H")
+    count += 1
+    if count % 100 == 0:
+        os.system('clear')
         pprint.pprint(JS)
         pprint.pprint(SERVO_OFFSET)
 
