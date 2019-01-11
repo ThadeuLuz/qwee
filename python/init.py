@@ -140,8 +140,8 @@ while RUN:
     set_motor(max(-JS['ly'], 0))
     set_servo('servo_l', JS['lx'] + JS['ry'])
     set_servo('servo_r', -JS['lx'] - JS['ry'])
-    set_servo('servo_f', JS['lx'] + JS['rx'])
-    set_servo('servo_b', -JS['lx'] - JS['rx'])
+    set_servo('servo_f', JS['lx'] - JS['rx'])
+    set_servo('servo_b', -JS['lx'] + JS['rx'])
 
     # Calibrar
     if JS['hatx'] != 0 and hatx_last == 0:
