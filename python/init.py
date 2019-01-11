@@ -80,20 +80,22 @@ RUN = True
 pi = pigpio.pi()
 
 # Pygame joystick
-# joystick = False
-pygame.init()
-pygame.joystick.init()
-while not joystick:
-    try:
-        joystick = pygame.joystick.Joystick(0)
-        joystick.init()
-        print("Joystick found! :)")
-    except:
+# pygame.init()
+JS_COUNT = 0
+while JS_COUNT == 0:
+    print("Looking for joystick...")
+    pygame.joystick.init()
+    JS_COUNT = pygame.joystick.get_count()
+    if JS_COUNT == = 0:
         print("No joystick found. Trying again in 5 seconds.")
+        pygame.joystick.quit()
         sleep(5)
+    else:
+        print("Joystick found! :)")
+        joystick = pygame.joystick.Joystick(0)
 
-        # FUNCTIONS
 
+# FUNCTIONS
 
 def set_servo(servo_name, pos=0):
     # position é entre -1 e 1. Se for outro será clampado.
