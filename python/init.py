@@ -12,13 +12,16 @@ import pprint
 import pygame
 from time import sleep
 import pigpio
+from gpiozero import Buzzer
+
 # CONSTANTS
 
 PINS = {
     'servo_l': 4,
     'servo_r': 17,
     'servo_f': 27,
-    'servo_b': 22
+    'servo_b': 22,
+    'buzzer': 37
 }
 
 SERVO_OFFSET = {
@@ -76,6 +79,8 @@ RUN = True
 
 # INITIALIZATION
 
+buzzer = Buzzer(PINS['buzzer'])
+
 # Pigpio
 pi = pigpio.pi()
 
@@ -89,10 +94,14 @@ while JS_COUNT == 0:
     JS_COUNT = pygame.joystick.get_count()
     if JS_COUNT == 0:
         print("No joystick found. Trying again in 5 seconds.")
+        buzzer.beep(n=1)
+
         pygame.joystick.quit()
         sleep(5)
     else:
         print("Joystick found! :)")
+        buzzer.beep(n=2)
+
         joystick = pygame.joystick.Joystick(0)
         joystick.init()
 
