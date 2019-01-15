@@ -190,7 +190,7 @@ while RUN:
 
     # Set Servos
 
-    set_motor(max(-JS['r2'], 0))
+    set_motor(max(JS['r2'], 0))
     set_servo('servo_l', +JS['lx'] - JS['ry'])
     set_servo('servo_r', +JS['lx'] + JS['ry'])
     set_servo('servo_f', +JS['lx'] + JS['rx'])
