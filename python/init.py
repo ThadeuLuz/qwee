@@ -164,6 +164,7 @@ def set_motor(pos):
     pulse = (pos * 1000) + 1000
     # clampa o resultado para um número seguro
     pulse = max(min(pulse, 2000), 1000)
+    pulse = 1000 if pulse < 1005 else pulse
     pi.set_servo_pulsewidth(PINS['motor'], pulse)
     STATE['motor'] = pulse
 
@@ -190,7 +191,7 @@ while RUN:
 
     # Set Servos
 
-    set_motor(max(JS['r2'], 0))
+    set_motor((JS['r2'] + 1) / 2)
     set_servo('servo_l', +JS['lx'] - JS['ry'])
     set_servo('servo_r', +JS['lx'] + JS['ry'])
     set_servo('servo_f', +JS['lx'] + JS['rx'])
