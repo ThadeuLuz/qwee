@@ -18,6 +18,8 @@ from gpiozero import Buzzer
 
 # CONSTANTS
 
+VERSION = [3, 1]
+
 PING = {
     # 1: 3.3v
     # 2: 5v
@@ -116,7 +118,11 @@ RUN = True
 # INITIALIZATION
 
 buzzer = Buzzer(PINS['buzzer'])
-buzzer.beep(n=5, on_time=0.1, off_time=0.1, background=False)
+
+# Beep Version
+buzzer.beep(n=VERSION[0], on_time=0.1, off_time=0.05, background=False)
+sleep(1)
+buzzer.beep(n=VERSION[0], on_time=0.1, off_time=0.05, background=False)
 
 # Pigpio
 pi = pigpio.pi()
