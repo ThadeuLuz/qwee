@@ -6,6 +6,7 @@
 # https://gpiozero.readthedocs.io/en/stable/recipes.html
 # https://maker.pro/raspberry-pi/projects/hexapod-walker-raspberry-pi
 # https://projects.raspberrypi.org/en/
+# https://playground.arduino.cc/Main/MAX72XXHardware
 
 import os
 import sys
@@ -17,13 +18,57 @@ from gpiozero import Buzzer
 
 # CONSTANTS
 
+PING = {
+    # 1: 3.3v
+    # 2: 5v
+    '3': 2,
+    # 4: 5v
+    '5': 3,
+    # 6: ground
+    '7': 4,
+    '8': 14,
+    # 9: ground
+    '10': 15,
+    '11': 17,
+    '12': 18,
+    '13': 27,
+    # 14: ground
+    '15': 22,
+    '16': 23,
+    # 17: 3.3v
+    '18': 24,
+    '19': 10,
+    # 20: ground
+    '21': 9,
+    '22': 25,
+    '23': 11,
+    '24': 8,
+    # 25: ground
+    '26': 7,
+    # Model B+ pins
+    # 27: ID_SD
+    # 28: ID_SC
+    '29': 5,
+    # 30: ground
+    '31': 6,
+    '32': 12,
+    '33': 13,
+    # 34: ground
+    '35': 19,
+    '36': 16,
+    '37': 26,
+    '38': 20,
+    # 39: ground
+    '40': 21
+}
+
 PINS = {
-    'motor': 18,  # 12
-    'servo_l': 6,  # 31
-    'servo_r': 13,  # 33
-    'servo_f': 19,  # 35
-    'servo_b': 26,  # 37
-    'buzzer': 20  # 38
+    'motor': PING['12'],
+    'buzzer': PING['29'],
+    'servo_l': PING['31'],
+    'servo_r': PING['33'],
+    'servo_f': PING['35'],
+    'servo_b': PING['37'],
 }
 
 SERVO_OFFSET = {
