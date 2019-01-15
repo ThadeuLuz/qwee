@@ -74,10 +74,10 @@ PINS = {
 }
 
 SERVO_OFFSET = {
-    'servo_l': 1315,
-    'servo_r': 1520,
+    'servo_l': 1320,
+    'servo_r': 1535,
     'servo_f': 1530,
-    'servo_b': 1460
+    'servo_b': 1505
 }
 SERVO_NAMES = list(SERVO_OFFSET.keys())
 SERVO_CAL = 0
