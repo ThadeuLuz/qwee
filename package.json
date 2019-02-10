@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "ssh": "source .env && sshpass -p $PI_PASSWORD ssh pi@${PI_IP} && cd qwee",
     "movepkg": "source .env && sshpass -p $PI_PASSWORD scp package.json pi@${PI_IP}:/home/pi/qwee",
     "movei": "source .env && sshpass -p $PI_PASSWORD scp src/index.js pi@${PI_IP}:/home/pi/qwee/src",
     "movepy": "source .env && sshpass -p $PI_PASSWORD scp src/init.py pi@${PI_IP}:/home/pi/qwee/src",
     "movep": "source .env && scp src/init.py pi@${PI_IP}:/home/pi/qwee/src",
     "move": "source .env && scp -r ./src pi@${PI_IP}:/home/pi/qwee",
-    "start": "sudo python3 python/init.py"
+    "prestart": "git pull",
+    "start": "echo 'hello world'"
   },
   "keywords": [],
   "author": "",
