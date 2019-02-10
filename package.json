@@ -10,7 +10,7 @@
     "movepy": "source .env && sshpass -p $PI_PASSWORD scp src/init.py pi@${PI_IP}:/home/pi/qwee/src",
     "movep": "source .env && scp src/init.py pi@${PI_IP}:/home/pi/qwee/src",
     "move": "source .env && scp -r ./src pi@${PI_IP}:/home/pi/qwee",
-    "prestart": "git pull",
+    "prestart": "git pull && npm install",
     "start": "echo 'hello world'"
   },
   "keywords": [],
