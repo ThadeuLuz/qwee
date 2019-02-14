@@ -1,6 +1,5 @@
 import { robot, start } from "cylon";
 
-const joystickConfig = __dirname + "/joystick.json";
 const servoConfig = {
   driver: "servo",
   limits: { bottom: 20, top: 160 },
@@ -14,7 +13,7 @@ const initialize = () =>
       .connection("raspi", { adaptor: "raspi" })
       .device("controller", {
         driver: "joystick",
-        config: joystickConfig,
+        config: "dualshock4-alternate-driver",
         connection: "joystick"
       })
       .device("servo_f", Object.assign({ pin: 3 }, servoConfig))

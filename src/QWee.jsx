@@ -1,62 +1,53 @@
 import { h, Color, Component } from "ink";
+import Console from "ink-console";
+
+// import initialize from "./services/initialize";
+import initialState from "./services/initialState";
+// import updateInputs from "./services/updateInputs";
+
+// import getJoystick from "./services/joystick";
+
 import Flap from "./components/Flap";
 
 class QWee extends Component {
-  constructor() {
-    super();
-    this.state = {
-      input: {
-        distaces: {
-          frontLeft: 0,
-          frontRight: 0,
-          backLeft: 0,
-          backRight: 0
-        },
-        gps: [0, 0],
-        height: 0,
-        joystick: {}
-      },
-      output: {
-        flaps: {
-          left: 0,
-          right: 0,
-          front: 0,
-          back: 0
-        },
-        rotations: {
-          x: 0,
-          y: 0,
-          z: 0
-        },
-        motors: {
-          top: 0,
-          bottom: 0
-        },
-        eyes: []
-      }
-    };
-  }
+  state = initialState;
 
-  getChildContext = () => {
-    return {
-      output: this.state.output,
-      input: this.state.input,
-      setState: this.setState
-    };
+  componentDidMount = async () => {
+    // const joystick = await getJoystick();
+    // try {
+    //   const joystick = initializeJoystick();
+    //   joystick.watchChanges(this.setState);
+    // } catch {
+    //   return "erro";
+    // }
   };
 
+  // componentWillUpdate = (_, newState) => {
+  // const oldState = this.state;
+  // reactToChanges(oldState, newState, this.qwee);
+  // };
+
+  getChildContext = () => ({
+    output: this.state.output,
+    input: this.state.input,
+    setState: this.setState
+  });
+
   render(_, state) {
-    const a = 110;
+    if (!state.ready) {
+      return <Color>Inicializando...</Color>;
+    }
 
     return (
       <>
-        <>
-          Flaps:
-          <Flap dir="front" />
-          <Flap dir="back" />
-          <Flap dir="left" />
-          <Flap dir="right" />
-        </>
+        Flaps:
+        <Flap dir="front" />
+        <Flap dir="back" />
+        <Flap dir="left" />
+        <Flap dir="right" />
+        <div>
+          <Console lines={4} />
+        </div>
       </>
     );
   }
