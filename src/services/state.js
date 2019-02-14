@@ -1,7 +1,7 @@
 let state = {};
 const onChange = [];
 
-export const subscribe = fn => {
+const subscribe = fn => {
   onChange.push(fn);
   return () => {
     const index = onChange.indexOf(fn);
@@ -11,11 +11,17 @@ export const subscribe = fn => {
   };
 };
 
-export const setState = updates => {
+const setState = updates => {
   state = Object.assign({}, state, updates);
   onChange.forEach(fn => {
     fn(state);
   });
 };
 
-export const getState = () => state;
+const getState = () => state;
+
+module.exports = {
+  setState,
+  subscribe,
+  getState
+};

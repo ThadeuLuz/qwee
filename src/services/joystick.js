@@ -1,5 +1,5 @@
-import dualShock from "dualshock-controller";
-import { setState } from "./state";
+const dualShock = require("dualshock-controller");
+const { setState } = require("./state");
 
 let attempts = 0;
 
@@ -23,7 +23,7 @@ const getJoystick = () =>
     attempt();
   });
 
-export default async () => {
+const initialize = async () => {
   const joystick = await getJoystick();
 
   // joystick.on("error", err => console.log(err));
@@ -90,3 +90,5 @@ export default async () => {
 
   return joystick.setExtras;
 };
+
+module.exports = initialize;

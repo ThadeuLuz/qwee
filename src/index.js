@@ -1,5 +1,5 @@
-import joystick from "./services/joystick";
-import { subscribe } from "./services/state";
+const joystick = require("./services/joystick");
+const { subscribe } = require("./services/state");
 
 subscribe(state => {
   console.clear();
