@@ -45,7 +45,7 @@ module.exports = async () => {
   const gp = ds.open(device);
 
   // Set js color green
-  gp.setLed(0, 255, 0);
+  // gp.setLed(0, 255, 0);
 
   const syncWithState = setState => {
     gp.ondigital((button, value) => {
