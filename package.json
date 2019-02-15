@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "update": "git checkout -- . && git pull && npm install",
+    "update": "git checkout -- . && git pull",
     "ssh": "source .env && sshpass -p $PI_PASSWORD ssh pi@${PI_IP} && cd qwee",
     "prestart": "ifconfig",
     "start": "clear && node src/index.js",

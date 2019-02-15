@@ -22,10 +22,10 @@ const stateKeys = {
 const getDevice = () =>
   new Promise(resolve => {
     const attemptConnection = () => {
-      const devices = ds.getDevices();
-      if (devices.length !== 0) {
+      const device = ds.getDevices()[0];
+      if (device) {
         info("Joystick found");
-        resolve(devices[0]);
+        return resolve(device);
       }
       warn("No joystick found. Trying again in 1 second.");
       setTimeout(() => {
