@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "update": "git checkout -- . && git pull && npm install",
     "ssh": "source .env && sshpass -p $PI_PASSWORD ssh pi@${PI_IP} && cd qwee",
     "prestart": "ifconfig",
     "start": "clear && node src/index.js",
@@ -15,6 +16,7 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "dualshock": "3.1.1",
+    "node-hid": "^0.7.6",
     "fs-extra": "^7.0.1",
     "onoff": "^3.2.2"
   },
