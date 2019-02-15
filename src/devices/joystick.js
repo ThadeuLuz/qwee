@@ -19,8 +19,8 @@ const stateKeys = {
   }
 };
 
-const getDevice = () =>
-  new Promise(resolve => {
+const waitForDevice = () => {
+  return new Promise(resolve => {
     const attemptConnection = () => {
       const device = ds.getDevices()[0];
       if (device) {
@@ -36,15 +36,16 @@ const getDevice = () =>
 
     attemptConnection();
   });
+};
 
 module.exports = async () => {
-  const device = await getDevice();
+  const device = await waitForDevice();
 
-  log("Found device", device);
+  log("Found device", JSON.stringify(device));
   const gp = ds.open(device);
 
   // Set js color green
-  // gp.setLed(0, 255, 0);
+  gp.setLed(0, 255, 0);
 
   const syncWithState = setState => {
     gp.ondigital((button, value) => {
