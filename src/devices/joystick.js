@@ -48,7 +48,7 @@ module.exports = async () => {
   // gp.setLed(0, 255, 0);
 
   const syncWithState = setState => {
-    gp.ondigital((button, value) => {
+    gp.ondigital = (button, value) => {
       const stateKey = stateKeys.digital[button];
       if (stateKey) {
         setState({ [stateKey]: value });
@@ -56,9 +56,9 @@ module.exports = async () => {
         stateKeys.digital[button] = false;
         warn(`Botão não rastreada: ${button}`);
       }
-    });
+    };
 
-    gp.onanalog((axis, value) => {
+    gp.onanalog = (axis, value) => {
       const stateKey = stateKeys.analog[axis];
       if (stateKey) {
         setState({ [stateKey]: value });
@@ -66,7 +66,7 @@ module.exports = async () => {
         stateKeys.analog[axis] = false;
         warn(`Eixo não rastreado: ${axis}`);
       }
-    });
+    };
   };
 
   return { syncWithState };
