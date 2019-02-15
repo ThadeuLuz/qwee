@@ -1,4 +1,4 @@
-const { info, warn } = require("./console");
+const { log, info, warn } = require("./console");
 const ds = require("dualshock");
 
 const stateKeys = {
@@ -25,12 +25,13 @@ const getDevice = () =>
       const device = ds.getDevices()[0];
       if (device) {
         info("Joystick found");
-        return resolve(device);
+        resolve(device);
+      } else {
+        warn("No joystick found. Trying again in 1 second.");
+        setTimeout(() => {
+          attemptConnection();
+        }, 1000);
       }
-      warn("No joystick found. Trying again in 1 second.");
-      setTimeout(() => {
-        attemptConnection();
-      }, 1000);
     };
 
     attemptConnection();
@@ -38,10 +39,12 @@ const getDevice = () =>
 
 module.exports = async () => {
   const device = await getDevice();
+
+  log("Found device", device);
   const gp = ds.open(device);
 
   // Set js color green
-  gp.setLed(0, 255, 0);
+  // gp.setLed(0, 255, 0);
 
   const syncWithState = setState => {
     gp.ondigital((button, value) => {
