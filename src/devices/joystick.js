@@ -36,7 +36,7 @@ const getDevice = () =>
     attemptConnection();
   });
 
-exports.initialize = async () => {
+module.exports = async () => {
   const device = await getDevice();
   const gp = ds.open(device);
 

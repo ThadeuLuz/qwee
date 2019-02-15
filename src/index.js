@@ -11,7 +11,7 @@ const initialize = async () => {
   info("Starting");
   log("Conecting joystick...");
   const js = await Joystick();
-  js.updateState(log);
+  js.updateState(() => {});
 
   // js.setState =
 
