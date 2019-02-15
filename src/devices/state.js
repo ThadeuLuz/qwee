@@ -1,4 +1,8 @@
-const state = {};
+const state = {
+  joystick_l1: 0,
+  joystick_l2: 0
+};
+
 const onChange = [];
 
 exports.getState = () => state;

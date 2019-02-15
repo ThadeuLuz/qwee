@@ -1,95 +1,69 @@
-const dualShock = require("dualshock-controller");
-const { setState } = require("./state");
+const { info, warn } = require("./console");
+const ds = require("dualshock");
 
-let attempts = 0;
-
-const getJoystick = () =>
-  new Promise(resolve => {
-    const attempt = () => {
-      attempts = attempts + 1;
-      console.log("Tentando pegar joystick", attempts);
-      try {
-        const joystick = dualShock({
-          config: "dualshock4-alternate-driver"
-        });
-        resolve(joystick);
-      } catch (err) {
-        console.log(err);
-        setTimeout(() => {
-          attempt();
-        }, 2000);
-      }
-    };
-
-    attempt();
-  });
-
-const initialize = async () => {
-  const joystick = await getJoystick();
-
-  // joystick.on("error", err => console.log(err));
-  joystick.on("connected", () => setState({ joystickReady: true }));
-
-  const move = ["left", "right"];
-  move.forEach(axis => {
-    joystick.on(`${axis}:move`, ({ x, y }) =>
-      setState({ [`joystick_${axis}_x`]: x, [`joystick_${axis}_y`]: y })
-    );
-  });
-
-  const pressRelease = [
-    "dpadright",
-    "dpadleft",
-    "dpadup",
-    "dpaddown",
-    "x",
-    "circle",
-    "square",
-    "triangle",
-    "l1",
-    "r1",
-    "leftAnalogBump",
-    "rightAnalogBump",
-    "psxButton",
-    "touchPad"
-  ];
-  pressRelease.forEach(button => {
-    joystick.on(`${button}:press`, () =>
-      setState({ [`joystick_${button}`]: true })
-    );
-    joystick.on(`${button}:release`, () =>
-      setState({ [`joystick_${button}`]: false })
-    );
-  });
-
-  const analogs = ["r2", "l2"];
-
-  analogs.forEach(analog => {
-    joystick.on(`${analog}:analog`, d =>
-      setState({ [`joystick_${analog}`]: d })
-    );
-  });
-
-  const motions = ["rightLeft", "forwardBackward", "upDown"];
-
-  motions.forEach(motion => {
-    joystick.on(`${motion}:motion`, d =>
-      setState({ [`joystick_${motion}`]: d })
-    );
-  });
-
-  // const setExtras = joystick.setExtras;
-  // controller.setExtras({
-  //   rumbleLeft: 0, // 0-255 (Rumble left intensity)
-  //   rumbleRight: 0, // 0-255 (Rumble right intensity)
-  //   red: 0, // 0-255 (Red intensity)
-  //   green: 75, // 0-255 (Blue intensity)
-  //   blue: 225, // 0-255 (Green intensity)
-  //   flashOn: 40, // 0-255 (Flash on time)
-  //   flashOff: 10 // 0-255 (Flash off time)
-  // });
-
-  return joystick.setExtras;
+const stateKeys = {
+  digital: {
+    cross: "joystick_x",
+    circle: "joystick_circle",
+    square: "joystick_square",
+    triangle: "joystick_triangle",
+    // pad: "joystick_hat",
+    select: "joystick_select",
+    start: "joystick_start",
+    l1: "joystick_l1",
+    r1: "joystick_r1"
+  },
+  analog: {
+    l2: "joystick_axisl2",
+    r2: "joystick_axisr2"
+  }
 };
 
-module.exports = initialize;
+const getDevice = () =>
+  new Promise(resolve => {
+    const attemptConnection = () => {
+      const devices = ds.getDevices();
+      if (devices.length !== 0) {
+        info("Joystick found");
+        resolve(devices[0]);
+      }
+      warn("No joystick found. Trying again in 1 second.");
+      setTimeout(() => {
+        attemptConnection();
+      }, 1000);
+    };
+
+    attemptConnection();
+  });
+
+exports.initialize = async () => {
+  const device = await getDevice();
+  const gp = ds.open(device);
+
+  // Set js color green
+  gp.setLed(0, 255, 0);
+
+  const syncWithState = setState => {
+    gp.ondigital((button, value) => {
+      const stateKey = stateKeys.digital[button];
+      if (stateKey) {
+        setState({ [stateKey]: value });
+      } else if (stateKey !== false) {
+        stateKeys.digital[button] = false;
+        warn(`Botão não rastreada: ${button}`);
+      }
+    });
+
+    gp.onanalog((axis, value) => {
+      const stateKey = stateKeys.analog[axis];
+      if (stateKey) {
+        setState({ [stateKey]: value });
+      } else if (stateKey !== false) {
+        stateKeys.analog[axis] = false;
+        warn(`Eixo não rastreado: ${axis}`);
+      }
+    });
+  };
+
+  return { syncWithState };
+};
