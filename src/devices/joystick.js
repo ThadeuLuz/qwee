@@ -55,11 +55,30 @@ const waitForDevice = () => {
 module.exports = async () => {
   const device = await waitForDevice();
 
-  log("Found device", JSON.stringify(device));
+  log("Found device");
   const gp = ds.open(device);
 
   // Set js color green
-  gp.setLed(0, 255, 0);
+  // const x = true;
+  // setInterval(() => {
+  //   const l = [
+  //     Math.floor(Math.random() * 255),
+  //     Math.floor(Math.random() * 255),
+  //     Math.floor(Math.random() * 255)
+  //   ];
+  //   log(l);
+  //   gp.setLed(...l);
+  // }, 2000);
+  // gp.setLed(255, 0, 0);
+  gp.rumble(255, 255, 1, 1);
+  // gp.setLed(0, 255, 0);
+  // setTimeout(() => {
+  //   gp.setLed(
+  //     Math.floor(Math.random() * 255),
+  //     Math.floor(Math.random() * 255),
+  //     Math.floor(Math.random() * 255)
+  //   );
+  // }, 2000);
 
   const syncWithState = setState => {
     gp.ondigital = (button, value) => {
