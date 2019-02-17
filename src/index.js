@@ -1,6 +1,7 @@
-const { log, info } = require("./devices/console");
+const { log, info } = require("./helpers/console");
+const { subscribe, setState } = require("./helpers/state");
+
 const Joystick = require("./devices/Joystick");
-const { subscribe, setState } = require("./devices/state");
 const getPiezo = require("./devices/Piezzo");
 
 subscribe(state => {
@@ -11,9 +12,11 @@ subscribe(state => {
 const initialize = async () => {
   info("Starting");
   log("Conecting joystick...");
+
   const js = await Joystick();
   js.syncWithState(setState);
 
+  // Joystick ready, play startup song
   const piezo = getPiezo();
 
   piezo.play({

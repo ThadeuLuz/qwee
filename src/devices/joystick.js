@@ -1,4 +1,4 @@
-const { log, info, warn } = require("./console");
+const { log, info, warn } = require("../helpers/console");
 const ds = require("dualshock");
 
 const stateKeys = {
