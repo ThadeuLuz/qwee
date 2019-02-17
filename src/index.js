@@ -20,6 +20,7 @@ qwee.on("ready", async () => {
 
   // Joystick ready, play startup song
   const piezo = getPiezo();
+  qwee.repl.inject({ piezo });
 
   piezo.play({
     song: songs.startup,
