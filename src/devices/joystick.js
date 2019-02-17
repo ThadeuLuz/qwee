@@ -24,13 +24,22 @@ const stateKeys = {
     ps: "joystick_ps"
   },
   analog: {
-    l2: "joystick_axisl2",
-    r2: "joystick_axisr2",
+    l2: "joystick_l2",
+    r2: "joystick_r2",
     lStickY: "joystick_lStickY",
     lStickX: "joystick_lStickX",
     rStickY: "joystick_rStickY",
     rStickX: "joystick_rStickX"
   }
+};
+
+const dz = 10;
+const mid = 255 / 2;
+const normalize = v => {
+  if (mid - dz < v && v < mid + dz) {
+    return 0;
+  }
+  return v / mid - 1;
 };
 
 const waitForDevice = () => {
@@ -91,7 +100,11 @@ module.exports = async () => {
     gp.onanalog = (axis, value) => {
       const stateKey = stateKeys.analog[axis];
       if (stateKey) {
-        setState({ [stateKey]: value });
+        if (stateKey.includes("Stick")) {
+          setState({ [stateKey]: normalize(value) });
+        } else {
+          setState({ [stateKey]: value });
+        }
       }
     };
   };
