@@ -23,8 +23,8 @@ module.exports = {
   // "P1-4", // 5V
   // "P1-6", // GND
   // motorTop: "P1-8", // GPIO14/TXD0     (Q)
-  piezo: "P1-10", // GPIO15/RXD0          (P)
-  // motorTop: "P1-12" // GPIO18/PWM0     (O)
+  // "P1-10", // GPIO15/RXD0              (P)
+  piezo: "P1-12", // GPIO18/PWM0          (O)
   _jumper: "P1-14" // GND                 (N)
   //           "P1-16", // GPIO23         (M)
   //           "P1-18", // GPIO24         (L)
