@@ -1,8 +1,8 @@
 const { log, info } = require("./helpers/misc");
 const state = require("./helpers/state");
 
-const Joystick = require("./devices/Joysti");
-const qwee = require("./devices/QWe");
+const Joystick = require("./devices/Joystick");
+const qwee = require("./devices/QWee");
 const getPiezo = require("./devices/Piezzo");
 const Motor = require("./devices/Motor");
 
