@@ -7,7 +7,7 @@
     "update": "git checkout -- . && git pull",
     "ssh": "source .env && sshpass -p $PI_PASSWORD ssh pi@${PI_IP} && cd qwee",
     "prestart": "ifconfig",
-    "start": "clear && node src/index.js",
+    "start": "clear && sudo node src/index.js",
     "dev": "nodemon -q --watch src/**/*.* --exec npm start"
   },
   "keywords": [],
