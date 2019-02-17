@@ -8,7 +8,9 @@ const getMotor = pin => {
   return motor;
 };
 
-module.exports = {
-  motorTop: getMotor(pins.motorTop),
-  motorBottom: getMotor(pins.motorBottom)
+module.exports = async () => {
+  return {
+    motorTop: getMotor(pins.motorTop)
+    // motorBottom: getMotor(pins.motorBottom)
+  };
 };

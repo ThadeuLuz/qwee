@@ -1,4 +1,4 @@
-const { log, info, warn } = require("../helpers/console");
+const { log, info, warn, scale } = require("../helpers/misc");
 const ds = require("dualshock");
 
 const stateKeys = {
@@ -33,13 +33,16 @@ const stateKeys = {
   }
 };
 
-const dz = 10;
+const dz = 50;
 const mid = 255 / 2;
-const normalize = v => {
-  if (mid - dz < v && v < mid + dz) {
+const normalizeStick = value => {
+  if (mid - dz < value && value < mid + dz) {
     return 0;
   }
-  return v / mid - 1;
+
+  return value > mid
+    ? scale(value, mid + dz, 255, 0, 1)
+    : scale(value, 0, mid - dz, -1, 0);
 };
 
 const waitForDevice = () => {
@@ -79,9 +82,9 @@ module.exports = async () => {
       const stateKey = stateKeys.analog[axis];
       if (stateKey) {
         if (stateKey.includes("Stick")) {
-          setState({ [stateKey]: normalize(value) });
+          setState({ [stateKey]: normalizeStick(value) });
         } else {
-          setState({ [stateKey]: value });
+          setState({ [stateKey]: scale(value, 0, 255, 0, 1) });
         }
       }
     };

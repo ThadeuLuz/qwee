@@ -1,4 +1,4 @@
-const state = {
+let state = {
   joystick_x: false,
   joystick_square: false,
   joystick_triangle: false,
@@ -23,25 +23,20 @@ const state = {
   joystick_ps: false
 };
 
-const onChange = [];
-
-exports.getState = () => state;
+let listeners = [];
 
 exports.setState = changes => {
-  Object.keys(changes).forEach(key => {
-    state[key] = changes[key];
+  const newState = Object.assign({}, state, changes);
+  listeners.forEach(listener => {
+    listener(newState, state);
   });
-  onChange.forEach(fn => {
-    fn(state, changes);
-  });
+  state = newState;
 };
 
-exports.subscribe = fn => {
-  onChange.push(fn);
-  return () => {
-    const index = onChange.indexOf(fn);
-    if (index > -1) {
-      onChange.splice(index, 1);
-    }
-  };
+exports.subscribe = listener => {
+  listeners.push(listener);
+};
+
+exports.unsubscribe = listener => {
+  listeners = listeners.filter(l => listener !== l);
 };

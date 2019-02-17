@@ -1,12 +1,13 @@
-const { log, info } = require("./helpers/console");
-const { subscribe } = require("./helpers/state");
+const { log, info, hasChanged } = require("./helpers/misc");
+const state = require("./helpers/state");
 const songs = require("./helpers/songs");
 
-// const Joystick = require("./devices/Joystick");
+const Joystick = require("./devices/Joystick");
 const qwee = require("./devices/QWee");
 const getPiezo = require("./devices/Piezzo");
+const Motor = require("./devices/Motor");
 
-subscribe(state => {
+state.subscribe(state => {
   console.clear();
   console.log(JSON.stringify(state, null, 2));
 });
@@ -15,17 +16,23 @@ qwee.on("ready", async () => {
   info("Starting");
   log("Conecting joystick...");
 
-  // const js = await Joystick();
-  // js.syncWithState(setState);
+  const js = await Joystick();
+  js.syncWithState(state.setState);
 
-  // Joystick ready, play startup song
+  // Joystick ready, play beep
   const piezo = getPiezo();
   qwee.repl.inject({ piezo });
 
-  piezo.play({
-    song: songs.startup,
-    tempo: 100
-  });
+  const { motorTop } = await Motor();
+
+  // Reactions to state changes
+  const reactToStateChanges = (state, oldState) => {
+    if (state.joystick_x === true && oldState.joystick_x === false) {
+      piezo.frequency(800, 500);
+    }
+  };
+
+  state.subscribe(reactToStateChanges);
 
   // js.setState =
 
