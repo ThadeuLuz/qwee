@@ -1,9 +1,8 @@
-const { log, info, hasChanged } = require("./helpers/misc");
+const { log, info } = require("./helpers/misc");
 const state = require("./helpers/state");
-const songs = require("./helpers/songs");
 
-const Joystick = require("./devices/Joystick");
-const qwee = require("./devices/QWee");
+const Joystick = require("./devices/Joysti");
+const qwee = require("./devices/QWe");
 const getPiezo = require("./devices/Piezzo");
 const Motor = require("./devices/Motor");
 
