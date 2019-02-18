@@ -4,12 +4,11 @@ const state = require("./helpers/state");
 const qwee = require("./devices/QWee");
 const getJoystick = require("./devices/Joystick");
 const getPiezo = require("./devices/Piezzo");
-const getMotor = require("./devices/Motor");
+// const getMotor = require("./devices/Motor");
 
-state.subscribe(state => {
-  console.clear();
-  console.log(JSON.stringify(state, null, 2));
-});
+setInterval(() => {
+  console.log(JSON.stringify(state.getState(), null, 2));
+}, 100);
 
 qwee.on("ready", async () => {
   info("Starting");

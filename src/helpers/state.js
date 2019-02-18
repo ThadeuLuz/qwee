@@ -25,6 +25,8 @@ let state = {
 
 let listeners = [];
 
+exports.getState = () => state;
+
 exports.setState = changes => {
   const newState = Object.assign({}, state, changes);
   listeners.forEach(listener => {
