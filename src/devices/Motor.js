@@ -1,10 +1,8 @@
-const { ESC } = require("johnny-five");
-
+const five = require("johnny-five");
 const pins = require("../helpers/pins");
 
 const getMotor = pin => {
-  const motor = new ESC(pin);
-  motor.speed(0);
+  const motor = new five.ESC(pin);
   return motor;
 };
 
