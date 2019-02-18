@@ -27,6 +27,7 @@ qwee.on("ready", async () => {
   // Reactions to state changes
   const reactToStateChanges = (state, oldState) => {
     if (state.joystick_x === true && oldState.joystick_x === false) {
+      console.log("aer");
       piezo.frequency(587, 1000);
     }
   };
