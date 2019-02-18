@@ -84,7 +84,7 @@ notes = {
 
 
 def buzz(note, length):
-    if(not note):
+    if(note == None):
         sleep(length)
         return
 
@@ -102,8 +102,8 @@ def buzz(note, length):
 
 
 def play(melody):
-    print('tocando')
     for i in range(0, len(melody)):
+        print('tocando %s' % melody[i])
         noteDuration = 1/12
         buzz(melody[i], noteDuration)
         sleep(noteDuration * 1.3)
@@ -113,5 +113,5 @@ with open('./song.json') as f:
     data = json.load(f)
 
 print('tamano da melodia')
-print(len(data['melody']))
+print(data['melody'])
 play(data['melody'])
