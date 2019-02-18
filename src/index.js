@@ -1,10 +1,10 @@
-const { log, info } = require("./helpers/misc");
+const { log, info, scale } = require("./helpers/misc");
 const state = require("./helpers/state");
 
 const qwee = require("./devices/QWee");
 const getJoystick = require("./devices/Joystick");
 const getPiezo = require("./devices/Piezzo");
-// const getMotor = require("./devices/Motor");
+const getMotor = require("./devices/Motor");
 
 // setInterval(() => {
 //   console.clear();
@@ -22,15 +22,21 @@ qwee.on("ready", async () => {
   const piezo = getPiezo();
   qwee.repl.inject({ piezo });
 
-  // const { motorTop } = await getMotor();
+  const { motorTop } = await getMotor();
 
   // Reactions to state changes
   const reactToStateChanges = (state, oldState) => {
     if (state.joystick_x === true && oldState.joystick_x === false) {
-      console.log("aer");
-      piezo.off();
       piezo.frequency(587, 1000);
+      setTimeout(() => {
+        piezo.off();
+      }, 1000);
     }
+
+    const [tmin, tmax] = motorTop.pwmRange;
+    const throttle = scale(state.joystick_r2, 10, 255, tmin, tmax);
+    console.log("motor", motorTop.pwmRange, throttle);
+    motorTop.throttle(throttle);
   };
 
   state.subscribe(reactToStateChanges);
