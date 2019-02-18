@@ -7,8 +7,9 @@ const getPiezo = require("./devices/Piezzo");
 // const getMotor = require("./devices/Motor");
 
 setInterval(() => {
+  console.clear();
   console.log(JSON.stringify(state.getState(), null, 2));
-}, 100);
+}, 200);
 
 qwee.on("ready", async () => {
   info("Starting");
