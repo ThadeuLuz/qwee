@@ -1,12 +1,16 @@
 import RPi.GPIO as GPIO
 import time
 import json
+from time import sleep
 
-buzzer_pin = 23
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(buzzer_pin, GPIO.IN)
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+buzzer_pin = 12
 GPIO.setup(buzzer_pin, GPIO.OUT)
+
+GPIO.output(buzzer, GPIO.HIGH)
+sleep(0.5)
+GPIO.output(buzzer, GPIO.LOW)
 
 
 notes = {
@@ -107,4 +111,4 @@ def play(melody):
 with open('./song.json') as f:
     data = json.load(f)
 
-play(data.melody)
+play(data['melody'])
