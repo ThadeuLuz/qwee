@@ -84,7 +84,7 @@ notes = {
 
 
 def buzz(note, length):
-    if(note == None):
+    if (note is None):
         sleep(length)
         return
 
@@ -104,7 +104,7 @@ def buzz(note, length):
 def play(melody):
     for i in range(0, len(melody)):
         print('tocando %s' % melody[i])
-        noteDuration = 1/12
+        noteDuration = 12
         buzz(melody[i], noteDuration)
         sleep(noteDuration * 1.3)
 
