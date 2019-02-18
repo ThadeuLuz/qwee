@@ -22,7 +22,7 @@ qwee.on("ready", async () => {
   const piezo = getPiezo();
   qwee.repl.inject({ piezo });
 
-  const { motorTop } = await getMotor();
+  const { motorTop } = getMotor();
 
   // Reactions to state changes
   const reactToStateChanges = (state, oldState) => {
