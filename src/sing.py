@@ -5,12 +5,13 @@ from time import sleep
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
+
 buzzer_pin = 12
 GPIO.setup(buzzer_pin, GPIO.OUT)
 
-GPIO.output(buzzer, GPIO.HIGH)
+GPIO.output(buzzer_pin, GPIO.HIGH)
 sleep(0.5)
-GPIO.output(buzzer, GPIO.LOW)
+GPIO.output(buzzer_pin, GPIO.LOW)
 
 
 notes = {
