@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-import time
 import json
 from time import sleep
 
@@ -86,7 +85,7 @@ notes = {
 
 def buzz(note, length):
     if(not note):
-        time.sleep(length)
+        sleep(length)
         return
 
     freq = notes[note]
@@ -97,19 +96,22 @@ def buzz(note, length):
 
     for _ in range(numCycles):
         GPIO.output(buzzer_pin, True)
-        time.sleep(delayValue)
+        sleep(delayValue)
         GPIO.output(buzzer_pin, False)
-        time.sleep(delayValue)
+        sleep(delayValue)
 
 
 def play(melody):
+    print('tocando')
     for i in range(0, len(melody)):
         noteDuration = 1/12
         buzz(melody[i], noteDuration)
-        time.sleep(noteDuration * 1.3)
+        sleep(noteDuration * 1.3)
 
 
 with open('./song.json') as f:
     data = json.load(f)
 
+print('tamano da melodia')
+print(len(data['melody']))
 play(data['melody'])
