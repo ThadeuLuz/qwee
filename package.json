@@ -16,13 +16,20 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "dualshock": "3.1.1",
+    "fs-extra": "^7.0.1",
+    "get-pixels": "^3.3.2",
     "johnny-five": "^1.0.0",
     "node-hid": "^0.7.6",
-    "fs-extra": "^7.0.1",
     "onoff": "^3.2.2",
-    "raspi-io": "9.0.1"
+    "raspi-io": "9.0.1",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.3.3"
   },
   "devDependencies": {
+    "@types/johnny-five": "0.0.40",
     "eslint": "^5.13.0",
     "prettier": "^1.16.4"
   }
