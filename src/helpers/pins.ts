@@ -1,4 +1,34 @@
-module.exports = {
+export type Pin =
+  | "P1-1"
+  | "P1-3"
+  | "P1-5"
+  | "P1-7"
+  | "P1-8"
+  | "P1-10"
+  | "P1-11"
+  | "P1-12"
+  | "P1-13"
+  | "P1-14"
+  | "P1-15"
+  | "P1-16"
+  | "P1-18"
+  | "P1-19"
+  | "P1-21"
+  | "P1-22"
+  | "P1-23"
+  | "P1-24"
+  | "P1-26"
+  | "P1-29"
+  | "P1-31"
+  | "P1-32"
+  | "P1-33"
+  | "P1-35"
+  | "P1-36"
+  | "P1-37"
+  | "P1-38"
+  | "P1-40";
+
+const Pins: Record<string, Pin> = {
   // "P1-1", // 3.3V
   // "P1-3", // SDA0
   // "P1-5", // SCL0
@@ -26,17 +56,19 @@ module.exports = {
   // "P1-10", // GPIO15/RXD0              (P)
   piezo: "P1-12", // GPIO18/PWM0          (O)
   _jumper: "P1-14", // GND                (N)
-  motorTop: "P1-16" // GPIO23             (M)
-  // motorTop: "P1-18" // GPIO24       (L)
+  motorTop: "P1-16", // GPIO23            (M)
+  motorBottom: "P1-18", // GPIO24         (L)
   //           "P1-20", // GND            (K)
-  // motorTop: "P1-22" // GPIO25         (J)
-  //           "P1-24", // GPIO8/CE0      (I)
-  //           "P1-26", // GPIO7/CE1      (H)
+  flapFront: "P1-22", // GPIO25           (J)
+  flapBack: "P1-24", // GPIO8/CE0         (I)
+  flapLeft: "P1-26", // GPIO7/CE1         (H)
   //           "P1-28", // Do Not Connect (G)
   //           "P1-30", // GND            (F)
   //           "P1-32", // GPIO12/PWM0    (E)
   //           "P1-34", // GND            (D)
-  //           "P1-36", // GPIO16         (C)
+  flapRight: "P1-36" // GPIO16            (C)
   //           "P1-38", // GPIO20/MOSI1   (B)
   //           "P1-40", // GPIO21/SCLK1   (A)
 };
+
+export default Pins;
