@@ -1,8 +1,7 @@
 const five = require("johnny-five");
 const Raspi = require("raspi-io");
 const board = new five.Board({
-  io: new Raspi(),
-  enableSoftPwm: true
+  io: new Raspi({ enableSoftPwm: true })
 });
 
 board.on("ready", function() {
