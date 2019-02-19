@@ -5,6 +5,7 @@ import Raspi from "raspi-io";
 // import { info, log, scale } from "./helpers/misc.js";
 import Joystick from "./devices/Joystick";
 import Piezo from "./devices/Piezo";
+import { songs } from "./helpers/emotion";
 import { getState, setState, subscribe } from "./helpers/state";
 
 subscribe(() => {
@@ -21,6 +22,8 @@ qwee.on("ready", async () => {
   setState({ message: "Connecting Joystick..." });
   await Joystick();
   const piezo = Piezo();
+
+  piezo.play(songs.startup);
 });
 
 //   if (settings.piezo) {
