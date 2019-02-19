@@ -10,7 +10,11 @@ import { getState, setState, subscribe } from "./helpers/state";
 
 subscribe(() => {
   console.clear();
-  console.log(getState());
+  const { message, ...state } = getState();
+  console.log("-----");
+  console.log(message);
+  console.log("-----");
+  console.log(state);
 });
 
 const qwee = new five.Board({
@@ -24,6 +28,8 @@ qwee.on("ready", async () => {
   const piezo = Piezo();
 
   piezo.play(songs.startup);
+
+  setState({ message: "Inicializado!" });
 });
 
 //   if (settings.piezo) {

@@ -64,7 +64,7 @@ const Pins: Record<string, Pin> = {
   flapLeft: "P1-26", // GPIO7/CE1         (H)
   //           "P1-28", // Do Not Connect (G)
   //           "P1-30", // GND            (F)
-  //           "P1-32", // GPIO12/PWM0    (E)
+  //           "P1-32", // GPIO12/PWM0    (E)npm
   //           "P1-34", // GND            (D)
   flapRight: "P1-36" // GPIO16            (C)
   //           "P1-38", // GPIO20/MOSI1   (B)
