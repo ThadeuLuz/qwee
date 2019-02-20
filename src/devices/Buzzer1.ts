@@ -31,7 +31,7 @@ class Buzzer {
   constructor(pin = pins.buzzer) {
     // Convert J5 pins ("P1-12") to rpio ("P12") pins
     // this.rpioPin = `P${pin.split("-")[1]}`;
-    this.rpioPin = 18;
+    this.rpioPin = 12;
     // this.rpioPin = 12;
     // @ts-ignore
     rpio.open(this.rpioPin, rpio.PWM);

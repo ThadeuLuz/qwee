@@ -71,7 +71,7 @@ var Buzzer = /** @class */ (function () {
         };
         // Convert J5 pins ("P1-12") to rpio ("P12") pins
         // this.rpioPin = `P${pin.split("-")[1]}`;
-        this.rpioPin = 18;
+        this.rpioPin = 12;
         // this.rpioPin = 12;
         // @ts-ignore
         rpio_1["default"].open(this.rpioPin, rpio_1["default"].PWM);
