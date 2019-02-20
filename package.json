@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "update": "git checkout -- . && git pull && npm run build",
-    "push": "npm run build && git add . && git commit -m \"Auto push\" git push origin master",
+    "push": "npm run build && git add . && git commit -m \"Auto push\" && git push origin master",
     "prebuild": "rm -rf dist/",
     "build": "tsc",
     "start": "sudo node dist/index.js",
