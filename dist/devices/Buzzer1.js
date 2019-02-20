@@ -84,5 +84,5 @@ var Buzzer = /** @class */ (function () {
 exports["default"] = Buzzer;
 exports.test = function () {
     var b = new Buzzer();
-    b.play("ghostBuster");
+    b.play("flinstons");
 };

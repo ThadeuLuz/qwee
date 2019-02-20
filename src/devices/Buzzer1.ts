@@ -101,5 +101,5 @@ export default Buzzer;
 
 export const test = () => {
   const b = new Buzzer();
-  b.play("ghostBuster");
+  b.play("flinstons");
 };
