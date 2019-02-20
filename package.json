@@ -8,7 +8,7 @@
     "push": "npm run build && git add . && git commit -m \"Auto push\" && git push origin master",
     "prebuild": "rm -rf dist/",
     "build": "tsc",
-    "prestart": "git pull",
+    "ustart": "npm run update && sudo node dist/index.js",
     "start": "sudo node dist/index.js",
     "dev": "ts-node src/index.ts"
   },
