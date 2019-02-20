@@ -15,14 +15,14 @@ import {
   subscribe
 } from "./helpers/state";
 
-setInterval(() => {
-  console.clear();
-  const { message, ...state } = getState();
-  console.log("-----");
-  console.log(message);
-  console.log("-----");
-  console.log(state);
-}, 50);
+// setInterval(() => {
+//   console.clear();
+//   const { message, ...state } = getState();
+//   console.log("-----");
+//   console.log(message);
+//   console.log("-----");
+//   console.log(state);
+// }, 50);
 
 const qwee = new five.Board({
   io: new Raspi({ enableSoftPwm: true })
@@ -44,7 +44,7 @@ qwee.on("ready", async () => {
     const { hasChanged, changedTo } = getHelpers(state, oldState);
 
     if (changedTo("joystick_x", true)) {
-      piezo.frequency(587, 1000);
+      console.log("x pressed");
     }
 
     if (hasChanged("joystick_r2")) {
