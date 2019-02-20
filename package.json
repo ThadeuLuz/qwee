@@ -7,7 +7,7 @@
     "check": "tsc --noEmit",
     "update": "git checkout -- . && git pull && npm run build",
     "ssh": "source .env && sshpass -p $PI_PASSWORD ssh pi@${PI_IP} && cd qwee",
-    "start": "sudo node_modules/.bin/tsc src/index.ts",
+    "start": "sudo node dist/index.js",
     "dev": "nodemon -q --watch src/**/*.* --exec npm start",
     "prebuild": "rm -rf dist/",
     "build": "tsc"
