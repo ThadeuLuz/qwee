@@ -1,4 +1,4 @@
-export type Pin =
+export type PhysicalPin =
   | "P1-1"
   | "P1-3"
   | "P1-5"
@@ -28,7 +28,16 @@ export type Pin =
   | "P1-38"
   | "P1-40";
 
-const Pins: Record<string, Pin> = {
+type Devices =
+  | "buzzer"
+  | "motorTop"
+  | "motorBottom"
+  | "flapFront"
+  | "flapBack"
+  | "flapLeft"
+  | "flapRight";
+
+const Pins: Record<Devices, PhysicalPin> = {
   // "P1-1", // 3.3V
   // "P1-3", // SDA0
   // "P1-5", // SCL0
@@ -45,7 +54,7 @@ const Pins: Record<string, Pin> = {
   // "P1-27", // Do Not Connect
   // "P1-29", // 21 GPIO5
   // "P1-31", // 22 GPIO6
-  // "P1-33", // 23 GPIO13/PWM1
+  // NAO USE! "P1-33", // 23 GPIO13/PWM1 (da erro com raspi-pwm)
   // "P1-35", // 24 GPIO19/MISO1/PWM1
   // "P1-37", // 25 GPIO26
   // "P1-39", // GND
@@ -54,8 +63,8 @@ const Pins: Record<string, Pin> = {
   // "P1-6", // GND
   // motorTop: "P1-8", // GPIO14/TXD0     (Q)
   // "P1-10", // GPIO15/RXD0              (P)
-  piezo: "P1-12", // GPIO18/PWM0          (O)
-  _jumper: "P1-14", // GND                (N)
+  buzzer: "P1-12", // GPIO18/PWM0          (O)
+  // _jumper: "P1-14", // GND                (N)
   motorTop: "P1-16", // GPIO23            (M)
   motorBottom: "P1-18", // GPIO24         (L)
   //           "P1-20", // GND            (K)
@@ -64,7 +73,7 @@ const Pins: Record<string, Pin> = {
   flapLeft: "P1-26", // GPIO7/CE1         (H)
   //           "P1-28", // Do Not Connect (G)
   //           "P1-30", // GND            (F)
-  //           "P1-32", // GPIO12/PWM0    (E)npm
+  // NAO USE! "P1-32", // GPIO12/PWM0     (E) (da erro com raspi-pwm)
   //           "P1-34", // GND            (D)
   flapRight: "P1-36" // GPIO16            (C)
   //           "P1-38", // GPIO20/MOSI1   (B)
