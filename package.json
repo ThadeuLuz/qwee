@@ -10,7 +10,8 @@
     "start": "sudo node dist/index.js",
     "dev": "nodemon -q --watch src/**/*.* --exec npm start",
     "prebuild": "rm -rf dist/",
-    "build": "tsc"
+    "build": "tsc",
+    "upstart": "npm run update && npm run start"
   },
   "keywords": [],
   "author": "",

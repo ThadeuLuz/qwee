@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "paths": { "*": ["types/*"] },
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "lib": ["es2017"],
     "moduleResolution": "node",
