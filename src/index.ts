@@ -6,7 +6,7 @@ import Joystick from "./devices/Joystick";
 import Motor from "./devices/Motor";
 import Piezo from "./devices/Piezo";
 import { songs } from "./helpers/emotion";
-import { scale } from "./helpers/misc.js";
+import { scale } from "./helpers/misc";
 import {
   getHelpers,
   getState,

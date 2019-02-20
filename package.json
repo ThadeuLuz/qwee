@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "check": "tsc --noEmit",
     "update": "git checkout -- . && git pull",
     "ssh": "source .env && sshpass -p $PI_PASSWORD ssh pi@${PI_IP} && cd qwee",
     "prestart": "npm run update",
