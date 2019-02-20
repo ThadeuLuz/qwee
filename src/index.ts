@@ -15,14 +15,14 @@ import {
   subscribe
 } from "./helpers/state";
 
-subscribe(() => {
+setInterval(() => {
   console.clear();
   const { message, ...state } = getState();
   console.log("-----");
   console.log(message);
   console.log("-----");
   console.log(state);
-});
+}, 50);
 
 const qwee = new five.Board({
   io: new Raspi({ enableSoftPwm: true })
