@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "check": "tsc --noEmit",
-    "update": "git checkout -- . && git pull",
+    "update": "git checkout -- . && git pull && npm run build",
     "ssh": "source .env && sshpass -p $PI_PASSWORD ssh pi@${PI_IP} && cd qwee",
-    "start": "sudo node_modules/.bin/ts-node src/index.ts",
-    "dev": "nodemon -q --watch src/**/*.* --exec npm start"
+    "start": "sudo node_modules/.bin/tsc src/index.ts",
+    "dev": "nodemon -q --watch src/**/*.* --exec npm start",
+    "prebuild": "rm -rf dist/",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
