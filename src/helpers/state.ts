@@ -1,4 +1,3 @@
-import { hasChanged } from "./state";
 export interface IState {
   joystick_x: boolean;
   joystick_square: boolean;
