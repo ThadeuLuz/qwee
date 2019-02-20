@@ -1,4 +1,4 @@
-// import debounce from "debounce";
+import debounce from "debounce";
 import five from "johnny-five";
 // @ts-ignore
 import Raspi from "raspi-io";
@@ -17,7 +17,7 @@ import {
   subscribe
 } from "./helpers/state";
 
-const showState = () => {
+const showState = debounce(() => {
   console.clear();
   console.log(getCount());
   // const { message, ...state } = getState();
@@ -25,7 +25,7 @@ const showState = () => {
   // console.log(message);
   // console.log("-----");
   // console.log(state);
-};
+}, 250);
 
 subscribe(showState);
 
