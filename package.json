@@ -4,14 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "check": "tsc --noEmit",
     "update": "git checkout -- . && git pull && npm run build",
-    "ssh": "source .env && sshpass -p $PI_PASSWORD ssh pi@${PI_IP} && cd qwee",
-    "start": "sudo node dist/index.js",
-    "dev": "nodemon -q --watch src/**/*.* --exec npm start",
+    "push": "npm run build && git add . && git commit - \"Auto push\" git push origin master",
     "prebuild": "rm -rf dist/",
     "build": "tsc",
-    "upstart": "npm run update && npm run start"
+    "start": "sudo node dist/index.js",
+    "dev": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +23,7 @@
     "johnny-five": "^1.0.0",
     "node-hid": "^0.7.6",
     "onoff": "^3.2.2",
+    "pigpio-mock": "0.0.1",
     "raspi-io": "9.0.1",
     "ts-node": "^8.0.2",
     "tslint": "^5.12.1",
