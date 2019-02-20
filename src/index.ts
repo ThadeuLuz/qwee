@@ -2,11 +2,18 @@ import five from "johnny-five";
 // @ts-ignore
 import Raspi from "raspi-io";
 
-// import { info, log, scale } from "./helpers/misc.js";
 import Joystick from "./devices/Joystick";
+import Motor from "./devices/Motor";
 import Piezo from "./devices/Piezo";
 import { songs } from "./helpers/emotion";
-import { getState, setState, subscribe } from "./helpers/state";
+import { scale } from "./helpers/misc.js";
+import {
+  getHelpers,
+  getState,
+  IState,
+  setState,
+  subscribe
+} from "./helpers/state";
 
 subscribe(() => {
   console.clear();
@@ -30,6 +37,24 @@ qwee.on("ready", async () => {
   piezo.play(songs.startup);
 
   setState({ message: "Inicializado!" });
+  const { motorTop } = Motor();
+
+  // React to changes
+  subscribe((state: IState, oldState: IState) => {
+    const { hasChanged, changedTo } = getHelpers(state, oldState);
+
+    if (changedTo("joystick_x", true)) {
+      piezo.frequency(587, 1000);
+    }
+
+    if (hasChanged("joystick_r2")) {
+      // @ts-ignore
+      const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
+      const throttle = scale(state.joystick_r2, 10, 255, tmin, tmax);
+      console.log("throttle", throttle);
+      // motorTop.throttle(throttle);
+    }
+  });
 });
 
 //   if (settings.piezo) {
@@ -37,7 +62,6 @@ qwee.on("ready", async () => {
 //   }
 
 //   if (settings.motors) {
-//     const { motorTop } = getMotor();
 //   }
 
 //   // Reactions to state changes

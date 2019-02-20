@@ -1,3 +1,4 @@
+import { hasChanged } from "./state";
 export interface IState {
   joystick_x: boolean;
   joystick_square: boolean;
@@ -74,8 +75,11 @@ export const unsubscribe = (subscription: Subscription) => {
   subscriptions = subscriptions.filter(s => s !== subscription);
 };
 
-export const hasChanged = (prop: keyof IState) =>
-  state[prop] !== oldState[prop];
+export const getHelpers = (state: IState, oldState: IState) => {
+  const hasChanged = (prop: keyof IState) => state[prop] !== oldState[prop];
 
-export const changedTo = (prop: keyof IState, value: any) =>
-  hasChanged(prop) && state[prop] === value;
+  const changedTo = (prop: keyof IState, value: any) =>
+    hasChanged(prop) && state[prop] === value;
+
+  return { hasChanged, changedTo };
+};
