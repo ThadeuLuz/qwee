@@ -1,3 +1,4 @@
+import debounce from "debounce";
 import five from "johnny-five";
 // @ts-ignore
 import Raspi from "raspi-io";
@@ -8,6 +9,7 @@ import Piezo from "./devices/Piezo";
 import { songs } from "./helpers/emotion";
 import { scale } from "./helpers/misc";
 import {
+  getCount,
   getHelpers,
   getState,
   IState,
@@ -15,14 +17,17 @@ import {
   subscribe
 } from "./helpers/state";
 
-// setInterval(() => {
-//   console.clear();
-//   const { message, ...state } = getState();
-//   console.log("-----");
-//   console.log(message);
-//   console.log("-----");
-//   console.log(state);
-// }, 50);
+const showState = debounce(() => {
+  console.clear();
+  console.log(getCount());
+  // const { message, ...state } = getState();
+  // console.log("-----");
+  // console.log(message);
+  // console.log("-----");
+  // console.log(state);
+}, 250);
+
+subscribe(showState);
 
 const qwee = new five.Board({
   io: new Raspi({ enableSoftPwm: true })

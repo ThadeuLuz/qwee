@@ -9,8 +9,6 @@
     "lib": ["es2017"],
     "moduleResolution": "node",
     "newLine": "LF",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "sourceMap": false,
     "strict": true
   },

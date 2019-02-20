@@ -58,13 +58,20 @@ let subscriptions: Subscription[] = [];
 
 export const getState = () => state;
 
+const counts: Record<string, number> = {};
 export const setState = (changes: Partial<IState>) => {
+  Object.keys(changes).forEach(key => {
+    counts[key] = (counts[key] || 0) + 1;
+  });
+  console.log(counts);
   oldState = state;
   state = Object.assign({}, state, changes);
   subscriptions.forEach(subscription => {
     subscription(state, oldState);
   });
 };
+
+export const getCount = () => counts;
 
 export const subscribe = (subscription: Subscription) => {
   subscriptions.push(subscription);
