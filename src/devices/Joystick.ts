@@ -33,7 +33,7 @@ const analogKeys: Record<string, keyof IState> = {
   rStickX: "joystick_rStickX"
 };
 
-const dz = 50;
+const dz = 15;
 const mid = 255 / 2;
 
 const normalizeStick = (value: number) => {
