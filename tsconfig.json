@@ -10,7 +10,8 @@
     "moduleResolution": "node",
     "newLine": "LF",
     "sourceMap": false,
-    "strict": true
+    "strict": true,
+    "outDir": "dist"
   },
   "exclude": [".git", "node_modules"],
   "include": ["src/**/*"]
