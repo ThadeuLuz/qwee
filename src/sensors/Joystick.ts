@@ -138,6 +138,11 @@ const Joystick = async () => {
   gp.onanalog = (axis: string, value: number) => {
     const stateKey = analogKeys[axis];
     if (stateKey) {
+      // Normalize stick
+      if (stateKey.includes("Stick")) {
+        value = normalizeStick(value);
+      }
+
       joystickState[stateKey] = value;
     }
   };
