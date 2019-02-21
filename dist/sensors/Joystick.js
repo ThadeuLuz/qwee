@@ -41,33 +41,59 @@ var _this = this;
 exports.__esModule = true;
 var dualshock_1 = __importDefault(require("dualshock"));
 var misc_1 = require("../helpers/misc");
-var state_1 = require("../helpers/state");
+var Logger_1 = require("../sensors/Logger");
+exports.joystickState = {
+    status: "",
+    x: false,
+    square: false,
+    triangle: false,
+    circle: false,
+    l1: false,
+    l2: 0,
+    lStickX: 0,
+    l3: false,
+    lStickY: 0,
+    r1: false,
+    r2: 0,
+    rStickY: 0,
+    rStickX: 0,
+    r3: false,
+    hat: false,
+    up: false,
+    left: false,
+    down: false,
+    right: false,
+    select: false,
+    start: false,
+    ps: false
+};
 var digitalKeys = {
-    cross: "joystick_x",
-    circle: "joystick_circle",
-    square: "joystick_square",
-    triangle: "joystick_triangle",
-    l1: "joystick_l1",
-    r1: "joystick_r1",
-    l3: "joystick_l3",
-    r3: "joystick_r3",
-    up: "joystick_up",
-    down: "joystick_down",
-    left: "joystick_left",
-    right: "joystick_right",
-    pad: "joystick_hat",
-    select: "joystick_select",
-    start: "joystick_start",
-    ps: "joystick_ps"
+    cross: "x",
+    circle: "circle",
+    square: "square",
+    triangle: "triangle",
+    l1: "l1",
+    r1: "r1",
+    l3: "l3",
+    r3: "r3",
+    up: "up",
+    down: "down",
+    left: "left",
+    right: "right",
+    pad: "hat",
+    select: "select",
+    start: "start",
+    ps: "ps"
 };
 var analogKeys = {
-    l2: "joystick_l2",
-    r2: "joystick_r2",
-    lStickY: "joystick_lStickY",
-    lStickX: "joystick_lStickX",
-    rStickY: "joystick_rStickY",
-    rStickX: "joystick_rStickX"
+    l2: "l2",
+    r2: "r2",
+    lStickY: "lStickY",
+    lStickX: "lStickX",
+    rStickY: "rStickY",
+    rStickX: "rStickX"
 };
+exports.getJoystickState = function () { return exports.joystickState; };
 var dz = 15;
 var mid = 255 / 2;
 var normalizeStick = function (value) {
@@ -83,11 +109,11 @@ var waitForDevice = function (onFail) {
         var attemptConnection = function () {
             var device = dualshock_1["default"].getDevices()[0];
             if (device) {
-                state_1.setState({ message: "Joystick found" });
+                Logger_1.info("Joystick found");
                 resolve(device);
             }
             else {
-                state_1.setState({ message: "No joystick found. Trying again in 1 second." });
+                Logger_1.warn("No joystick found. Trying again in 5 second.");
                 onFail();
                 setTimeout(function () {
                     attemptConnection();
@@ -97,33 +123,35 @@ var waitForDevice = function (onFail) {
         attemptConnection();
     });
 };
-var Joystick = function (onFail) { return __awaiter(_this, void 0, void 0, function () {
+var fails = 0;
+var Joystick = function () { return __awaiter(_this, void 0, void 0, function () {
     var device, gp;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, waitForDevice(onFail)];
+            case 0: return [4 /*yield*/, waitForDevice(function () {
+                    fails = fails + 1;
+                    exports.joystickState.status = "Failed " + fails + " times";
+                })];
             case 1:
                 device = _a.sent();
                 gp = dualshock_1["default"].open(device);
                 gp.ondigital = function (button, value) {
-                    var _a;
                     var stateKey = digitalKeys[button];
                     if (stateKey) {
-                        state_1.setState((_a = {}, _a[stateKey] = value, _a));
+                        exports.joystickState[stateKey] = value;
                     }
                 };
                 gp.onanalog = function (axis, value) {
-                    var _a, _b;
                     var stateKey = analogKeys[axis];
                     if (stateKey) {
+                        // Normalize stick
                         if (stateKey.includes("Stick")) {
-                            state_1.setState((_a = {}, _a[stateKey] = normalizeStick(value), _a));
+                            value = normalizeStick(value);
                         }
-                        else {
-                            state_1.setState((_b = {}, _b[stateKey] = misc_1.scale(value, 0, 255, 0, 1), _b));
-                        }
+                        exports.joystickState[stateKey] = value;
                     }
                 };
+                exports.joystickState.status = "OK";
                 return [2 /*return*/];
         }
     });

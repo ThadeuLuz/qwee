@@ -39,29 +39,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _this = this;
 exports.__esModule = true;
-var johnny_five_1 = __importDefault(require("johnny-five"));
-// @ts-ignore
-var raspi_io_1 = __importDefault(require("raspi-io"));
-var actuators_1 = require("./actuators");
-var qwee = new johnny_five_1["default"].Board({
-    io: new raspi_io_1["default"]({ enableSoftPwm: true })
-});
-// Initialize board
-qwee.on("ready", function () { return __awaiter(_this, void 0, void 0, function () {
-    var actuators, loop;
+var misc_1 = require("../helpers/misc");
+var sensors_1 = require("../sensors");
+var Logger_1 = require("../sensors/Logger");
+var Buzzer_1 = __importDefault(require("./Buzzer"));
+var previousState = sensors_1.getState();
+var state = sensors_1.getState();
+exports.setup = function () { return __awaiter(_this, void 0, void 0, function () {
+    var buzzer;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, actuators_1.setup()];
-            case 1:
-                actuators = _a.sent();
-                loop = function () {
-                    actuators_1.update(actuators);
-                    setTimeout(function () {
-                        loop();
-                    }, 500);
-                };
-                loop();
-                return [2 /*return*/];
-        }
+        buzzer = new Buzzer_1["default"]();
+        return [2 /*return*/, { buzzer: buzzer }];
     });
-}); });
+}); };
+// Updates actuators
+exports.update = function (_a) {
+    var buzzer = _a.buzzer;
+    previousState = state;
+    state = sensors_1.getState();
+    var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
+    // Play sounds on joystick status changes
+    if (hasChanged(["joystick", "status"])) {
+        if (state.joystick.status === "OK") {
+            buzzer.play("startup");
+        }
+        else {
+            buzzer.play("ops");
+        }
+    }
+    // Break out if joystick is not present
+    if (state.joystick.status !== "OK") {
+        return;
+    }
+    if (changedTo(["joystick", "x"], true)) {
+        buzzer.play("yay");
+    }
+    if (hasChanged(["joystick", "r2"])) {
+        // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
+        // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
+        var throttle = misc_1.scale(state.joystick.r2, 10, 255, 1000, 2000);
+        Logger_1.log("Throttle: " + throttle);
+    }
+};
