@@ -96,39 +96,9 @@ qwee.on("ready", function () { return __awaiter(_this, void 0, void 0, function 
                         updateLoop();
                     }, 500);
                 };
+                // Start loop
+                updateLoop();
                 return [2 /*return*/];
         }
     });
 }); });
-//   if (settings.piezo) {
-//     qwee.repl.inject({ piezo });
-//   }
-//   if (settings.motors) {
-//   }
-//   // Reactions to state changes
-//   const reactToStateChanges = (state, oldState, { wasPressed }) => {
-//     // Buzz if x is pressed
-//     if (piezo && joystick) {
-//       if (state.joystick_x === true && oldState.joystick_x === false) {
-//         piezo.frequency(587, 1000);
-//         setTimeout(() => {
-//           piezo.off();
-//         }, 1000);
-//       }
-//     }
-//     const [tmin, tmax] = motorTop.pwmRange;
-//     const throttle = scale(state.joystick_r2, 10, 255, tmin, tmax);
-//     console.log("motor", motorTop.pwmRange, throttle);
-//     motorTop.throttle(throttle);
-//   };
-//   state.subscribe(reactToStateChanges);
-//   // js.setState =
-//   // info("info");
-//   // warn("warn");
-//   // error("error");
-//   // await js.initialize();
-//   // js.updateState()
-//   // const js = await joystick();
-//   // js.onChange();
-//   // this.setJoystickExtras = js.setExtras;
-// });
