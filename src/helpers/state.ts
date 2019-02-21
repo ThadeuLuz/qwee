@@ -1,4 +1,4 @@
-export interface IState {
+export interface State {
   joystick_x: boolean;
   joystick_square: boolean;
   joystick_triangle: boolean;
@@ -24,7 +24,7 @@ export interface IState {
   message: string;
 }
 
-const initialState: IState = {
+export const initialState: State = {
   joystick_x: false,
   joystick_square: false,
   joystick_triangle: false,
@@ -50,28 +50,36 @@ const initialState: IState = {
   message: "Inicializing..."
 };
 
-type Subscription = (state: IState, oldState: IState) => void;
+interface Helpers {
+  hasChanged: (props: keyof State) => boolean;
+  changedTo: (props: keyof State, value: any) => boolean;
+}
+
+type Subscription = (
+  state: State,
+  previousState: State,
+  helpers: Helpers
+) => void;
 
 let state = initialState;
-let oldState = initialState;
+let previousState = initialState;
+let nextChanges = {};
 let subscriptions: Subscription[] = [];
 
 export const getState = () => state;
 
-const counts: Record<string, number> = {};
-export const setState = (changes: Partial<IState>) => {
-  Object.keys(changes).forEach(key => {
-    counts[key] = (counts[key] || 0) + 1;
-  });
-  console.log(counts);
-  oldState = state;
-  state = Object.assign({}, state, changes);
-  subscriptions.forEach(subscription => {
-    subscription(state, oldState);
-  });
+export const setState = (changes: Partial<State>) => {
+  nextChanges = Object.assign(nextChanges, changes);
 };
 
-export const getCount = () => counts;
+export const subscriptionLoop = () => {
+  previousState = state;
+  state = Object.assign(state, nextChanges);
+  nextChanges = {};
+  subscriptions.forEach(subscriptions => {
+    subscriptions(state, previousState, getHelpers(state, previousState));
+  });
+};
 
 export const subscribe = (subscription: Subscription) => {
   subscriptions.push(subscription);
@@ -81,10 +89,10 @@ export const unsubscribe = (subscription: Subscription) => {
   subscriptions = subscriptions.filter(s => s !== subscription);
 };
 
-export const getHelpers = (state: IState, oldState: IState) => {
-  const hasChanged = (prop: keyof IState) => state[prop] !== oldState[prop];
+export const getHelpers = (state: State, previousState: State): Helpers => {
+  const hasChanged = (prop: keyof State) => state[prop] !== previousState[prop];
 
-  const changedTo = (prop: keyof IState, value: any) =>
+  const changedTo = (prop: keyof State, value: any) =>
     hasChanged(prop) && state[prop] === value;
 
   return { hasChanged, changedTo };

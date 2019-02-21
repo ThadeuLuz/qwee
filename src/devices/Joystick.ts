@@ -1,8 +1,8 @@
 import ds from "dualshock";
 import { scale } from "../helpers/misc";
-import { IState, setState } from "../helpers/state";
+import { setState, State } from "../helpers/state";
 
-const digitalKeys: Record<string, keyof IState> = {
+const digitalKeys: Record<string, keyof State> = {
   cross: "joystick_x",
   circle: "joystick_circle",
   square: "joystick_square",
@@ -24,7 +24,7 @@ const digitalKeys: Record<string, keyof IState> = {
   ps: "joystick_ps"
 };
 
-const analogKeys: Record<string, keyof IState> = {
+const analogKeys: Record<string, keyof State> = {
   l2: "joystick_l2",
   r2: "joystick_r2",
   lStickY: "joystick_lStickY",
@@ -46,7 +46,7 @@ const normalizeStick = (value: number) => {
     : scale(value, 0, mid - dz, -1, 0);
 };
 
-const waitForDevice = () => {
+const waitForDevice = (onFail: () => void) => {
   return new Promise(resolve => {
     const attemptConnection = () => {
       const device = ds.getDevices()[0];
@@ -55,9 +55,10 @@ const waitForDevice = () => {
         resolve(device);
       } else {
         setState({ message: "No joystick found. Trying again in 1 second." });
+        onFail();
         setTimeout(() => {
           attemptConnection();
-        }, 1000);
+        }, 5000);
       }
     };
 
@@ -65,8 +66,8 @@ const waitForDevice = () => {
   });
 };
 
-const Joystick = async () => {
-  const device = await waitForDevice();
+const Joystick = async (onFail: () => void) => {
+  const device = await waitForDevice(onFail);
   const gp = ds.open(device);
 
   gp.ondigital = (button: string, value: boolean) => {
