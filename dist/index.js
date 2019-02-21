@@ -40,14 +40,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _this = this;
 exports.__esModule = true;
 var johnny_five_1 = __importDefault(require("johnny-five"));
-var raspi_1 = __importDefault(require("./helpers/raspi"));
+// @ts-ignore
+var raspi_io_1 = __importDefault(require("raspi-io"));
 var Buzzer_1 = __importDefault(require("./devices/Buzzer"));
 var Joystick_1 = __importDefault(require("./devices/Joystick"));
 // import Motor from "./devices/Motor";
 // import { scale } from "./helpers/misc";
 var state_1 = require("./helpers/state");
 var qwee = new johnny_five_1["default"].Board({
-    io: new raspi_1["default"]({ enableSoftPwm: true })
+    io: new raspi_io_1["default"]({ enableSoftPwm: true })
 });
 var messages = Array(10).fill("-");
 var log = function (message) {

@@ -1,5 +1,6 @@
 import five from "johnny-five";
-import Raspi from "./helpers/raspi";
+// @ts-ignore
+import Raspi from "raspi-io";
 
 import Buzzer from "./devices/Buzzer";
 import Joystick from "./devices/Joystick";
