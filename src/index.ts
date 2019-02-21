@@ -24,6 +24,9 @@ qwee.on("ready", async () => {
   // Initialize buzzer
   const buzzer = new Buzzer();
   buzzer.play("startup");
+  await new Promise(r => {
+    setTimeout(() => r(), 2000);
+  });
 
   // Initialize Joystick
   console.log("Connecting joystick");

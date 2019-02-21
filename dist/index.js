@@ -63,12 +63,17 @@ qwee.on("ready", function () { return __awaiter(_this, void 0, void 0, function 
             case 0:
                 buzzer = new Buzzer_1["default"]();
                 buzzer.play("startup");
+                return [4 /*yield*/, new Promise(function (r) {
+                        setTimeout(function () { return r(); }, 2000);
+                    })];
+            case 1:
+                _a.sent();
                 // Initialize Joystick
                 console.log("Connecting joystick");
                 return [4 /*yield*/, Joystick_1["default"](function () {
                         buzzer.play("ops");
                     })];
-            case 1:
+            case 2:
                 _a.sent();
                 buzzer.play("yay");
                 previousState = state_1.initialState;
