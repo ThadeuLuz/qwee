@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var initialState = {
+exports.initialState = {
     joystick_x: false,
     joystick_square: false,
     joystick_triangle: false,
@@ -25,31 +25,30 @@ var initialState = {
     joystick_ps: false,
     message: "Inicializing..."
 };
-var state = initialState;
-var oldState = initialState;
+var state = exports.initialState;
+var previousState = exports.initialState;
+var nextChanges = {};
 var subscriptions = [];
 exports.getState = function () { return state; };
-var counts = {};
 exports.setState = function (changes) {
-    Object.keys(changes).forEach(function (key) {
-        counts[key] = (counts[key] || 0) + 1;
-    });
-    console.log(counts);
-    oldState = state;
-    state = Object.assign({}, state, changes);
-    subscriptions.forEach(function (subscription) {
-        subscription(state, oldState);
+    nextChanges = Object.assign(nextChanges, changes);
+};
+exports.subscriptionLoop = function () {
+    previousState = state;
+    state = Object.assign(state, nextChanges);
+    nextChanges = {};
+    subscriptions.forEach(function (subscriptions) {
+        subscriptions(state, previousState, exports.getHelpers(state, previousState));
     });
 };
-exports.getCount = function () { return counts; };
 exports.subscribe = function (subscription) {
     subscriptions.push(subscription);
 };
 exports.unsubscribe = function (subscription) {
     subscriptions = subscriptions.filter(function (s) { return s !== subscription; });
 };
-exports.getHelpers = function (state, oldState) {
-    var hasChanged = function (prop) { return state[prop] !== oldState[prop]; };
+exports.getHelpers = function (state, previousState) {
+    var hasChanged = function (prop) { return state[prop] !== previousState[prop]; };
     var changedTo = function (prop, value) {
         return hasChanged(prop) && state[prop] === value;
     };

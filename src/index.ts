@@ -3,7 +3,7 @@ import Raspi from "./helpers/raspi";
 
 import Buzzer from "./devices/Buzzer";
 import Joystick from "./devices/Joystick";
-import Motor from "./devices/Motor";
+// import Motor from "./devices/Motor";
 
 // import { scale } from "./helpers/misc";
 import { getHelpers, getState, initialState } from "./helpers/state";
@@ -32,7 +32,7 @@ qwee.on("ready", async () => {
   buzzer.play("yay");
 
   // piezo.play(melodies.startup);
-  const { motorTop } = Motor();
+  // const { motorTop } = Motor();
 
   let previousState = initialState;
   let state = initialState;
@@ -47,19 +47,19 @@ qwee.on("ready", async () => {
     console.log(state);
     messages.forEach(m => console.log(m));
 
-    const { changedTo } = getHelpers(state, previousState);
+    const { hasChanged, changedTo } = getHelpers(state, previousState);
 
     if (changedTo("joystick_x", true)) {
       buzzer.play("yay");
     }
 
-    // if (hasChanged("joystick_r2")) {
-    //   // @ts-ignore
-    //   const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-    //   const throttle = scale(state.joystick_r2, 10, 255, tmin, tmax);
-    //   console.log("throttle", throttle);
-    //   // motorTop.throttle(throttle);
-    // }
+    if (hasChanged("joystick_r2")) {
+      // @ts-ignore
+      // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
+      // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
+      const throttle = scale(state.joystick_r2, 10, 255, 1000, 2000);
+      log(`${throttle}`);
+    }
 
     setTimeout(() => {
       // update again

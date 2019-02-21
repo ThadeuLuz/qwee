@@ -78,7 +78,7 @@ var normalizeStick = function (value) {
         ? misc_1.scale(value, mid + dz, 255, 0, 1)
         : misc_1.scale(value, 0, mid - dz, -1, 0);
 };
-var waitForDevice = function () {
+var waitForDevice = function (onFail) {
     return new Promise(function (resolve) {
         var attemptConnection = function () {
             var device = dualshock_1["default"].getDevices()[0];
@@ -88,19 +88,20 @@ var waitForDevice = function () {
             }
             else {
                 state_1.setState({ message: "No joystick found. Trying again in 1 second." });
+                onFail();
                 setTimeout(function () {
                     attemptConnection();
-                }, 1000);
+                }, 5000);
             }
         };
         attemptConnection();
     });
 };
-var Joystick = function () { return __awaiter(_this, void 0, void 0, function () {
+var Joystick = function (onFail) { return __awaiter(_this, void 0, void 0, function () {
     var device, gp;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, waitForDevice()];
+            case 0: return [4 /*yield*/, waitForDevice(onFail)];
             case 1:
                 device = _a.sent();
                 gp = dualshock_1["default"].open(device);
