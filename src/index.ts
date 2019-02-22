@@ -1,10 +1,11 @@
-import { init } from "raspi";
 import { loop, setup } from "./actuators";
 
-init(async () => {
+const start = async () => {
   const actuators = await setup();
   loop(actuators);
-});
+};
+
+start();
 
 // import five from "johnny-five";
 // // @ts-ignore

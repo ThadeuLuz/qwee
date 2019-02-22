@@ -1,6 +1,5 @@
 import cloneDeep from "lodash.clonedeep";
 // @ts-ignore
-import { SoftPWM } from "raspi-soft-pwm";
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
 import { info, log } from "../sensors/Logger";
@@ -10,7 +9,7 @@ import Motor from "./Motor";
 
 interface Actuators {
   buzzer: Buzzer;
-  motorTop: SoftPWM;
+  motorTop: any;
   // motorBottom: Servo;
   // flapFront: Servo;
   // flapBack: Servo;
@@ -87,7 +86,7 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
   if (hasChanged("joystick", "r2")) {
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-    const speed = scale(state.joystick.r2, 10, 255, 0, 1);
+    const speed = scale(state.joystick.r2, 10, 255, 1000, 2000);
     log(`Speed: ${speed}`);
     motorTop.write(speed);
   }

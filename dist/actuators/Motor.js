@@ -1,16 +1,14 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
 // @ts-ignore
-var raspi_soft_pwm_1 = require("raspi-soft-pwm");
-var pins_1 = __importDefault(require("../helpers/pins"));
+// import { SoftPWM } from "raspi-soft-pwm";
+var pigpio_1 = require("pigpio");
 var getMotor = function (name) {
-    var motor = new raspi_soft_pwm_1.SoftPWM(pins_1["default"][name]);
+    // const motor = new SoftPWM(pins[name]);
+    var motor = new pigpio_1.Gpio(23, { mode: pigpio_1.Gpio.OUTPUT });
     return motor;
 };
 exports["default"] = (function () { return ({
-    motorTop: getMotor("motorTop"),
-    motorBottom: getMotor("motorBottom")
+    motorTop: getMotor("motorTop")
+    // motorBottom: getMotor("motorBottom")
 }); });

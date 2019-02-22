@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _this = this;
 exports.__esModule = true;
 var lodash_clonedeep_1 = __importDefault(require("lodash.clonedeep"));
+// @ts-ignore
 var misc_1 = require("../helpers/misc");
 var sensors_1 = require("../sensors");
 var Logger_1 = require("../sensors/Logger");
@@ -109,7 +110,7 @@ var updateActuators = function (_a) {
     if (hasChanged("joystick", "r2")) {
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-        var speed = misc_1.scale(state.joystick.r2, 10, 255, 0, 1);
+        var speed = misc_1.scale(state.joystick.r2, 10, 255, 1000, 2000);
         Logger_1.log("Speed: " + speed);
         motorTop.write(speed);
     }

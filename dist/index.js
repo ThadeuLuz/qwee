@@ -36,9 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 exports.__esModule = true;
-var raspi_1 = require("raspi");
 var actuators_1 = require("./actuators");
-raspi_1.init(function () { return __awaiter(_this, void 0, void 0, function () {
+var start = function () { return __awaiter(_this, void 0, void 0, function () {
     var actuators;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -49,7 +48,8 @@ raspi_1.init(function () { return __awaiter(_this, void 0, void 0, function () {
                 return [2 /*return*/];
         }
     });
-}); });
+}); };
+start();
 // import five from "johnny-five";
 // // @ts-ignore
 // import Raspi from "raspi-io";
