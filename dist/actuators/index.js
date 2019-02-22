@@ -48,7 +48,7 @@ exports.setup = function () { return __awaiter(_this, void 0, void 0, function (
     var buzzer;
     return __generator(this, function (_a) {
         buzzer = new Buzzer_1["default"]();
-        buzzer.play("startup");
+        // buzzer.play("startup");
         return [2 /*return*/, { buzzer: buzzer }];
     });
 }); };
@@ -58,32 +58,32 @@ exports.loop = function (actuators) {
         exports.loop(actuators);
     }, 100);
 };
+var previousState = sensors_1.initialState;
+var state = sensors_1.initialState;
 // Updates actuators
-var previousState = lodash_clonedeep_1["default"](sensors_1.initialState);
-var state = lodash_clonedeep_1["default"](sensors_1.initialState);
 var updateActuators = function (_a) {
     var buzzer = _a.buzzer;
     previousState = lodash_clonedeep_1["default"](state);
-    state = lodash_clonedeep_1["default"](sensors_1.getState());
+    state = sensors_1.getState();
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     sensors_1.printLogs();
     Logger_1.error("xx: ", "" + previousState.joystick.x, "" + state.joystick.x);
     if (hasChanged("joystick", "x")) {
-        buzzer.play("startup");
-        Logger_1.info("AAA: ", state.joystick.status);
+        Logger_1.info("X changed");
     }
-    // Play sounds on joystick status changes
-    if (previousState.joystick.status !== state.joystick.status) {
-        Logger_1.info("BBB: ", state.joystick.status);
+    if (changedTo("joystick", "x", true)) {
+        Logger_1.log("X pressed");
     }
-    if (hasChanged("joystick", "status")) {
-        Logger_1.warn("Status Changed: ", state.joystick.status);
-        // if ( === "OK") {
-        // buzzer.play("startup");
-        // } else {
-        // buzzer.play("ops");
-        // }
-    }
+    // if (hasChanged("joystick", "status")) {
+    //   warn("Status Changed: ", state.joystick.status);
+    //   if (state.joystick.status === "OK") {
+    //     info("Joystick initialized");
+    //     buzzer.play("startup");
+    //   } else {
+    //     warn("Joystick not found", state.joystick.status);
+    //     buzzer.play("ops");
+    //   }
+    // }
     // Break out if joystick is not present
     if (state.joystick.status !== "OK") {
         return;

@@ -1,7 +1,7 @@
 import cloneDeep from "lodash.clonedeep";
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
-import { error, info, log, warn } from "../sensors/Logger";
+import { error, info, log } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 
 interface Actuators {
@@ -10,7 +10,7 @@ interface Actuators {
 
 export const setup = async () => {
   const buzzer = new Buzzer();
-  buzzer.play("startup");
+  // buzzer.play("startup");
   return { buzzer };
 };
 
@@ -21,36 +21,36 @@ export const loop = (actuators: Actuators) => {
   }, 100);
 };
 
-// Updates actuators
-let previousState = cloneDeep(initialState);
-let state = cloneDeep(initialState);
+let previousState = initialState;
+let state = initialState;
 
+// Updates actuators
 const updateActuators = ({ buzzer }: Actuators) => {
   previousState = cloneDeep(state);
-  state = cloneDeep(getState());
+  state = getState();
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
   printLogs();
   error("xx: ", `${previousState.joystick.x}`, `${state.joystick.x}`);
 
   if (hasChanged("joystick", "x")) {
-    buzzer.play("startup");
-    info("AAA: ", state.joystick.status);
+    info("X changed");
   }
 
-  // Play sounds on joystick status changes
-  if (previousState.joystick.status !== state.joystick.status) {
-    info("BBB: ", state.joystick.status);
+  if (changedTo("joystick", "x", true)) {
+    log("X pressed");
   }
 
-  if (hasChanged("joystick", "status")) {
-    warn("Status Changed: ", state.joystick.status);
-    // if ( === "OK") {
-    // buzzer.play("startup");
-    // } else {
-    // buzzer.play("ops");
-    // }
-  }
+  // if (hasChanged("joystick", "status")) {
+  //   warn("Status Changed: ", state.joystick.status);
+  //   if (state.joystick.status === "OK") {
+  //     info("Joystick initialized");
+  //     buzzer.play("startup");
+  //   } else {
+  //     warn("Joystick not found", state.joystick.status);
+  //     buzzer.play("ops");
+  //   }
+  // }
 
   // Break out if joystick is not present
   if (state.joystick.status !== "OK") {
