@@ -18,7 +18,7 @@ export const loop = (actuators: Actuators) => {
   updateActuators(actuators);
   setTimeout(() => {
     loop(actuators);
-  }, 100);
+  }, 1);
 };
 
 let previousState = initialState;

@@ -56,7 +56,7 @@ exports.loop = function (actuators) {
     updateActuators(actuators);
     setTimeout(function () {
         exports.loop(actuators);
-    }, 100);
+    }, 1);
 };
 var previousState = sensors_1.initialState;
 var state = sensors_1.initialState;
