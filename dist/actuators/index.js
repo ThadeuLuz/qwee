@@ -44,12 +44,13 @@ var misc_1 = require("../helpers/misc");
 var sensors_1 = require("../sensors");
 var Logger_1 = require("../sensors/Logger");
 var Buzzer_1 = __importDefault(require("./Buzzer"));
+var Motor_1 = __importDefault(require("./Motor"));
 exports.setup = function () { return __awaiter(_this, void 0, void 0, function () {
-    var buzzer;
-    return __generator(this, function (_a) {
+    var buzzer, _a, motorTop, motorBottom;
+    return __generator(this, function (_b) {
         buzzer = new Buzzer_1["default"]();
-        // buzzer.play("startup");
-        return [2 /*return*/, { buzzer: buzzer }];
+        _a = Motor_1["default"](), motorTop = _a.motorTop, motorBottom = _a.motorBottom;
+        return [2 /*return*/, { buzzer: buzzer, motorTop: motorTop, motorBottom: motorBottom }];
     });
 }); };
 exports.loop = function (actuators) {
@@ -63,7 +64,7 @@ var state = sensors_1.initialState;
 var loopCount = 0;
 // Updates actuators
 var updateActuators = function (_a) {
-    var buzzer = _a.buzzer;
+    var buzzer = _a.buzzer, motorTop = _a.motorTop;
     previousState = lodash_clonedeep_1["default"](state);
     state = lodash_clonedeep_1["default"](sensors_1.getState());
     loopCount = loopCount + 1;
@@ -99,6 +100,6 @@ var updateActuators = function (_a) {
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         var throttle = misc_1.scale(state.joystick.r2, 10, 255, 1000, 2000);
-        Logger_1.log("Throttle: " + throttle);
+        motorTop.throttle(throttle);
     }
 };

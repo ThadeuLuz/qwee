@@ -1,17 +1,21 @@
+import { ESC } from "johnny-five";
 import cloneDeep from "lodash.clonedeep";
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
 import { info, log } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
+import Motor from "./Motor";
 
 interface Actuators {
   buzzer: Buzzer;
+  motorTop: ESC;
+  motorBottom: ESC;
 }
 
-export const setup = async () => {
+export const setup = async (): Promise<Actuators> => {
   const buzzer = new Buzzer();
-  // buzzer.play("startup");
-  return { buzzer };
+  const { motorTop, motorBottom } = Motor();
+  return { buzzer, motorTop, motorBottom };
 };
 
 export const loop = (actuators: Actuators) => {
@@ -26,7 +30,7 @@ let state = initialState;
 let loopCount = 0;
 
 // Updates actuators
-const updateActuators = ({ buzzer }: Actuators) => {
+const updateActuators = ({ buzzer, motorTop }: Actuators) => {
   previousState = cloneDeep(state);
   state = cloneDeep(getState());
   loopCount = loopCount + 1;
@@ -69,6 +73,6 @@ const updateActuators = ({ buzzer }: Actuators) => {
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     const throttle = scale(state.joystick.r2, 10, 255, 1000, 2000);
-    log(`Throttle: ${throttle}`);
+    motorTop.throttle(throttle);
   }
 };
