@@ -54,7 +54,9 @@ exports.setup = function () { return __awaiter(_this, void 0, void 0, function (
 }); };
 exports.loop = function (actuators) {
     updateActuators(actuators);
-    exports.loop(actuators);
+    setTimeout(function () {
+        exports.loop(actuators);
+    }, 50);
 };
 // Updates actuators
 var updateActuators = function (_a) {

@@ -17,7 +17,9 @@ export const setup = async () => {
 
 export const loop = (actuators: Actuators) => {
   updateActuators(actuators);
-  loop(actuators);
+  setTimeout(() => {
+    loop(actuators);
+  }, 50);
 };
 
 // Updates actuators
