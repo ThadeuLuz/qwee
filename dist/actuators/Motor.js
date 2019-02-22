@@ -24,8 +24,8 @@ var Motor = /** @class */ (function (_super) {
     function Motor(name) {
         return _super.call(this, {
             pin: pins_1["default"][name],
-            startAt: 0,
-            range: [0, 180]
+            startAt: -90,
+            range: [-90, 270]
         }) || this;
     }
     Motor.prototype.set = function (value) {

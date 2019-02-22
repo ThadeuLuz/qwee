@@ -8,8 +8,8 @@ class Motor extends Servo {
   constructor(name: MotorName) {
     super({
       pin: pins[name],
-      startAt: 0,
-      range: [0, 180]
+      startAt: -90,
+      range: [-90, 270]
     });
   }
 
