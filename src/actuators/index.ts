@@ -1,6 +1,6 @@
 import { scale } from "../helpers/misc";
 import { getHelpers, getState } from "../sensors";
-import { log } from "../sensors/Logger";
+import { log, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 
 let previousState = getState();
@@ -33,6 +33,7 @@ const updateActuators = ({ buzzer }: Actuators) => {
 
   // Play sounds on joystick status changes
   if (hasChanged(["joystick", "status"])) {
+    warn("Status Changed");
     if (state.joystick.status === "OK") {
       buzzer.play("startup");
     } else {

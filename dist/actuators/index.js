@@ -68,6 +68,7 @@ var updateActuators = function (_a) {
     console.log(state);
     // Play sounds on joystick status changes
     if (hasChanged(["joystick", "status"])) {
+        Logger_1.warn("Status Changed");
         if (state.joystick.status === "OK") {
             buzzer.play("startup");
         }
