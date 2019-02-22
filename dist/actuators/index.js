@@ -63,7 +63,7 @@ exports.loop = function (actuators) {
 var updateActuators = function (_a) {
     var buzzer = _a.buzzer;
     previousState = Object.assign({}, state);
-    state = sensors_1.getState();
+    state = Object.assign({}, sensors_1.getState());
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     Logger_1.printLogs();
     if (hasChanged("joystick", "square")) {

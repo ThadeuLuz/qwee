@@ -26,7 +26,7 @@ export const loop = (actuators: Actuators) => {
 // Updates actuators
 const updateActuators = ({ buzzer }: Actuators) => {
   previousState = Object.assign({}, state);
-  state = getState();
+  state = Object.assign({}, getState());
   const { hasChanged, changedTo } = getHelpers(state, previousState);
 
   printLogs();
