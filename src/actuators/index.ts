@@ -21,6 +21,7 @@ export const setup = async (): Promise<Actuators> => {
   const buzzer = new Buzzer();
   const { motorTop, motorBottom } = Motor();
   const { flapFront, flapBack, flapLeft, flapRight } = Flap();
+  motorTop.sweep();
   return {
     buzzer,
     motorTop,
@@ -88,6 +89,6 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     const speed = scale(state.joystick.r2, 10, 255, 0, 180);
     log(`Speed: ${speed}`);
-    motorTop.to(speed);
+    // motorTop.to(speed);
   }
 };
