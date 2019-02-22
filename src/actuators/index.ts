@@ -23,14 +23,18 @@ export const loop = (actuators: Actuators) => {
 
 let previousState = initialState;
 let state = initialState;
+let loopCount = 0;
 
 // Updates actuators
 const updateActuators = ({ buzzer }: Actuators) => {
   previousState = cloneDeep(state);
   state = cloneDeep(getState());
+  loopCount = loopCount + 1;
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
-  printLogs();
+  if (loopCount % 50 === 0) {
+    printLogs();
+  }
 
   if (hasChanged("joystick", "x")) {
     info("X changed");

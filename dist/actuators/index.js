@@ -60,13 +60,17 @@ exports.loop = function (actuators) {
 };
 var previousState = sensors_1.initialState;
 var state = sensors_1.initialState;
+var loopCount = 0;
 // Updates actuators
 var updateActuators = function (_a) {
     var buzzer = _a.buzzer;
     previousState = lodash_clonedeep_1["default"](state);
     state = lodash_clonedeep_1["default"](sensors_1.getState());
+    loopCount = loopCount + 1;
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
-    sensors_1.printLogs();
+    if (loopCount % 50 === 0) {
+        sensors_1.printLogs();
+    }
     if (hasChanged("joystick", "x")) {
         Logger_1.info("X changed");
     }
