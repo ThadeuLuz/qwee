@@ -67,18 +67,15 @@ var updateActuators = function (_a) {
     Logger_1.printLogs();
     if (state.joystick.square === true) {
         buzzer.play("startup");
-        Logger_1.log("ok!");
-        Logger_1.warn("o-oh!");
     }
     // Play sounds on joystick status changes
     if (hasChanged("joystick", "status")) {
-        Logger_1.warn("Status Changed");
-        if (state.joystick.status === "OK") {
-            buzzer.play("startup");
-        }
-        else {
-            buzzer.play("ops");
-        }
+        Logger_1.warn("Status Changed: ", state.joystick.status);
+        // if ( === "OK") {
+        // buzzer.play("startup");
+        // } else {
+        // buzzer.play("ops");
+        // }
     }
     // Break out if joystick is not present
     if (state.joystick.status !== "OK") {
