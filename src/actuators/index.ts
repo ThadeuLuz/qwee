@@ -2,7 +2,7 @@ import cloneDeep from "lodash.clonedeep";
 // @ts-ignore
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
-import { info, log, warn } from "../sensors/Logger";
+import { info, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 // import Flap from "./Flap";
 import Motor from "./Motor";
@@ -10,7 +10,7 @@ import Motor from "./Motor";
 interface Actuators {
   buzzer: Buzzer;
   motorTop: Motor;
-  // motorBottom: Servo;
+  motorBottom: Motor;
   // flapFront: Servo;
   // flapBack: Servo;
   // flapLeft: Servo;
@@ -20,12 +20,13 @@ interface Actuators {
 export const setup = async (): Promise<Actuators> => {
   const buzzer = new Buzzer();
   const motorTop = new Motor("motorTop");
+  const motorBottom = new Motor("motorBottom");
 
   // const { flapFront, flapBack, flapLeft, flapRight } = Flap();
   return {
     buzzer,
-    motorTop
-    // motorBottom,
+    motorTop,
+    motorBottom
     // flapFront,
     // flapBack,
     // flapLeft,
@@ -45,13 +46,13 @@ let state = initialState;
 let loopCount = 0;
 
 // Updates actuators
-const updateActuators = ({ buzzer, motorTop }: Actuators) => {
+const updateActuators = ({ buzzer, motorTop, motorBottom }: Actuators) => {
   previousState = cloneDeep(state);
   state = cloneDeep(getState());
   loopCount = loopCount + 1;
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
-  if (loopCount % 100 === 0) {
+  if (loopCount % 50 === 0) {
     printLogs();
     console.log(loopCount);
   }
@@ -75,11 +76,14 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
     buzzer.play("yay");
   }
 
+  // Motor Top
   if (hasChanged("joystick", "r2")) {
-    // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-    // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-    const speed = scale(state.joystick.r2, 10, 255, 0, 1);
-    log(`Speed: ${speed}`);
-    motorTop.set(speed);
+    const topSpeed = scale(state.joystick.r2, 10, 255, 0, 1);
+    motorTop.set(topSpeed);
+  }
+
+  if (hasChanged("joystick", "l2")) {
+    const bottomSpeed = scale(state.joystick.l2, 10, 255, 0, 1);
+    motorBottom.set(bottomSpeed);
   }
 };
