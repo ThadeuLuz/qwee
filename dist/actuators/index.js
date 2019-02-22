@@ -52,12 +52,18 @@ exports.setup = function () { return __awaiter(_this, void 0, void 0, function (
         return [2 /*return*/, { buzzer: buzzer }];
     });
 }); };
+exports.loop = function (actuators) {
+    updateActuators(actuators);
+    exports.loop(actuators);
+};
 // Updates actuators
-exports.update = function (_a) {
+var updateActuators = function (_a) {
     var buzzer = _a.buzzer;
     previousState = state;
     state = sensors_1.getState();
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
+    console.clear();
+    console.log(state);
     // Play sounds on joystick status changes
     if (hasChanged(["joystick", "status"])) {
         if (state.joystick.status === "OK") {

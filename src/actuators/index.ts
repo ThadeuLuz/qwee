@@ -15,11 +15,19 @@ export const setup = async () => {
   return { buzzer };
 };
 
+export const loop = (actuators: Actuators) => {
+  updateActuators(actuators);
+  loop(actuators);
+};
+
 // Updates actuators
-export const update = ({ buzzer }: Actuators) => {
+const updateActuators = ({ buzzer }: Actuators) => {
   previousState = state;
   state = getState();
   const { hasChanged, changedTo } = getHelpers(state, previousState);
+
+  console.clear();
+  console.log(state);
 
   // Play sounds on joystick status changes
   if (hasChanged(["joystick", "status"])) {

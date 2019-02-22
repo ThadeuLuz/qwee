@@ -48,19 +48,13 @@ var qwee = new johnny_five_1["default"].Board({
 });
 // Initialize board
 qwee.on("ready", function () { return __awaiter(_this, void 0, void 0, function () {
-    var actuators, loop;
+    var actuators;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, actuators_1.setup()];
             case 1:
                 actuators = _a.sent();
-                loop = function () {
-                    actuators_1.update(actuators);
-                    setTimeout(function () {
-                        loop();
-                    }, 500);
-                };
-                loop();
+                actuators_1.loop(actuators);
                 return [2 /*return*/];
         }
     });
