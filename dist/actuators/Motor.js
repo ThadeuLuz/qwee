@@ -10,6 +10,7 @@ var pins_1 = __importDefault(require("../helpers/pins"));
 var Motor = /** @class */ (function () {
     function Motor(name) {
         var pin = raspi_board_1.getGpioNumber(pins_1["default"][name]);
+        console.log("pin", pin);
         this.pwm = new Gpio(pin, { mode: Gpio.OUTPUT });
     }
     Motor.prototype.set = function (v) {
