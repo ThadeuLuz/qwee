@@ -67,7 +67,6 @@ var updateActuators = function (_a) {
     state = sensors_1.getState();
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     sensors_1.printLogs();
-    Logger_1.error("xx: ", "" + previousState.joystick.x, "" + state.joystick.x);
     if (hasChanged("joystick", "x")) {
         Logger_1.info("X changed");
     }

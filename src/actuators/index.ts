@@ -1,7 +1,7 @@
 import cloneDeep from "lodash.clonedeep";
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
-import { error, info, log } from "../sensors/Logger";
+import { info, log } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 
 interface Actuators {
@@ -31,7 +31,6 @@ const updateActuators = ({ buzzer }: Actuators) => {
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
   printLogs();
-  error("xx: ", `${previousState.joystick.x}`, `${state.joystick.x}`);
 
   if (hasChanged("joystick", "x")) {
     info("X changed");
