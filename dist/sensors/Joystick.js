@@ -41,7 +41,6 @@ var _this = this;
 exports.__esModule = true;
 var dualshock_1 = __importDefault(require("dualshock"));
 var misc_1 = require("../helpers/misc");
-var Logger_1 = require("../sensors/Logger");
 exports.joystickInitialState = {
     status: "Starting",
     x: false,
@@ -110,11 +109,9 @@ var waitForDevice = function (onFail) {
         var attemptConnection = function () {
             var device = dualshock_1["default"].getDevices()[0];
             if (device) {
-                Logger_1.info("Joystick found");
                 resolve(device);
             }
             else {
-                Logger_1.warn("No joystick found. Trying again in 5 second.");
                 onFail();
                 setTimeout(function () {
                     attemptConnection();

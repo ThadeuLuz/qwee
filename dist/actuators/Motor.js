@@ -16,33 +16,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var johnny_five_1 = require("johnny-five");
+var Gpio = (process.env.QWEE ? require("pigpio-mock") : require("pigpio")).Gpio;
+var raspi_board_1 = require("raspi-board");
 var misc_1 = require("../helpers/misc");
 var pins_1 = __importDefault(require("../helpers/pins"));
+var motor = new Gpio(10, { mode: Gpio.OUTPUT });
+motor.servoWrite(1000);
 var Motor = /** @class */ (function (_super) {
     __extends(Motor, _super);
     function Motor(name) {
-        return _super.call(this, {
-            pin: pins_1["default"][name],
-            startAt: -90,
-            range: [-90, 270]
-        }) || this;
+        var _this = _super.call(this, raspi_board_1.getGpioNumber(pins_1["default"][name]), { mode: Gpio.OUTPUT }) || this;
+        _this.set = function (v) {
+            var pulseWidth = Math.round(misc_1.scale(v, 0, 1, 1000, 2000));
+            _this.servoWrite(pulseWidth);
+        };
+        return _this;
     }
-    Motor.prototype.set = function (value) {
-        this.to(Math.round(misc_1.scale(value, 0, 1, -90, 270)));
-    };
     return Motor;
-}(johnny_five_1.Servo));
+}(Gpio));
 exports["default"] = Motor;
-// const getMotor = (name: MotorName) => {
-//   const motor = new Servo({
-//     pin: pins[name],
-//     startAt: 0,
-//     range: [0, 180]
-//   });
-//   return motor;
-// };
-// export default () => ({
-//   motorTop: getMotor("motorTop"),
-//   motorBottom: getMotor("motorBottom")
-// });

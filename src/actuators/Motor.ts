@@ -1,35 +1,22 @@
-import { Servo } from "johnny-five";
+const { Gpio } = process.env.QWEE ? require("pigpio-mock") : require("pigpio");
+import { getGpioNumber } from "raspi-board";
 import { scale } from "../helpers/misc";
 import pins from "../helpers/pins";
 
 type MotorName = "motorTop" | "motorBottom";
 
-class Motor extends Servo {
+const motor = new Gpio(10, { mode: Gpio.OUTPUT });
+motor.servoWrite(1000);
+
+class Motor extends Gpio {
   constructor(name: MotorName) {
-    super({
-      pin: pins[name],
-      startAt: -90,
-      range: [-90, 270]
-    });
+    super(getGpioNumber(pins[name]), { mode: Gpio.OUTPUT });
   }
 
-  public set(value: number) {
-    this.to(Math.round(scale(value, 0, 1, -90, 270)));
-  }
+  public set = (v: number) => {
+    const pulseWidth = Math.round(scale(v, 0, 1, 1000, 2000));
+    this.servoWrite(pulseWidth);
+  };
 }
 
 export default Motor;
-
-// const getMotor = (name: MotorName) => {
-//   const motor = new Servo({
-//     pin: pins[name],
-//     startAt: 0,
-//     range: [0, 180]
-//   });
-//   return motor;
-// };
-
-// export default () => ({
-//   motorTop: getMotor("motorTop"),
-//   motorBottom: getMotor("motorBottom")
-// });

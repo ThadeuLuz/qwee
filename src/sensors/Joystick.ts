@@ -1,6 +1,5 @@
 import ds from "dualshock";
 import { scale } from "../helpers/misc";
-import { info, warn } from "../sensors/Logger";
 
 export interface JoystickState {
   status: string;
@@ -106,10 +105,8 @@ const waitForDevice = (onFail: () => void) => {
     const attemptConnection = () => {
       const device = ds.getDevices()[0];
       if (device) {
-        info("Joystick found");
         resolve(device);
       } else {
-        warn("No joystick found. Trying again in 5 second.");
         onFail();
         setTimeout(() => {
           attemptConnection();

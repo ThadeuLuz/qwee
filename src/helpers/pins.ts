@@ -1,14 +1,10 @@
 export type PhysicalPin =
-  | "P1-1"
-  | "P1-3"
-  | "P1-5"
   | "P1-7"
   | "P1-8"
   | "P1-10"
   | "P1-11"
   | "P1-12"
   | "P1-13"
-  | "P1-14"
   | "P1-15"
   | "P1-16"
   | "P1-18"
@@ -78,6 +74,33 @@ const Pins: Record<Devices, PhysicalPin> = {
   flapRight: "P1-36" // GPIO16            (C)
   //           "P1-38", // GPIO20/MOSI1   (B)
   //           "P1-40", // GPIO21/SCLK1   (A)
+};
+
+export const physicalToGpio: Record<PhysicalPin, number> = {
+  "P1-7": 4,
+  "P1-8": 14,
+  "P1-10": 15,
+  "P1-11": 17,
+  "P1-12": 18,
+  "P1-13": 27,
+  "P1-15": 22,
+  "P1-16": 23,
+  "P1-18": 24,
+  "P1-19": 10,
+  "P1-21": 9,
+  "P1-22": 25,
+  "P1-23": 11,
+  "P1-24": 8,
+  "P1-26": 7,
+  "P1-29": 5,
+  "P1-31": 6,
+  "P1-32": 12,
+  "P1-33": 13,
+  "P1-35": 19,
+  "P1-36": 16,
+  "P1-37": 26,
+  "P1-38": 20,
+  "P1-40": 21
 };
 
 export default Pins;

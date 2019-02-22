@@ -34,20 +34,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 var _this = this;
 exports.__esModule = true;
-var johnny_five_1 = __importDefault(require("johnny-five"));
-// @ts-ignore
-var raspi_io_1 = __importDefault(require("raspi-io"));
 var actuators_1 = require("./actuators");
-var qwee = new johnny_five_1["default"].Board({
-    io: new raspi_io_1["default"]({ enableSoftPwm: true })
-});
-// Initialize board
-qwee.on("ready", function () { return __awaiter(_this, void 0, void 0, function () {
+var start = function () { return __awaiter(_this, void 0, void 0, function () {
     var actuators;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -58,4 +48,17 @@ qwee.on("ready", function () { return __awaiter(_this, void 0, void 0, function 
                 return [2 /*return*/];
         }
     });
-}); });
+}); };
+start();
+// import five from "johnny-five";
+// // @ts-ignore
+// import Raspi from "raspi-io";
+// import { loop, setup } from "./actuators";
+// const qwee = new five.Board({
+//   io: new Raspi({ enableSoftPwm: true })
+// });
+// // Initialize board
+// qwee.on("ready", async () => {
+//   const actuators = await setup();
+//   loop(actuators);
+// });

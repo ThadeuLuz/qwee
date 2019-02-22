@@ -2,7 +2,7 @@ import cloneDeep from "lodash.clonedeep";
 // @ts-ignore
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
-import { info, log } from "../sensors/Logger";
+import { info, log, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 // import Flap from "./Flap";
 import Motor from "./Motor";
@@ -51,29 +51,20 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
   loopCount = loopCount + 1;
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
-  if (loopCount % 50 === 0) {
+  if (loopCount % 25 === 0) {
     printLogs();
     console.log(loopCount);
   }
 
-  if (hasChanged("joystick", "x")) {
-    info("X changed");
+  if (hasChanged("joystick", "status")) {
+    if (state.joystick.status === "OK") {
+      info("Joystick initialized");
+      buzzer.play("startup");
+    } else {
+      warn("Joystick not found", state.joystick.status);
+      buzzer.play("ops");
+    }
   }
-
-  if (changedTo("joystick", "x", true)) {
-    log("X pressed");
-  }
-
-  // if (hasChanged("joystick", "status")) {
-  //   warn("Status Changed: ", state.joystick.status);
-  //   if (state.joystick.status === "OK") {
-  //     info("Joystick initialized");
-  //     buzzer.play("startup");
-  //   } else {
-  //     warn("Joystick not found", state.joystick.status);
-  //     buzzer.play("ops");
-  //   }
-  // }
 
   // Break out if joystick is not present
   if (state.joystick.status !== "OK") {
