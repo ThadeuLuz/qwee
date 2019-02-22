@@ -6,7 +6,8 @@ type MotorName = "motorTop" | "motorBottom";
 const getMotor = (name: MotorName) => {
   const motor = new Servo({
     pin: pins[name],
-    startAt: 0
+    startAt: 0,
+    range: [0, 180]
   });
   return motor;
 };

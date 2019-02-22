@@ -8,7 +8,8 @@ var pins_1 = __importDefault(require("../helpers/pins"));
 var getMotor = function (name) {
     var motor = new johnny_five_1.Servo({
         pin: pins_1["default"][name],
-        startAt: 0
+        startAt: 0,
+        range: [0, 180]
     });
     return motor;
 };
