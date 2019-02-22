@@ -29,7 +29,7 @@ var Motor = /** @class */ (function (_super) {
         }) || this;
     }
     Motor.prototype.set = function (value) {
-        this.to(Math.round(misc_1.scale(value, 0, 1, 0, 180)));
+        this.to(Math.round(misc_1.scale(value, 0, 1, -90, 270)));
     };
     return Motor;
 }(johnny_five_1.Servo));

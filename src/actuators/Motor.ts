@@ -14,7 +14,7 @@ class Motor extends Servo {
   }
 
   public set(value: number) {
-    this.to(Math.round(scale(value, 0, 1, 0, 180)));
+    this.to(Math.round(scale(value, 0, 1, -90, 270)));
   }
 }
 
