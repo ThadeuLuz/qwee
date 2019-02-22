@@ -1,6 +1,6 @@
 import { scale } from "../helpers/misc";
-import { getHelpers, getState, initialState } from "../sensors";
-import { log, printLogs, warn } from "../sensors/Logger";
+import { getHelpers, getState, initialState, printLogs } from "../sensors";
+import { log, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 
 let previousState = Object.assign({}, initialState);

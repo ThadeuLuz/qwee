@@ -1,9 +1,16 @@
+import chalk from "chalk";
+
 import Joystick, {
   getJoystickState,
   joystickInitialState,
   JoystickState
 } from "./Joystick";
-import { getLoggerState, loggerInitialState, LoggerState } from "./Logger";
+import {
+  getLoggerState,
+  loggerInitialState,
+  LoggerState,
+  LogType
+} from "./Logger";
 
 // Initialize sensors
 Joystick();
@@ -41,4 +48,20 @@ export const getHelpers = (state: State, previousState: State): Helpers => {
     hasChanged(prop, subprop) && state[prop][subprop] === value;
 
   return { hasChanged, changedTo };
+};
+
+const logFunctions: Record<LogType, (p: string[]) => void> = {
+  log: (p: string[]) => console.log("🐟", ...p.map(s => chalk.blue(s))),
+  info: (p: string[]) => console.info("🐸", ...p.map(s => chalk.green(s))),
+  warn: (p: string[]) => console.warn("🐱", ...p.map(s => chalk.yellow(s))),
+  error: (p: string[]) => console.error("🐞", ...p.map(s => chalk.red(s)))
+};
+
+export const printLogs = () => {
+  const { logs, ...others } = getState();
+  console.clear();
+  console.log(others);
+  logs.forEach(({ type, payload }) => {
+    logFunctions[type](payload);
+  });
 };

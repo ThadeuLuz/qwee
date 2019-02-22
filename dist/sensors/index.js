@@ -1,4 +1,16 @@
 "use strict";
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -7,6 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 exports.__esModule = true;
+var chalk_1 = __importDefault(require("chalk"));
 var Joystick_1 = __importStar(require("./Joystick"));
 var Logger_1 = require("./Logger");
 // Initialize sensors
@@ -29,4 +42,19 @@ exports.getHelpers = function (state, previousState) {
         return hasChanged(prop, subprop) && state[prop][subprop] === value;
     };
     return { hasChanged: hasChanged, changedTo: changedTo };
+};
+var logFunctions = {
+    log: function (p) { return console.log.apply(console, ["🐟"].concat(p.map(function (s) { return chalk_1["default"].blue(s); }))); },
+    info: function (p) { return console.info.apply(console, ["🐸"].concat(p.map(function (s) { return chalk_1["default"].green(s); }))); },
+    warn: function (p) { return console.warn.apply(console, ["🐱"].concat(p.map(function (s) { return chalk_1["default"].yellow(s); }))); },
+    error: function (p) { return console.error.apply(console, ["🐞"].concat(p.map(function (s) { return chalk_1["default"].red(s); }))); }
+};
+exports.printLogs = function () {
+    var _a = exports.getState(), logs = _a.logs, others = __rest(_a, ["logs"]);
+    console.clear();
+    console.log(others);
+    logs.forEach(function (_a) {
+        var type = _a.type, payload = _a.payload;
+        logFunctions[type](payload);
+    });
 };
