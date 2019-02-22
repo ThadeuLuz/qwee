@@ -86,7 +86,7 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
   if (hasChanged("joystick", "r2")) {
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-    const speed = Math.round(scale(state.joystick.r2, 10, 255, 1000, 2000));
+    const speed = Math.round(scale(state.joystick.r2, 10, 255, 0, 3000));
     log(`Speed: ${speed}`);
     motorTop.servoWrite(speed);
   }

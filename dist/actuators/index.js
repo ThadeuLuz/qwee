@@ -110,7 +110,7 @@ var updateActuators = function (_a) {
     if (hasChanged("joystick", "r2")) {
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-        var speed = Math.round(misc_1.scale(state.joystick.r2, 10, 255, 1000, 2000));
+        var speed = Math.round(misc_1.scale(state.joystick.r2, 10, 255, 0, 3000));
         Logger_1.log("Speed: " + speed);
         motorTop.servoWrite(speed);
     }
