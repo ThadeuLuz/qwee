@@ -1,6 +1,6 @@
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
-import { log, warn } from "../sensors/Logger";
+import { error, info, log, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 
 let previousState = Object.assign({}, initialState);
@@ -27,17 +27,19 @@ export const loop = (actuators: Actuators) => {
 const updateActuators = ({ buzzer }: Actuators) => {
   previousState = Object.assign({}, state);
   state = Object.assign({}, getState());
-  const { hasChanged, changedTo } = getHelpers(state, previousState);
 
+  const { hasChanged, changedTo } = getHelpers(state, previousState);
   printLogs();
+  error("xx: ", previousState.joystick.status, state.joystick.status);
 
   if (hasChanged("joystick", "square")) {
     buzzer.play("startup");
+    info("AAA: ", state.joystick.status);
   }
 
   // Play sounds on joystick status changes
   if (previousState.joystick.status !== state.joystick.status) {
-    warn("Status Changedii: ", state.joystick.status);
+    info("BBB: ", state.joystick.status);
   }
 
   if (hasChanged("joystick", "status")) {

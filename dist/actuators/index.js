@@ -66,12 +66,14 @@ var updateActuators = function (_a) {
     state = Object.assign({}, sensors_1.getState());
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     sensors_1.printLogs();
+    Logger_1.error("xx: ", previousState.joystick.status, state.joystick.status);
     if (hasChanged("joystick", "square")) {
         buzzer.play("startup");
+        Logger_1.info("AAA: ", state.joystick.status);
     }
     // Play sounds on joystick status changes
     if (previousState.joystick.status !== state.joystick.status) {
-        Logger_1.warn("Status Changedii: ", state.joystick.status);
+        Logger_1.info("BBB: ", state.joystick.status);
     }
     if (hasChanged("joystick", "status")) {
         Logger_1.warn("Status Changed: ", state.joystick.status);
