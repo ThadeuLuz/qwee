@@ -21,6 +21,7 @@ export const setup = async (): Promise<Actuators> => {
   const buzzer = new Buzzer();
   const { motorTop, motorBottom } = Motor();
   const { flapFront, flapBack, flapLeft, flapRight } = Flap();
+  flapFront.sweep();
   return {
     buzzer,
     motorTop,

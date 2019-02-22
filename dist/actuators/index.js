@@ -52,6 +52,7 @@ exports.setup = function () { return __awaiter(_this, void 0, void 0, function (
         buzzer = new Buzzer_1["default"]();
         _a = Motor_1["default"](), motorTop = _a.motorTop, motorBottom = _a.motorBottom;
         _b = Flap_1["default"](), flapFront = _b.flapFront, flapBack = _b.flapBack, flapLeft = _b.flapLeft, flapRight = _b.flapRight;
+        flapFront.sweep();
         return [2 /*return*/, {
                 buzzer: buzzer,
                 motorTop: motorTop,
