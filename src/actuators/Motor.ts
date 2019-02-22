@@ -5,14 +5,17 @@ import pins from "../helpers/pins";
 
 type MotorName = "motorTop" | "motorBottom";
 
-class Motor extends Gpio {
+class Motor {
+  public pwm: any;
+
   constructor(name: MotorName) {
-    super(getGpioNumber(pins[name]), { mode: Gpio.OUTPUT });
+    const pin = getGpioNumber(pins[name]);
+    this.pwm = new Gpio(pin, { mode: Gpio.OUTPUT });
   }
 
   public set(v: number) {
     const pulseWidth = Math.round(scale(v, 0, 1, 1000, 2000));
-    super.servoWrite(pulseWidth);
+    this.pwm.servoWrite(pulseWidth);
   }
 }
 
