@@ -42,7 +42,7 @@ exports.__esModule = true;
 var dualshock_1 = __importDefault(require("dualshock"));
 var misc_1 = require("../helpers/misc");
 var Logger_1 = require("../sensors/Logger");
-exports.joystickState = {
+exports.joystickInitialState = {
     status: "",
     x: false,
     square: false,
@@ -67,6 +67,8 @@ exports.joystickState = {
     start: false,
     ps: false
 };
+var joystickState = exports.joystickInitialState;
+exports.getJoystickState = function () { return joystickState; };
 var digitalKeys = {
     cross: "x",
     circle: "circle",
@@ -93,7 +95,6 @@ var analogKeys = {
     rStickY: "rStickY",
     rStickX: "rStickX"
 };
-exports.getJoystickState = function () { return exports.joystickState; };
 var dz = 15;
 var mid = 255 / 2;
 var normalizeStick = function (value) {
@@ -130,7 +131,7 @@ var Joystick = function () { return __awaiter(_this, void 0, void 0, function ()
         switch (_a.label) {
             case 0: return [4 /*yield*/, waitForDevice(function () {
                     fails = fails + 1;
-                    exports.joystickState.status = "Failed " + fails + " times";
+                    joystickState.status = "Failed " + fails + " times";
                 })];
             case 1:
                 device = _a.sent();
@@ -138,7 +139,7 @@ var Joystick = function () { return __awaiter(_this, void 0, void 0, function ()
                 gp.ondigital = function (button, value) {
                     var stateKey = digitalKeys[button];
                     if (stateKey) {
-                        exports.joystickState[stateKey] = value;
+                        joystickState[stateKey] = value;
                     }
                 };
                 gp.onanalog = function (axis, value) {
@@ -148,10 +149,10 @@ var Joystick = function () { return __awaiter(_this, void 0, void 0, function ()
                         if (stateKey.includes("Stick")) {
                             value = normalizeStick(value);
                         }
-                        exports.joystickState[stateKey] = value;
+                        joystickState[stateKey] = value;
                     }
                 };
-                exports.joystickState.status = "OK";
+                joystickState.status = "OK";
                 return [2 /*return*/];
         }
     });

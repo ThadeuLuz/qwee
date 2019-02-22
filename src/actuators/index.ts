@@ -1,10 +1,10 @@
 import { scale } from "../helpers/misc";
-import { getHelpers, getState } from "../sensors";
+import { getHelpers, getState, initialState } from "../sensors";
 import { log, printLogs, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 
-let previousState = getState();
-let state = getState();
+let previousState = initialState;
+let state = initialState;
 
 interface Actuators {
   buzzer: Buzzer;
@@ -12,6 +12,7 @@ interface Actuators {
 
 export const setup = async () => {
   const buzzer = new Buzzer();
+  buzzer.play("startup");
   return { buzzer };
 };
 

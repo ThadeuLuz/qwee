@@ -11,6 +11,10 @@ var Joystick_1 = __importStar(require("./Joystick"));
 var Logger_1 = require("./Logger");
 // Initialize sensors
 Joystick_1["default"]();
+exports.initialState = {
+    joystick: Joystick_1.joystickInitialState,
+    logs: Logger_1.loggerInitialState
+};
 exports.getState = function () {
     return {
         joystick: Joystick_1.getJoystickState(),

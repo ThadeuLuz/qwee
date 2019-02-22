@@ -28,7 +28,7 @@ export interface JoystickState {
   ps: boolean;
 }
 
-export const joystickState: JoystickState = {
+export const joystickInitialState: JoystickState = {
   status: "",
   x: false,
   square: false,
@@ -53,6 +53,9 @@ export const joystickState: JoystickState = {
   start: false,
   ps: false
 };
+
+const joystickState = joystickInitialState;
+export const getJoystickState = () => joystickState;
 
 const digitalKeys: Record<string, keyof JoystickState> = {
   cross: "x",
@@ -84,8 +87,6 @@ const analogKeys: Record<string, keyof JoystickState> = {
   rStickY: "rStickY",
   rStickX: "rStickX"
 };
-
-export const getJoystickState = () => joystickState;
 
 const dz = 15;
 const mid = 255 / 2;

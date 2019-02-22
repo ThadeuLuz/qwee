@@ -1,5 +1,9 @@
-import Joystick, { getJoystickState, JoystickState } from "./Joystick";
-import { getLoggerState, LoggerState } from "./Logger";
+import Joystick, {
+  getJoystickState,
+  joystickInitialState,
+  JoystickState
+} from "./Joystick";
+import { getLoggerState, loggerInitialState, LoggerState } from "./Logger";
 
 // Initialize sensors
 Joystick();
@@ -8,6 +12,11 @@ export interface State {
   joystick: JoystickState;
   logs: LoggerState;
 }
+
+export const initialState = {
+  joystick: joystickInitialState,
+  logs: loggerInitialState
+};
 
 export const getState = (): State => {
   return {

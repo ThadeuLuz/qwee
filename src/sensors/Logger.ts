@@ -9,9 +9,11 @@ interface Log {
 
 export type LoggerState = Log[];
 
-const loggerState: LoggerState = Array(10)
+export const loggerInitialState: LoggerState = Array(10)
   .fill("")
   .map((): Log => ({ type: "log", payload: [] }));
+
+const loggerState = loggerInitialState;
 
 export const getLoggerState = () => loggerState;
 

@@ -43,12 +43,13 @@ var misc_1 = require("../helpers/misc");
 var sensors_1 = require("../sensors");
 var Logger_1 = require("../sensors/Logger");
 var Buzzer_1 = __importDefault(require("./Buzzer"));
-var previousState = sensors_1.getState();
-var state = sensors_1.getState();
+var previousState = sensors_1.initialState;
+var state = sensors_1.initialState;
 exports.setup = function () { return __awaiter(_this, void 0, void 0, function () {
     var buzzer;
     return __generator(this, function (_a) {
         buzzer = new Buzzer_1["default"]();
+        buzzer.play("startup");
         return [2 /*return*/, { buzzer: buzzer }];
     });
 }); };

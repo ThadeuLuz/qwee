@@ -4,9 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 var chalk_1 = __importDefault(require("chalk"));
-var loggerState = Array(10)
+exports.loggerInitialState = Array(10)
     .fill("")
     .map(function () { return ({ type: "log", payload: [] }); });
+var loggerState = exports.loggerInitialState;
 exports.getLoggerState = function () { return loggerState; };
 exports.getLogger = function (type) { return function () {
     var payload = [];
