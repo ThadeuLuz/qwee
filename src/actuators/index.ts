@@ -1,4 +1,4 @@
-import { ESC, Servo } from "johnny-five";
+import { Servo } from "johnny-five";
 import cloneDeep from "lodash.clonedeep";
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
@@ -9,8 +9,8 @@ import Motor from "./Motor";
 
 interface Actuators {
   buzzer: Buzzer;
-  motorTop: ESC;
-  motorBottom: ESC;
+  motorTop: Servo;
+  motorBottom: Servo;
   flapFront: Servo;
   flapBack: Servo;
   flapLeft: Servo;
@@ -21,7 +21,6 @@ export const setup = async (): Promise<Actuators> => {
   const buzzer = new Buzzer();
   const { motorTop, motorBottom } = Motor();
   const { flapFront, flapBack, flapLeft, flapRight } = Flap();
-  flapFront.sweep();
   return {
     buzzer,
     motorTop,
@@ -87,8 +86,8 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
   if (hasChanged("joystick", "r2")) {
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-    const speed = scale(state.joystick.r2, 10, 255, 0, 1);
+    const speed = scale(state.joystick.r2, 10, 255, 0, 180);
     log(`Speed: ${speed}`);
-    motorTop.speed(speed);
+    motorTop.to(speed);
   }
 };
