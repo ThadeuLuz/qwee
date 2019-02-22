@@ -5,9 +5,6 @@ import pins from "../helpers/pins";
 
 type MotorName = "motorTop" | "motorBottom";
 
-const motor = new Gpio(10, { mode: Gpio.OUTPUT });
-motor.servoWrite(1000);
-
 class Motor extends Gpio {
   constructor(name: MotorName) {
     super(getGpioNumber(pins[name]), { mode: Gpio.OUTPUT });

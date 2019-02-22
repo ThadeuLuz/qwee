@@ -20,8 +20,6 @@ var Gpio = (process.env.QWEE ? require("pigpio-mock") : require("pigpio")).Gpio;
 var raspi_board_1 = require("raspi-board");
 var misc_1 = require("../helpers/misc");
 var pins_1 = __importDefault(require("../helpers/pins"));
-var motor = new Gpio(10, { mode: Gpio.OUTPUT });
-motor.servoWrite(1000);
 var Motor = /** @class */ (function (_super) {
     __extends(Motor, _super);
     function Motor(name) {
