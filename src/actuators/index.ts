@@ -3,8 +3,8 @@ import { getHelpers, getState, initialState } from "../sensors";
 import { log, printLogs, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 
-let previousState = initialState;
-let state = initialState;
+let previousState = Object.assign({}, initialState);
+let state = Object.assign({}, initialState);
 
 interface Actuators {
   buzzer: Buzzer;
@@ -25,13 +25,13 @@ export const loop = (actuators: Actuators) => {
 
 // Updates actuators
 const updateActuators = ({ buzzer }: Actuators) => {
-  previousState = state;
+  previousState = Object.assign({}, state);
   state = getState();
   const { hasChanged, changedTo } = getHelpers(state, previousState);
 
   printLogs();
 
-  if (state.joystick.square === true) {
+  if (hasChanged("joystick", "square")) {
     buzzer.play("startup");
   }
 

@@ -43,7 +43,7 @@ var dualshock_1 = __importDefault(require("dualshock"));
 var misc_1 = require("../helpers/misc");
 var Logger_1 = require("../sensors/Logger");
 exports.joystickInitialState = {
-    status: "",
+    status: "Starting",
     x: false,
     square: false,
     triangle: false,

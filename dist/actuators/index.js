@@ -43,8 +43,8 @@ var misc_1 = require("../helpers/misc");
 var sensors_1 = require("../sensors");
 var Logger_1 = require("../sensors/Logger");
 var Buzzer_1 = __importDefault(require("./Buzzer"));
-var previousState = sensors_1.initialState;
-var state = sensors_1.initialState;
+var previousState = Object.assign({}, sensors_1.initialState);
+var state = Object.assign({}, sensors_1.initialState);
 exports.setup = function () { return __awaiter(_this, void 0, void 0, function () {
     var buzzer;
     return __generator(this, function (_a) {
@@ -62,11 +62,11 @@ exports.loop = function (actuators) {
 // Updates actuators
 var updateActuators = function (_a) {
     var buzzer = _a.buzzer;
-    previousState = state;
+    previousState = Object.assign({}, state);
     state = sensors_1.getState();
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     Logger_1.printLogs();
-    if (state.joystick.square === true) {
+    if (hasChanged("joystick", "square")) {
         buzzer.play("startup");
     }
     // Play sounds on joystick status changes

@@ -29,7 +29,7 @@ export interface JoystickState {
 }
 
 export const joystickInitialState: JoystickState = {
-  status: "",
+  status: "Starting",
   x: false,
   square: false,
   triangle: false,
