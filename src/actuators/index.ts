@@ -1,21 +1,35 @@
-import { ESC } from "johnny-five";
+import { ESC, Servo } from "johnny-five";
 import cloneDeep from "lodash.clonedeep";
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
 import { info, log } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
+import Flap from "./Flap";
 import Motor from "./Motor";
 
 interface Actuators {
   buzzer: Buzzer;
   motorTop: ESC;
   motorBottom: ESC;
+  flapFront: Servo;
+  flapBack: Servo;
+  flapLeft: Servo;
+  flapRight: Servo;
 }
 
 export const setup = async (): Promise<Actuators> => {
   const buzzer = new Buzzer();
   const { motorTop, motorBottom } = Motor();
-  return { buzzer, motorTop, motorBottom };
+  const { flapFront, flapBack, flapLeft, flapRight } = Flap();
+  return {
+    buzzer,
+    motorTop,
+    motorBottom,
+    flapFront,
+    flapBack,
+    flapLeft,
+    flapRight
+  };
 };
 
 export const loop = (actuators: Actuators) => {

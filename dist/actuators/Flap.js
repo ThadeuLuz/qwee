@@ -22,9 +22,9 @@ var getFlap = function (name) {
         range: [90 - variance, 90 + variance]
     });
 };
-module.exports = function () { return ({
+exports["default"] = (function () { return ({
     flapFront: getFlap("flapFront"),
     flapBack: getFlap("flapBack"),
     flapLeft: getFlap("flapLeft"),
     flapRight: getFlap("flapRight")
-}); };
+}); });

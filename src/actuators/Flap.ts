@@ -22,7 +22,7 @@ const getFlap = (name: FlapName) =>
     range: [90 - variance, 90 + variance]
   });
 
-module.exports = () => ({
+export default () => ({
   flapFront: getFlap("flapFront"),
   flapBack: getFlap("flapBack"),
   flapLeft: getFlap("flapLeft"),

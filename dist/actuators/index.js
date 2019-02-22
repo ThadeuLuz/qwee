@@ -44,13 +44,23 @@ var misc_1 = require("../helpers/misc");
 var sensors_1 = require("../sensors");
 var Logger_1 = require("../sensors/Logger");
 var Buzzer_1 = __importDefault(require("./Buzzer"));
+var Flap_1 = __importDefault(require("./Flap"));
 var Motor_1 = __importDefault(require("./Motor"));
 exports.setup = function () { return __awaiter(_this, void 0, void 0, function () {
-    var buzzer, _a, motorTop, motorBottom;
-    return __generator(this, function (_b) {
+    var buzzer, _a, motorTop, motorBottom, _b, flapFront, flapBack, flapLeft, flapRight;
+    return __generator(this, function (_c) {
         buzzer = new Buzzer_1["default"]();
         _a = Motor_1["default"](), motorTop = _a.motorTop, motorBottom = _a.motorBottom;
-        return [2 /*return*/, { buzzer: buzzer, motorTop: motorTop, motorBottom: motorBottom }];
+        _b = Flap_1["default"](), flapFront = _b.flapFront, flapBack = _b.flapBack, flapLeft = _b.flapLeft, flapRight = _b.flapRight;
+        return [2 /*return*/, {
+                buzzer: buzzer,
+                motorTop: motorTop,
+                motorBottom: motorBottom,
+                flapFront: flapFront,
+                flapBack: flapBack,
+                flapLeft: flapLeft,
+                flapRight: flapRight
+            }];
     });
 }); };
 exports.loop = function (actuators) {
