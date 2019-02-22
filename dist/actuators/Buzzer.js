@@ -7,6 +7,7 @@ exports.__esModule = true;
 var rpio_1 = __importDefault(require("rpio"));
 var rtttl_parse_1 = require("rtttl-parse");
 var pins_1 = __importDefault(require("../helpers/pins"));
+var Logger_1 = require("../sensors/Logger");
 // Play here: https://adamonsoon.github.io/rtttl-play/
 var rtttls = {
     startup: "Startup:d=16,o=6,b=200:d,d#,e,f,f#",
@@ -32,7 +33,7 @@ var Buzzer = /** @class */ (function () {
         this.noteCounter = 0;
         this.tune = rtttl_parse_1.parse(rtttls.startup);
         this.play = function (rttlName) {
-            console.log("Playing " + rttlName);
+            Logger_1.log("Playing " + rttlName);
             // Parse RTTTL to playable notes
             _this.tune = rtttl_parse_1.parse(rtttls[rttlName]);
             _this.noteCounter = 0;
@@ -43,7 +44,6 @@ var Buzzer = /** @class */ (function () {
         };
         this.playNote = function (frequency) {
             if (frequency === void 0) { frequency = 0; }
-            console.log("Setting frequency: " + frequency);
             // Avoid divide by 0
             if (frequency !== 0) {
                 var freq = frequency * _this.freqMultiplier;

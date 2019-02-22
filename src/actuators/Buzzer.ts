@@ -2,6 +2,7 @@
 import rpio from "rpio";
 import { parse } from "rtttl-parse";
 import pins from "../helpers/pins";
+import { log } from "../sensors/Logger";
 
 export type RtttlName =
   | "startup"
@@ -53,7 +54,7 @@ class Buzzer {
   }
 
   public play = (rttlName: RtttlName) => {
-    console.log(`Playing ${rttlName}`);
+    log(`Playing ${rttlName}`);
     // Parse RTTTL to playable notes
     this.tune = parse(rtttls[rttlName]);
     this.noteCounter = 0;
@@ -65,7 +66,6 @@ class Buzzer {
   };
 
   public playNote = (frequency = 0) => {
-    console.log(`Setting frequency: ${frequency}`);
     // Avoid divide by 0
     if (frequency !== 0) {
       const freq = frequency * this.freqMultiplier;

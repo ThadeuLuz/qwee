@@ -32,6 +32,8 @@ const updateActuators = ({ buzzer }: Actuators) => {
 
   if (state.joystick.square === true) {
     buzzer.play("startup");
+    log("ok!");
+    warn("o-oh!");
   }
 
   // Play sounds on joystick status changes
