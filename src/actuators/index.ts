@@ -1,7 +1,7 @@
 import cloneDeep from "lodash.clonedeep";
 // @ts-ignore
 import { scale } from "../helpers/misc";
-import { getHelpers, getState, initialState } from "../sensors";
+import { getHelpers, getState, initialState, printLogs } from "../sensors";
 import { info, log, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 // import Flap from "./Flap";
@@ -51,10 +51,10 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
   loopCount = loopCount + 1;
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
-  // if (loopCount % 25 === 0) {
-  //   printLogs();
-  //   console.log(loopCount);
-  // }
+  if (loopCount % 25 === 0) {
+    printLogs();
+    console.log(loopCount);
+  }
 
   if (hasChanged("joystick", "status")) {
     if (state.joystick.status === "OK") {
