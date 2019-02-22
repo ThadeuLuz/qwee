@@ -36,6 +36,10 @@ const updateActuators = ({ buzzer }: Actuators) => {
   }
 
   // Play sounds on joystick status changes
+  if (previousState.joystick.status !== state.joystick.status) {
+    warn("Status Changedii: ", state.joystick.status);
+  }
+
   if (hasChanged("joystick", "status")) {
     warn("Status Changed: ", state.joystick.status);
     // if ( === "OK") {
