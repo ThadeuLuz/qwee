@@ -73,6 +73,7 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     const speed = scale(state.joystick.r2, 10, 255, 0, 1);
+    log(`Speed: ${speed}`);
     motorTop.speed(speed);
   }
 };

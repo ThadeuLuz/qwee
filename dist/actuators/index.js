@@ -100,6 +100,7 @@ var updateActuators = function (_a) {
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         var speed = misc_1.scale(state.joystick.r2, 10, 255, 0, 1);
+        Logger_1.log("Speed: " + speed);
         motorTop.speed(speed);
     }
 };
