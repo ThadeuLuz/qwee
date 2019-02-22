@@ -64,7 +64,7 @@ var state = sensors_1.initialState;
 var updateActuators = function (_a) {
     var buzzer = _a.buzzer;
     previousState = lodash_clonedeep_1["default"](state);
-    state = sensors_1.getState();
+    state = lodash_clonedeep_1["default"](sensors_1.getState());
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     sensors_1.printLogs();
     if (hasChanged("joystick", "x")) {

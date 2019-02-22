@@ -27,7 +27,7 @@ let state = initialState;
 // Updates actuators
 const updateActuators = ({ buzzer }: Actuators) => {
   previousState = cloneDeep(state);
-  state = getState();
+  state = cloneDeep(getState());
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
   printLogs();
