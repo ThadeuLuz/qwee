@@ -1,6 +1,6 @@
 import { scale } from "../helpers/misc";
 import { getHelpers, getState } from "../sensors";
-import { log, warn } from "../sensors/Logger";
+import { log, printLogs, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 
 let previousState = getState();
@@ -28,8 +28,7 @@ const updateActuators = ({ buzzer }: Actuators) => {
   state = getState();
   const { hasChanged, changedTo } = getHelpers(state, previousState);
 
-  console.clear();
-  console.log(state);
+  printLogs();
 
   if (state.joystick.square === true) {
     buzzer.play("startup");

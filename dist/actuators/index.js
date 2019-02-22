@@ -64,8 +64,7 @@ var updateActuators = function (_a) {
     previousState = state;
     state = sensors_1.getState();
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
-    console.clear();
-    console.log(state);
+    Logger_1.printLogs();
     if (state.joystick.square === true) {
         buzzer.play("startup");
     }
