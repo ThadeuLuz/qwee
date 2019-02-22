@@ -18,13 +18,11 @@ exports.getState = function () {
     };
 };
 exports.getHelpers = function (state, previousState) {
-    var hasChanged = function (_a) {
-        var prop = _a[0], subprop = _a[1];
+    var hasChanged = function (prop, subprop) {
         return state[prop][subprop] !== previousState[prop][subprop];
     };
-    var changedTo = function (_a, value) {
-        var prop = _a[0], subprop = _a[1];
-        return hasChanged([prop, subprop]) && state[prop][subprop] === value;
+    var changedTo = function (prop, subprop, value) {
+        return hasChanged(prop, subprop) && state[prop][subprop] === value;
     };
     return { hasChanged: hasChanged, changedTo: changedTo };
 };

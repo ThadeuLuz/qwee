@@ -66,8 +66,11 @@ var updateActuators = function (_a) {
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     console.clear();
     console.log(state);
+    if (state.joystick.square === true) {
+        buzzer.play("startup");
+    }
     // Play sounds on joystick status changes
-    if (hasChanged(["joystick", "status"])) {
+    if (hasChanged("joystick", "status")) {
         Logger_1.warn("Status Changed");
         if (state.joystick.status === "OK") {
             buzzer.play("startup");
@@ -80,10 +83,10 @@ var updateActuators = function (_a) {
     if (state.joystick.status !== "OK") {
         return;
     }
-    if (changedTo(["joystick", "x"], true)) {
+    if (changedTo("joystick", "x", true)) {
         buzzer.play("yay");
     }
-    if (hasChanged(["joystick", "r2"])) {
+    if (hasChanged("joystick", "r2")) {
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         var throttle = misc_1.scale(state.joystick.r2, 10, 255, 1000, 2000);
