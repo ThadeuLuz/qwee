@@ -1,35 +1,35 @@
-import { Servo } from "johnny-five";
 import cloneDeep from "lodash.clonedeep";
+// @ts-ignore
+import { SoftPWM } from "raspi-soft-pwm";
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
 import { info, log } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
-import Flap from "./Flap";
+// import Flap from "./Flap";
 import Motor from "./Motor";
 
 interface Actuators {
   buzzer: Buzzer;
-  motorTop: Servo;
-  motorBottom: Servo;
-  flapFront: Servo;
-  flapBack: Servo;
-  flapLeft: Servo;
-  flapRight: Servo;
+  motorTop: SoftPWM;
+  // motorBottom: Servo;
+  // flapFront: Servo;
+  // flapBack: Servo;
+  // flapLeft: Servo;
+  // flapRight: Servo;
 }
 
 export const setup = async (): Promise<Actuators> => {
   const buzzer = new Buzzer();
-  const { motorTop, motorBottom } = Motor();
-  const { flapFront, flapBack, flapLeft, flapRight } = Flap();
-  motorTop.sweep();
+  const { motorTop } = Motor();
+  // const { flapFront, flapBack, flapLeft, flapRight } = Flap();
   return {
     buzzer,
-    motorTop,
-    motorBottom,
-    flapFront,
-    flapBack,
-    flapLeft,
-    flapRight
+    motorTop
+    // motorBottom,
+    // flapFront,
+    // flapBack,
+    // flapLeft,
+    // flapRight
   };
 };
 
@@ -87,8 +87,8 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
   if (hasChanged("joystick", "r2")) {
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-    const speed = scale(state.joystick.r2, 10, 255, 0, 180);
+    const speed = scale(state.joystick.r2, 10, 255, 0, 1);
     log(`Speed: ${speed}`);
-    // motorTop.to(speed);
+    motorTop.write(speed);
   }
 };

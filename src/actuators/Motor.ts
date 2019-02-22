@@ -1,14 +1,11 @@
-import { Servo } from "johnny-five";
+// @ts-ignore
+import { SoftPWM } from "raspi-soft-pwm";
 import pins from "../helpers/pins";
 
 type MotorName = "motorTop" | "motorBottom";
 
 const getMotor = (name: MotorName) => {
-  const motor = new Servo({
-    pin: pins[name],
-    startAt: 0,
-    range: [0, 180]
-  });
+  const motor = new SoftPWM(pins[name]);
   return motor;
 };
 

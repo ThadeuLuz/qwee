@@ -44,23 +44,22 @@ var misc_1 = require("../helpers/misc");
 var sensors_1 = require("../sensors");
 var Logger_1 = require("../sensors/Logger");
 var Buzzer_1 = __importDefault(require("./Buzzer"));
-var Flap_1 = __importDefault(require("./Flap"));
+// import Flap from "./Flap";
 var Motor_1 = __importDefault(require("./Motor"));
 exports.setup = function () { return __awaiter(_this, void 0, void 0, function () {
-    var buzzer, _a, motorTop, motorBottom, _b, flapFront, flapBack, flapLeft, flapRight;
-    return __generator(this, function (_c) {
+    var buzzer, motorTop;
+    return __generator(this, function (_a) {
         buzzer = new Buzzer_1["default"]();
-        _a = Motor_1["default"](), motorTop = _a.motorTop, motorBottom = _a.motorBottom;
-        _b = Flap_1["default"](), flapFront = _b.flapFront, flapBack = _b.flapBack, flapLeft = _b.flapLeft, flapRight = _b.flapRight;
-        motorTop.sweep();
+        motorTop = Motor_1["default"]().motorTop;
+        // const { flapFront, flapBack, flapLeft, flapRight } = Flap();
         return [2 /*return*/, {
                 buzzer: buzzer,
-                motorTop: motorTop,
-                motorBottom: motorBottom,
-                flapFront: flapFront,
-                flapBack: flapBack,
-                flapLeft: flapLeft,
-                flapRight: flapRight
+                motorTop: motorTop
+                // motorBottom,
+                // flapFront,
+                // flapBack,
+                // flapLeft,
+                // flapRight
             }];
     });
 }); };
@@ -110,8 +109,8 @@ var updateActuators = function (_a) {
     if (hasChanged("joystick", "r2")) {
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-        var speed = misc_1.scale(state.joystick.r2, 10, 255, 0, 180);
+        var speed = misc_1.scale(state.joystick.r2, 10, 255, 0, 1);
         Logger_1.log("Speed: " + speed);
-        // motorTop.to(speed);
+        motorTop.write(speed);
     }
 };
