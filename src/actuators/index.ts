@@ -34,6 +34,7 @@ const updateActuators = ({ buzzer }: Actuators) => {
   const { hasChanged, changedTo } = getHelpers(state, previousState);
   if (loopCount % 50 === 0) {
     printLogs();
+    console.log(loopCount);
   }
 
   if (hasChanged("joystick", "x")) {
