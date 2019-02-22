@@ -1,18 +1,35 @@
-// @ts-ignore
-// import { SoftPWM } from "raspi-soft-pwm";
-import { Gpio } from "pigpio";
-// import pins from "../helpers/pins";
+import { Servo } from "johnny-five";
+import { scale } from "../helpers/misc";
+import pins from "../helpers/pins";
 
 type MotorName = "motorTop" | "motorBottom";
 
-const getMotor = (name: MotorName) => {
-  // const motor = new SoftPWM(pins[name]);
-  const motor = new Gpio(23, { mode: Gpio.OUTPUT });
+class Motor extends Servo {
+  constructor(name: MotorName) {
+    super({
+      pin: pins[name],
+      startAt: 0,
+      range: [0, 180]
+    });
+  }
 
-  return motor;
-};
+  public set(value: number) {
+    this.to(Math.round(scale(value, 0, 1, 0, 180)));
+  }
+}
 
-export default () => ({
-  motorTop: getMotor("motorTop")
-  // motorBottom: getMotor("motorBottom")
-});
+export default Motor;
+
+// const getMotor = (name: MotorName) => {
+//   const motor = new Servo({
+//     pin: pins[name],
+//     startAt: 0,
+//     range: [0, 180]
+//   });
+//   return motor;
+// };
+
+// export default () => ({
+//   motorTop: getMotor("motorTop"),
+//   motorBottom: getMotor("motorBottom")
+// });

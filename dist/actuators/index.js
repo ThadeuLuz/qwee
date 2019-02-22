@@ -51,7 +51,7 @@ exports.setup = function () { return __awaiter(_this, void 0, void 0, function (
     var buzzer, motorTop;
     return __generator(this, function (_a) {
         buzzer = new Buzzer_1["default"]();
-        motorTop = Motor_1["default"]().motorTop;
+        motorTop = new Motor_1["default"]("motorTop");
         // const { flapFront, flapBack, flapLeft, flapRight } = Flap();
         return [2 /*return*/, {
                 buzzer: buzzer,
@@ -110,8 +110,8 @@ var updateActuators = function (_a) {
     if (hasChanged("joystick", "r2")) {
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
         // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-        var speed = Math.round(misc_1.scale(state.joystick.r2, 10, 255, 500, 2500));
+        var speed = misc_1.scale(state.joystick.r2, 10, 255, 0, 1);
         Logger_1.log("Speed: " + speed);
-        motorTop.servoWrite(speed);
+        motorTop.set(speed);
     }
 };

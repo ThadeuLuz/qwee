@@ -9,7 +9,7 @@ import Motor from "./Motor";
 
 interface Actuators {
   buzzer: Buzzer;
-  motorTop: any;
+  motorTop: Motor;
   // motorBottom: Servo;
   // flapFront: Servo;
   // flapBack: Servo;
@@ -19,7 +19,8 @@ interface Actuators {
 
 export const setup = async (): Promise<Actuators> => {
   const buzzer = new Buzzer();
-  const { motorTop } = Motor();
+  const motorTop = new Motor("motorTop");
+
   // const { flapFront, flapBack, flapLeft, flapRight } = Flap();
   return {
     buzzer,
@@ -86,8 +87,8 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
   if (hasChanged("joystick", "r2")) {
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
     // const [tmin, tmax] = motorTop.pwmRange || motorTop.range;
-    const speed = Math.round(scale(state.joystick.r2, 10, 255, 500, 2500));
+    const speed = scale(state.joystick.r2, 10, 255, 0, 1);
     log(`Speed: ${speed}`);
-    motorTop.servoWrite(speed);
+    motorTop.set(speed);
   }
 };
