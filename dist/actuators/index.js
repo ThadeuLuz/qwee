@@ -80,7 +80,7 @@ var updateActuators = function (_a) {
     state = lodash_clonedeep_1["default"](sensors_1.getState());
     loopCount = loopCount + 1;
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
-    if (loopCount % 25 === 0) {
+    if (loopCount % 100 === 0) {
         sensors_1.printLogs();
         console.log(loopCount);
     }

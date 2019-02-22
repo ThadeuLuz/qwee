@@ -51,7 +51,7 @@ const updateActuators = ({ buzzer, motorTop }: Actuators) => {
   loopCount = loopCount + 1;
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
-  if (loopCount % 25 === 0) {
+  if (loopCount % 100 === 0) {
     printLogs();
     console.log(loopCount);
   }
