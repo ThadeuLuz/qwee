@@ -57,7 +57,7 @@ exports.loop = function (actuators) {
     updateActuators(actuators);
     setTimeout(function () {
         exports.loop(actuators);
-    }, 50);
+    }, 100);
 };
 // Updates actuators
 var updateActuators = function (_a) {
@@ -66,8 +66,8 @@ var updateActuators = function (_a) {
     state = Object.assign({}, sensors_1.getState());
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     sensors_1.printLogs();
-    Logger_1.error("xx: ", previousState.joystick.status, state.joystick.status);
-    if (hasChanged("joystick", "square")) {
+    Logger_1.error("xx: ", "" + previousState.joystick.x, "" + state.joystick.x);
+    if (hasChanged("joystick", "x")) {
         buzzer.play("startup");
         Logger_1.info("AAA: ", state.joystick.status);
     }

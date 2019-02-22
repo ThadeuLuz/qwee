@@ -20,7 +20,7 @@ export const loop = (actuators: Actuators) => {
   updateActuators(actuators);
   setTimeout(() => {
     loop(actuators);
-  }, 50);
+  }, 100);
 };
 
 // Updates actuators
@@ -30,9 +30,9 @@ const updateActuators = ({ buzzer }: Actuators) => {
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
   printLogs();
-  error("xx: ", previousState.joystick.status, state.joystick.status);
+  error("xx: ", `${previousState.joystick.x}`, `${state.joystick.x}`);
 
-  if (hasChanged("joystick", "square")) {
+  if (hasChanged("joystick", "x")) {
     buzzer.play("startup");
     info("AAA: ", state.joystick.status);
   }
