@@ -23,13 +23,12 @@ var pins_1 = __importDefault(require("../helpers/pins"));
 var Motor = /** @class */ (function (_super) {
     __extends(Motor, _super);
     function Motor(name) {
-        var _this = _super.call(this, raspi_board_1.getGpioNumber(pins_1["default"][name]), { mode: Gpio.OUTPUT }) || this;
-        _this.set = function (v) {
-            var pulseWidth = Math.round(misc_1.scale(v, 0, 1, 1000, 2000));
-            _this.servoWrite(pulseWidth);
-        };
-        return _this;
+        return _super.call(this, raspi_board_1.getGpioNumber(pins_1["default"][name]), { mode: Gpio.OUTPUT }) || this;
     }
+    Motor.prototype.set = function (v) {
+        var pulseWidth = Math.round(misc_1.scale(v, 0, 1, 1000, 2000));
+        _super.prototype.servoWrite.call(this, pulseWidth);
+    };
     return Motor;
 }(Gpio));
 exports["default"] = Motor;

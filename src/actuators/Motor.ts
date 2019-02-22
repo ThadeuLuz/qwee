@@ -10,10 +10,10 @@ class Motor extends Gpio {
     super(getGpioNumber(pins[name]), { mode: Gpio.OUTPUT });
   }
 
-  public set = (v: number) => {
+  public set(v: number) {
     const pulseWidth = Math.round(scale(v, 0, 1, 1000, 2000));
-    this.servoWrite(pulseWidth);
-  };
+    super.servoWrite(pulseWidth);
+  }
 }
 
 export default Motor;
