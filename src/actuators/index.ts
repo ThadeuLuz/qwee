@@ -1,10 +1,8 @@
+import cloneDeep from "lodash.clonedeep";
 import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
 import { error, info, log, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
-
-let previousState = Object.assign({}, initialState);
-let state = Object.assign({}, initialState);
 
 interface Actuators {
   buzzer: Buzzer;
@@ -24,9 +22,12 @@ export const loop = (actuators: Actuators) => {
 };
 
 // Updates actuators
+let previousState = cloneDeep(initialState);
+let state = cloneDeep(initialState);
+
 const updateActuators = ({ buzzer }: Actuators) => {
-  previousState = Object.assign({}, state);
-  state = Object.assign({}, getState());
+  previousState = cloneDeep(state);
+  state = cloneDeep(getState());
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
   printLogs();

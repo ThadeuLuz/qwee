@@ -39,12 +39,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _this = this;
 exports.__esModule = true;
+var lodash_clonedeep_1 = __importDefault(require("lodash.clonedeep"));
 var misc_1 = require("../helpers/misc");
 var sensors_1 = require("../sensors");
 var Logger_1 = require("../sensors/Logger");
 var Buzzer_1 = __importDefault(require("./Buzzer"));
-var previousState = Object.assign({}, sensors_1.initialState);
-var state = Object.assign({}, sensors_1.initialState);
 exports.setup = function () { return __awaiter(_this, void 0, void 0, function () {
     var buzzer;
     return __generator(this, function (_a) {
@@ -60,10 +59,12 @@ exports.loop = function (actuators) {
     }, 100);
 };
 // Updates actuators
+var previousState = lodash_clonedeep_1["default"](sensors_1.initialState);
+var state = lodash_clonedeep_1["default"](sensors_1.initialState);
 var updateActuators = function (_a) {
     var buzzer = _a.buzzer;
-    previousState = Object.assign({}, state);
-    state = Object.assign({}, sensors_1.getState());
+    previousState = lodash_clonedeep_1["default"](state);
+    state = lodash_clonedeep_1["default"](sensors_1.getState());
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     sensors_1.printLogs();
     Logger_1.error("xx: ", "" + previousState.joystick.x, "" + state.joystick.x);
