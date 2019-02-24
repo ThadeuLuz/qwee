@@ -10,7 +10,6 @@ class Motor {
 
   constructor(name: MotorName) {
     const pin = getGpioNumber(pins[name]);
-    console.log("pin", pin);
     this.pwm = new Gpio(pin, { mode: Gpio.OUTPUT });
   }
 
