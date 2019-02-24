@@ -109,6 +109,6 @@ var updateActuators = function (_a) {
     // Update Flaps
     flapFront.set(state.joystick.lStickX);
     flapBack.set(-state.joystick.lStickX);
-    flapLeft.set(state.joystick.lStickY);
-    // flapRight.set(state.joystick.lStickY);
+    flapRight.set(state.joystick.lStickY);
+    flapLeft.set(-state.joystick.lStickY);
 };
