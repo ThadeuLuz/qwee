@@ -54,7 +54,7 @@ const updateActuators = ({
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
   if (loopCount % 50 === 0) {
-    printLogs();
+    // printLogs();
     console.log(loopCount);
   }
 

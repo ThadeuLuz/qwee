@@ -77,7 +77,7 @@ var updateActuators = function (_a) {
     loopCount = loopCount + 1;
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     if (loopCount % 50 === 0) {
-        sensors_1.printLogs();
+        // printLogs();
         console.log(loopCount);
     }
     if (hasChanged("joystick", "status")) {
