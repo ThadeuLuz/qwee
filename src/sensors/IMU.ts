@@ -50,6 +50,7 @@ const IMU = () => {
       imuState.rotationY = data.rotation.y;
       update();
     });
+    update();
   };
 };
 

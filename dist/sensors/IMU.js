@@ -40,6 +40,7 @@ var IMU = function () {
             imuState.rotationY = data.rotation.y;
             update();
         });
+        update();
     };
 };
 exports["default"] = IMU;

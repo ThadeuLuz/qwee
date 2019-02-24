@@ -8,6 +8,8 @@
     "push": "npm run build && git add . && git commit -m \"Auto push\" && git push origin master",
     "prebuild": "rm -rf dist/",
     "build": "tsc",
+    "presend": "npm run build",
+    "send": "scp -r dist/ pi@raspberrypi.local:/home/pi/qwee ",
     "ustart": "npm run update && npm start",
     "start": "sudo node dist/index.js",
     "dev": "ts-node src/index.ts",
