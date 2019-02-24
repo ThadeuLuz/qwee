@@ -43,8 +43,11 @@ const updateActuators = ({
   buzzer,
   motorTop,
   motorBottom,
-  flapFront
-}: Actuators) => {
+  flapFront,
+  flapBack
+}: // flapLeft,
+// flapRight
+Actuators) => {
   previousState = cloneDeep(state);
   state = cloneDeep(getState());
   loopCount = loopCount + 1;
@@ -87,4 +90,5 @@ const updateActuators = ({
 
   // Update Flaps
   flapFront.set(state.joystick.rStickX);
+  flapBack.set(state.joystick.rStickX);
 };

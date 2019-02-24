@@ -71,7 +71,7 @@ var state = sensors_1.initialState;
 var loopCount = 0;
 // Updates actuators
 var updateActuators = function (_a) {
-    var buzzer = _a.buzzer, motorTop = _a.motorTop, motorBottom = _a.motorBottom, flapFront = _a.flapFront;
+    var buzzer = _a.buzzer, motorTop = _a.motorTop, motorBottom = _a.motorBottom, flapFront = _a.flapFront, flapBack = _a.flapBack;
     previousState = lodash_clonedeep_1["default"](state);
     state = lodash_clonedeep_1["default"](sensors_1.getState());
     loopCount = loopCount + 1;
@@ -108,4 +108,5 @@ var updateActuators = function (_a) {
     }
     // Update Flaps
     flapFront.set(state.joystick.rStickX);
+    flapBack.set(state.joystick.rStickX);
 };
