@@ -37,6 +37,7 @@ export const loop = (actuators: Actuators) => {
 let previousState = initialState;
 let state = initialState;
 let loopCount = 0;
+let zRotationCompensation = 0;
 
 // Updates actuators
 const updateActuators = ({
@@ -77,16 +78,19 @@ const updateActuators = ({
     buzzer.play("yay");
   }
 
-  // Update Motors
-  if (hasChanged("joystick", "r2")) {
-    const topSpeed = scale(state.joystick.r2, 10, 255, 0, 1);
-    motorTop.set(topSpeed);
+  // Z Compenstion
+  if (changedTo("joystick", "up", true)) {
+    zRotationCompensation = zRotationCompensation + 0.01;
   }
 
-  if (hasChanged("joystick", "l2")) {
-    const bottomSpeed = scale(state.joystick.l2, 10, 255, 0, 1);
-    motorBottom.set(bottomSpeed);
+  if (changedTo("joystick", "down", true)) {
+    zRotationCompensation = zRotationCompensation - 0.01;
   }
+
+  // Update Motors
+  const motorSpeed = scale(state.joystick.r2, 10, 255, 0, 1);
+  motorTop.set(motorSpeed + zRotationCompensation);
+  motorBottom.set(motorSpeed - zRotationCompensation);
 
   // Update Flaps
   flapFront.set(state.joystick.lStickX);

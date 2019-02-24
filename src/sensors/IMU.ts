@@ -11,6 +11,8 @@ const IMU = () => {
       if (err) {
         throw err;
       }
+      console.clear();
+
       console.log(data);
     });
   }, 100);

@@ -69,6 +69,7 @@ exports.loop = function (actuators) {
 var previousState = sensors_1.initialState;
 var state = sensors_1.initialState;
 var loopCount = 0;
+var zRotationCompensation = 0;
 // Updates actuators
 var updateActuators = function (_a) {
     var buzzer = _a.buzzer, motorTop = _a.motorTop, motorBottom = _a.motorBottom, flapFront = _a.flapFront, flapBack = _a.flapBack, flapLeft = _a.flapLeft, flapRight = _a.flapRight;
@@ -97,15 +98,17 @@ var updateActuators = function (_a) {
     if (changedTo("joystick", "x", true)) {
         buzzer.play("yay");
     }
+    // Z Compenstion
+    if (changedTo("joystick", "up", true)) {
+        zRotationCompensation = zRotationCompensation + 0.01;
+    }
+    if (changedTo("joystick", "down", true)) {
+        zRotationCompensation = zRotationCompensation - 0.01;
+    }
     // Update Motors
-    if (hasChanged("joystick", "r2")) {
-        var topSpeed = misc_1.scale(state.joystick.r2, 10, 255, 0, 1);
-        motorTop.set(topSpeed);
-    }
-    if (hasChanged("joystick", "l2")) {
-        var bottomSpeed = misc_1.scale(state.joystick.l2, 10, 255, 0, 1);
-        motorBottom.set(bottomSpeed);
-    }
+    var motorSpeed = misc_1.scale(state.joystick.r2, 10, 255, 0, 1);
+    motorTop.set(motorSpeed + zRotationCompensation);
+    motorBottom.set(motorSpeed - zRotationCompensation);
     // Update Flaps
     flapFront.set(state.joystick.lStickX);
     flapBack.set(-state.joystick.lStickX);

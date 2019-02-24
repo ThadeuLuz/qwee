@@ -14,6 +14,7 @@ var IMU = function () {
             if (err) {
                 throw err;
             }
+            console.clear();
             console.log(data);
         });
     }, 100);
