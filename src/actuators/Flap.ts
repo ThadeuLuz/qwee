@@ -13,8 +13,6 @@ const controllerConfig = {
   k_d: 0.01
 };
 
-const sideFlaps = ["flapLeft", "flapRight"];
-const invertedFlaps = ["flapFront", "flapRight"];
 const rangeOffset = 350; // range in pulses
 
 class Flap {
@@ -37,8 +35,6 @@ class Flap {
     const pin = getGpioNumber(pins[name]);
     this.pwm = new Gpio(pin, { mode: Gpio.OUTPUT });
     this.controller = new Controller(controllerConfig);
-    this.isSide = sideFlaps.includes(name);
-    this.isInverted = invertedFlaps.includes(name);
   }
 
   public set(value: number) {

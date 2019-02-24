@@ -107,8 +107,8 @@ var updateActuators = function (_a) {
         motorBottom.set(bottomSpeed);
     }
     // Update Flaps
-    flapFront.set(state.joystick.lStickX);
-    // flapBack.set(state.joystick.lStickX);
+    flapFront.set(-state.joystick.lStickX);
+    flapBack.set(state.joystick.lStickX);
     // flapLeft.set(state.joystick.lStickY);
     // flapRight.set(state.joystick.lStickY);
 };

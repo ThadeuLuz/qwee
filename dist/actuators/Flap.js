@@ -13,8 +13,6 @@ var controllerConfig = {
     k_i: 0.01,
     k_d: 0.01
 };
-var sideFlaps = ["flapLeft", "flapRight"];
-var invertedFlaps = ["flapFront", "flapRight"];
 var rangeOffset = 350; // range in pulses
 var Flap = /** @class */ (function () {
     function Flap(name, offset) {
@@ -27,8 +25,6 @@ var Flap = /** @class */ (function () {
         var pin = raspi_board_1.getGpioNumber(pins_1["default"][name]);
         this.pwm = new Gpio(pin, { mode: Gpio.OUTPUT });
         this.controller = new node_pid_controller_1["default"](controllerConfig);
-        this.isSide = sideFlaps.includes(name);
-        this.isInverted = invertedFlaps.includes(name);
     }
     Flap.prototype.set = function (value) {
         var _a = this.range, min = _a.min, max = _a.max;
