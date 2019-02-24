@@ -48,22 +48,16 @@ var Buzzer_1 = __importDefault(require("./Buzzer"));
 var Flap_1 = __importDefault(require("./Flap"));
 var Motor_1 = __importDefault(require("./Motor"));
 exports.setup = function () { return __awaiter(_this, void 0, void 0, function () {
-    var buzzer, motorTop, motorBottom, flapFront;
     return __generator(this, function (_a) {
-        buzzer = new Buzzer_1["default"]();
-        motorTop = new Motor_1["default"]("motorTop");
-        motorBottom = new Motor_1["default"]("motorBottom");
-        flapFront = new Flap_1["default"]("flapFront");
-        // const { flapFront, flapBack, flapLeft, flapRight } = Flap();
-        return [2 /*return*/, {
-                buzzer: buzzer,
-                motorTop: motorTop,
-                motorBottom: motorBottom,
-                flapFront: flapFront
-                // flapBack,
+        return [2 /*return*/, ({
+                buzzer: new Buzzer_1["default"](),
+                motorTop: new Motor_1["default"]("motorTop"),
+                motorBottom: new Motor_1["default"]("motorBottom"),
+                flapFront: new Flap_1["default"]("flapFront"),
+                flapBack: new Flap_1["default"]("flapBack")
                 // flapLeft,
                 // flapRight
-            }];
+            })];
     });
 }); };
 exports.loop = function (actuators) {

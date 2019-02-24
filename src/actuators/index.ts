@@ -12,28 +12,20 @@ interface Actuators {
   motorTop: Motor;
   motorBottom: Motor;
   flapFront: Flap;
-  // flapBack: Servo;
-  // flapLeft: Servo;
-  // flapRight: Servo;
+  flapBack: Flap;
+  // flapLeft: Flap;
+  // flapRight: Flap;
 }
 
-export const setup = async (): Promise<Actuators> => {
-  const buzzer = new Buzzer();
-  const motorTop = new Motor("motorTop");
-  const motorBottom = new Motor("motorBottom");
-  const flapFront = new Flap("flapFront");
-
-  // const { flapFront, flapBack, flapLeft, flapRight } = Flap();
-  return {
-    buzzer,
-    motorTop,
-    motorBottom,
-    flapFront
-    // flapBack,
-    // flapLeft,
-    // flapRight
-  };
-};
+export const setup = async (): Promise<Actuators> => ({
+  buzzer: new Buzzer(),
+  motorTop: new Motor("motorTop"),
+  motorBottom: new Motor("motorBottom"),
+  flapFront: new Flap("flapFront"),
+  flapBack: new Flap("flapBack")
+  // flapLeft,
+  // flapRight
+});
 
 export const loop = (actuators: Actuators) => {
   updateActuators(actuators);
