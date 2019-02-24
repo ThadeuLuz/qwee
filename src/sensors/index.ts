@@ -1,40 +1,28 @@
 import chalk from "chalk";
 
-import IMU from "./IMU";
-import Joystick, {
-  getJoystickState,
-  joystickInitialState,
-  JoystickState
-} from "./Joystick";
-import {
-  getLoggerState,
-  loggerInitialState,
-  LoggerState,
-  LogType
-} from "./Logger";
+import IMU, { getImuState, IIMUState } from "./IMU";
+import Joystick, { getJoystickState, IJoystickState } from "./Joystick";
+import { getLoggerState, LoggerState, LogType } from "./Logger";
 
 // Initialize sensors
 Joystick();
 IMU();
 
 export interface State {
-  joystick: JoystickState;
+  joystick: IJoystickState;
   logs: LoggerState;
+  imu: IIMUState;
 }
-
-export const initialState = {
-  joystick: joystickInitialState,
-  logs: loggerInitialState
-};
 
 export const getState = (): State => {
   return {
     joystick: getJoystickState(),
-    logs: getLoggerState()
+    logs: getLoggerState(),
+    imu: getImuState()
   };
 };
 
-type StateSubprop = keyof JoystickState;
+type StateSubprop = keyof IJoystickState | keyof IIMUState;
 type StateProp = keyof State;
 
 export interface Helpers {
@@ -53,10 +41,10 @@ export const getHelpers = (state: State, previousState: State): Helpers => {
 };
 
 const logFunctions: Record<LogType, (p: string[]) => void> = {
-  log: (p: string[]) => console.log("🐟", ...p.map(s => chalk.blue(s))),
-  info: (p: string[]) => console.info("🐸", ...p.map(s => chalk.green(s))),
-  warn: (p: string[]) => console.warn("🐱", ...p.map(s => chalk.yellow(s))),
-  error: (p: string[]) => console.error("🐞", ...p.map(s => chalk.red(s)))
+  log: (p: string[]) => console.log(...p.map(s => chalk.blue(s))),
+  info: (p: string[]) => console.info(...p.map(s => chalk.green(s))),
+  warn: (p: string[]) => console.warn(...p.map(s => chalk.yellow(s))),
+  error: (p: string[]) => console.error(...p.map(s => chalk.red(s)))
 };
 
 export const printLogs = () => {

@@ -10,7 +10,8 @@
     "build": "tsc",
     "ustart": "npm run update && npm start",
     "start": "sudo node dist/index.js",
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "i2c": "sudo i2cdetect -y 1"
   },
   "keywords": [],
   "author": "",

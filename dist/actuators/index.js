@@ -66,8 +66,8 @@ exports.loop = function (actuators) {
         exports.loop(actuators);
     }, 10);
 };
-var previousState = sensors_1.initialState;
-var state = sensors_1.initialState;
+var previousState = sensors_1.getState();
+var state = sensors_1.getState();
 var loopCount = 0;
 var zRotationCompensation = 0;
 // Updates actuators
@@ -78,7 +78,7 @@ var updateActuators = function (_a) {
     loopCount = loopCount + 1;
     var _b = sensors_1.getHelpers(state, previousState), hasChanged = _b.hasChanged, changedTo = _b.changedTo;
     if (loopCount % 50 === 0) {
-        // printLogs();
+        sensors_1.printLogs();
         console.log(loopCount);
     }
     if (hasChanged("joystick", "status")) {
@@ -110,8 +110,10 @@ var updateActuators = function (_a) {
     motorTop.set(motorSpeed + zRotationCompensation);
     motorBottom.set(motorSpeed - zRotationCompensation);
     // Update Flaps
-    flapFront.set(state.joystick.lStickX);
-    flapBack.set(-state.joystick.lStickX);
-    flapRight.set(state.joystick.lStickY);
-    flapLeft.set(-state.joystick.lStickY);
+    var _c = state.joystick, lStickX = _c.lStickX, lStickY = _c.lStickY;
+    var _d = state.imu, rotationX = _d.rotationX, rotationY = _d.rotationY;
+    flapFront.set(lStickX, rotationX);
+    flapBack.set(-lStickX, 0);
+    flapRight.set(lStickY, rotationY);
+    flapLeft.set(-lStickY, 0);
 };

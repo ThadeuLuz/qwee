@@ -1,7 +1,7 @@
 import ds from "dualshock";
 import { scale } from "../helpers/misc";
 
-export interface JoystickState {
+export interface IJoystickState {
   status: string;
   x: boolean;
   square: boolean;
@@ -27,7 +27,7 @@ export interface JoystickState {
   ps: boolean;
 }
 
-export const joystickInitialState: JoystickState = {
+export const joystickInitialState: IJoystickState = {
   status: "Starting",
   x: false,
   square: false,
@@ -56,7 +56,7 @@ export const joystickInitialState: JoystickState = {
 const joystickState = joystickInitialState;
 export const getJoystickState = () => joystickState;
 
-const digitalKeys: Record<string, keyof JoystickState> = {
+const digitalKeys: Record<string, keyof IJoystickState> = {
   cross: "x",
   circle: "circle",
   square: "square",
@@ -78,7 +78,7 @@ const digitalKeys: Record<string, keyof JoystickState> = {
   ps: "ps"
 };
 
-const analogKeys: Record<string, keyof JoystickState> = {
+const analogKeys: Record<string, keyof IJoystickState> = {
   l2: "l2",
   r2: "r2",
   lStickY: "lStickY",

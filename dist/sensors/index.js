@@ -20,20 +20,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 exports.__esModule = true;
 var chalk_1 = __importDefault(require("chalk"));
-var IMU_1 = __importDefault(require("./IMU"));
+var IMU_1 = __importStar(require("./IMU"));
 var Joystick_1 = __importStar(require("./Joystick"));
 var Logger_1 = require("./Logger");
 // Initialize sensors
 Joystick_1["default"]();
 IMU_1["default"]();
-exports.initialState = {
-    joystick: Joystick_1.joystickInitialState,
-    logs: Logger_1.loggerInitialState
-};
 exports.getState = function () {
     return {
         joystick: Joystick_1.getJoystickState(),
-        logs: Logger_1.getLoggerState()
+        logs: Logger_1.getLoggerState(),
+        imu: IMU_1.getImuState()
     };
 };
 exports.getHelpers = function (state, previousState) {
@@ -46,10 +43,10 @@ exports.getHelpers = function (state, previousState) {
     return { hasChanged: hasChanged, changedTo: changedTo };
 };
 var logFunctions = {
-    log: function (p) { return console.log.apply(console, ["🐟"].concat(p.map(function (s) { return chalk_1["default"].blue(s); }))); },
-    info: function (p) { return console.info.apply(console, ["🐸"].concat(p.map(function (s) { return chalk_1["default"].green(s); }))); },
-    warn: function (p) { return console.warn.apply(console, ["🐱"].concat(p.map(function (s) { return chalk_1["default"].yellow(s); }))); },
-    error: function (p) { return console.error.apply(console, ["🐞"].concat(p.map(function (s) { return chalk_1["default"].red(s); }))); }
+    log: function (p) { return console.log.apply(console, p.map(function (s) { return chalk_1["default"].blue(s); })); },
+    info: function (p) { return console.info.apply(console, p.map(function (s) { return chalk_1["default"].green(s); })); },
+    warn: function (p) { return console.warn.apply(console, p.map(function (s) { return chalk_1["default"].yellow(s); })); },
+    error: function (p) { return console.error.apply(console, p.map(function (s) { return chalk_1["default"].red(s); })); }
 };
 exports.printLogs = function () {
     var _a = exports.getState(), logs = _a.logs, others = __rest(_a, ["logs"]);

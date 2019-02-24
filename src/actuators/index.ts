@@ -1,7 +1,7 @@
 import cloneDeep from "lodash.clonedeep";
 // @ts-ignore
 import { scale } from "../helpers/misc";
-import { getHelpers, getState, initialState, printLogs } from "../sensors";
+import { getHelpers, getState, printLogs } from "../sensors";
 import { info, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
 import Flap from "./Flap";
@@ -34,8 +34,8 @@ export const loop = (actuators: Actuators) => {
   }, 10);
 };
 
-let previousState = initialState;
-let state = initialState;
+let previousState = getState();
+let state = getState();
 let loopCount = 0;
 let zRotationCompensation = 0;
 
@@ -55,7 +55,7 @@ const updateActuators = ({
 
   const { hasChanged, changedTo } = getHelpers(state, previousState);
   if (loopCount % 50 === 0) {
-    // printLogs();
+    printLogs();
     console.log(loopCount);
   }
 
@@ -93,8 +93,10 @@ const updateActuators = ({
   motorBottom.set(motorSpeed - zRotationCompensation);
 
   // Update Flaps
-  flapFront.set(state.joystick.lStickX);
-  flapBack.set(-state.joystick.lStickX);
-  flapRight.set(state.joystick.lStickY);
-  flapLeft.set(-state.joystick.lStickY);
+  const { lStickX, lStickY } = state.joystick;
+  const { rotationX, rotationY } = state.imu;
+  flapFront.set(lStickX, rotationX);
+  flapBack.set(-lStickX, 0);
+  flapRight.set(lStickY, rotationY);
+  flapLeft.set(-lStickY, 0);
 };
