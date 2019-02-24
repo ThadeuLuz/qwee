@@ -23,16 +23,28 @@ class Flap {
   public controller: Controller;
   public isInverted: boolean;
   public isSide: boolean;
-  public range: [number, number];
+  public range: {
+    min: number;
+    max: number;
+  };
 
   constructor(name: FlapName, offset = 0) {
     const center = 1500 + offset;
-    this.range = [center - rangeOffset, center + rangeOffset];
+    this.range = {
+      min: center - rangeOffset,
+      max: center + rangeOffset
+    };
     const pin = getGpioNumber(pins[name]);
     this.pwm = new Gpio(pin, { mode: Gpio.OUTPUT });
     this.controller = new Controller(controllerConfig);
     this.isSide = sideFlaps.includes(name);
     this.isInverted = invertedFlaps.includes(name);
+  }
+
+  public set(value: number) {
+    const { min, max } = this.range;
+    const pulse = scale(value, -1, 1, min, max);
+    this.pwm.servoWrite(Math.round(pulse));
   }
 
   public update(state: State) {
@@ -48,9 +60,11 @@ class Flap {
     const gyroAxis = 0;
     this.controller.setTarget(joysticAxis); // 120km/h
     const correction = this.controller.update(gyroAxis);
+
     // const correction = joysticAxis;
-    const pulse = scale(correction, -1, 1, this.range[0], this.range[1]);
-    this.pwm.servoWrite(Math.round(pulse));
+    // const { min, max } = this.range;
+    // const pulse = scale(correction, -1, 1, min, max);
+    // this.pwm.servoWrite(Math.round(pulse));
   }
 }
 

@@ -45,20 +45,21 @@ var misc_1 = require("../helpers/misc");
 var sensors_1 = require("../sensors");
 var Logger_1 = require("../sensors/Logger");
 var Buzzer_1 = __importDefault(require("./Buzzer"));
-// import Flap from "./Flap";
+var Flap_1 = __importDefault(require("./Flap"));
 var Motor_1 = __importDefault(require("./Motor"));
 exports.setup = function () { return __awaiter(_this, void 0, void 0, function () {
-    var buzzer, motorTop, motorBottom;
+    var buzzer, motorTop, motorBottom, flapFront;
     return __generator(this, function (_a) {
         buzzer = new Buzzer_1["default"]();
         motorTop = new Motor_1["default"]("motorTop");
         motorBottom = new Motor_1["default"]("motorBottom");
+        flapFront = new Flap_1["default"]("flapFront");
         // const { flapFront, flapBack, flapLeft, flapRight } = Flap();
         return [2 /*return*/, {
                 buzzer: buzzer,
                 motorTop: motorTop,
-                motorBottom: motorBottom
-                // flapFront,
+                motorBottom: motorBottom,
+                flapFront: flapFront
                 // flapBack,
                 // flapLeft,
                 // flapRight
@@ -76,7 +77,7 @@ var state = sensors_1.initialState;
 var loopCount = 0;
 // Updates actuators
 var updateActuators = function (_a) {
-    var buzzer = _a.buzzer, motorTop = _a.motorTop, motorBottom = _a.motorBottom;
+    var buzzer = _a.buzzer, motorTop = _a.motorTop, motorBottom = _a.motorBottom, flapFront = _a.flapFront;
     previousState = lodash_clonedeep_1["default"](state);
     state = lodash_clonedeep_1["default"](sensors_1.getState());
     loopCount = loopCount + 1;
@@ -102,7 +103,7 @@ var updateActuators = function (_a) {
     if (changedTo("joystick", "x", true)) {
         buzzer.play("yay");
     }
-    // Motor Top
+    // Update Motors
     if (hasChanged("joystick", "r2")) {
         var topSpeed = misc_1.scale(state.joystick.r2, 10, 255, 0, 1);
         motorTop.set(topSpeed);
@@ -111,4 +112,6 @@ var updateActuators = function (_a) {
         var bottomSpeed = misc_1.scale(state.joystick.l2, 10, 255, 0, 1);
         motorBottom.set(bottomSpeed);
     }
+    // Update Flaps
+    flapFront.set(state.joystick.rStickX);
 };

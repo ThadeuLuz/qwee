@@ -4,14 +4,14 @@ import { scale } from "../helpers/misc";
 import { getHelpers, getState, initialState, printLogs } from "../sensors";
 import { info, warn } from "../sensors/Logger";
 import Buzzer from "./Buzzer";
-// import Flap from "./Flap";
+import Flap from "./Flap";
 import Motor from "./Motor";
 
 interface Actuators {
   buzzer: Buzzer;
   motorTop: Motor;
   motorBottom: Motor;
-  // flapFront: Servo;
+  flapFront: Flap;
   // flapBack: Servo;
   // flapLeft: Servo;
   // flapRight: Servo;
@@ -21,13 +21,14 @@ export const setup = async (): Promise<Actuators> => {
   const buzzer = new Buzzer();
   const motorTop = new Motor("motorTop");
   const motorBottom = new Motor("motorBottom");
+  const flapFront = new Flap("flapFront");
 
   // const { flapFront, flapBack, flapLeft, flapRight } = Flap();
   return {
     buzzer,
     motorTop,
-    motorBottom
-    // flapFront,
+    motorBottom,
+    flapFront
     // flapBack,
     // flapLeft,
     // flapRight
@@ -46,7 +47,12 @@ let state = initialState;
 let loopCount = 0;
 
 // Updates actuators
-const updateActuators = ({ buzzer, motorTop, motorBottom }: Actuators) => {
+const updateActuators = ({
+  buzzer,
+  motorTop,
+  motorBottom,
+  flapFront
+}: Actuators) => {
   previousState = cloneDeep(state);
   state = cloneDeep(getState());
   loopCount = loopCount + 1;
@@ -76,7 +82,7 @@ const updateActuators = ({ buzzer, motorTop, motorBottom }: Actuators) => {
     buzzer.play("yay");
   }
 
-  // Motor Top
+  // Update Motors
   if (hasChanged("joystick", "r2")) {
     const topSpeed = scale(state.joystick.r2, 10, 255, 0, 1);
     motorTop.set(topSpeed);
@@ -86,4 +92,7 @@ const updateActuators = ({ buzzer, motorTop, motorBottom }: Actuators) => {
     const bottomSpeed = scale(state.joystick.l2, 10, 255, 0, 1);
     motorBottom.set(bottomSpeed);
   }
+
+  // Update Flaps
+  flapFront.set(state.joystick.rStickX);
 };
