@@ -13,8 +13,8 @@ interface Actuators {
   motorBottom: Motor;
   flapFront: Flap;
   flapBack: Flap;
-  // flapLeft: Flap;
-  // flapRight: Flap;
+  flapLeft: Flap;
+  flapRight: Flap;
 }
 
 export const setup = async (): Promise<Actuators> => ({
@@ -22,9 +22,9 @@ export const setup = async (): Promise<Actuators> => ({
   motorTop: new Motor("motorTop"),
   motorBottom: new Motor("motorBottom"),
   flapFront: new Flap("flapFront"),
-  flapBack: new Flap("flapBack")
-  // flapLeft,
-  // flapRight
+  flapBack: new Flap("flapBack"),
+  flapLeft: new Flap("flapLeft"),
+  flapRight: new Flap("flapRight")
 });
 
 export const loop = (actuators: Actuators) => {
@@ -44,10 +44,10 @@ const updateActuators = ({
   motorTop,
   motorBottom,
   flapFront,
-  flapBack
-}: // flapLeft,
-// flapRight
-Actuators) => {
+  flapBack,
+  flapLeft,
+  flapRight
+}: Actuators) => {
   previousState = cloneDeep(state);
   state = cloneDeep(getState());
   loopCount = loopCount + 1;
@@ -89,8 +89,8 @@ Actuators) => {
   }
 
   // Update Flaps
-  flapFront.set(-state.joystick.lStickX);
-  flapBack.set(state.joystick.lStickX);
-  // flapLeft.set(state.joystick.lStickY);
+  flapFront.set(state.joystick.lStickX);
+  flapBack.set(-state.joystick.lStickX);
+  flapLeft.set(state.joystick.lStickY);
   // flapRight.set(state.joystick.lStickY);
 };

@@ -54,9 +54,9 @@ exports.setup = function () { return __awaiter(_this, void 0, void 0, function (
                 motorTop: new Motor_1["default"]("motorTop"),
                 motorBottom: new Motor_1["default"]("motorBottom"),
                 flapFront: new Flap_1["default"]("flapFront"),
-                flapBack: new Flap_1["default"]("flapBack")
-                // flapLeft,
-                // flapRight
+                flapBack: new Flap_1["default"]("flapBack"),
+                flapLeft: new Flap_1["default"]("flapLeft"),
+                flapRight: new Flap_1["default"]("flapRight")
             })];
     });
 }); };
@@ -71,7 +71,7 @@ var state = sensors_1.initialState;
 var loopCount = 0;
 // Updates actuators
 var updateActuators = function (_a) {
-    var buzzer = _a.buzzer, motorTop = _a.motorTop, motorBottom = _a.motorBottom, flapFront = _a.flapFront, flapBack = _a.flapBack;
+    var buzzer = _a.buzzer, motorTop = _a.motorTop, motorBottom = _a.motorBottom, flapFront = _a.flapFront, flapBack = _a.flapBack, flapLeft = _a.flapLeft, flapRight = _a.flapRight;
     previousState = lodash_clonedeep_1["default"](state);
     state = lodash_clonedeep_1["default"](sensors_1.getState());
     loopCount = loopCount + 1;
@@ -107,8 +107,8 @@ var updateActuators = function (_a) {
         motorBottom.set(bottomSpeed);
     }
     // Update Flaps
-    flapFront.set(-state.joystick.lStickX);
-    flapBack.set(state.joystick.lStickX);
-    // flapLeft.set(state.joystick.lStickY);
+    flapFront.set(state.joystick.lStickX);
+    flapBack.set(-state.joystick.lStickX);
+    flapLeft.set(state.joystick.lStickY);
     // flapRight.set(state.joystick.lStickY);
 };
