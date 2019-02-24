@@ -33,12 +33,12 @@ var Pins = {
     //           "P1-20", // GND            (K)
     flapRight: "P1-22",
     flapBack: "P1-24",
-    flapLeft: "P1-26",
+    flapFront: "P1-26",
     //           "P1-28", // Do Not Connect (G)
     //           "P1-30", // GND            (F)
     // NAO USE! "P1-32", // GPIO12/PWM0     (E) (da erro com raspi-pwm)
     //           "P1-34", // GND            (D)
-    flapFront: "P1-36" // GPIO16            (C)
+    flapLeft: "P1-36" // GPIO16            (C)
     //           "P1-38", // GPIO20/MOSI1   (B)
     //           "P1-40", // GPIO21/SCLK1   (A)
 };
