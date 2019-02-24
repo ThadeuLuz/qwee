@@ -14,8 +14,8 @@ const controllerConfig = {
 };
 
 const sideFlaps = ["flapLeft", "flapRight"];
-const invertedFlaps = ["flapBack", "flapRight"];
-const rangeOffset = 250; // range in pulses
+const invertedFlaps = ["flapFront", "flapRight"];
+const rangeOffset = 350; // range in pulses
 
 class Flap {
   public pwm: any;

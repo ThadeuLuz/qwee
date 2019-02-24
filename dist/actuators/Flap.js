@@ -14,8 +14,8 @@ var controllerConfig = {
     k_d: 0.01
 };
 var sideFlaps = ["flapLeft", "flapRight"];
-var invertedFlaps = ["flapBack", "flapRight"];
-var rangeOffset = 250; // range in pulses
+var invertedFlaps = ["flapFront", "flapRight"];
+var rangeOffset = 350; // range in pulses
 var Flap = /** @class */ (function () {
     function Flap(name, offset) {
         if (offset === void 0) { offset = 0; }
