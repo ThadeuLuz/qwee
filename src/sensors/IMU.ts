@@ -8,11 +8,10 @@ const sensor = new MPU6050(i2c1, address);
 const IMU = () => {
   setInterval(() => {
     sensor.read(function(err, data) {
-      if (err) {
-        throw err;
-      }
-      console.clear();
-
+      // if (err) {
+      // throw err;
+      // }
+      // console.clear();
       console.log(data);
     });
   }, 100);

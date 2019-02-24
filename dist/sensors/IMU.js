@@ -11,10 +11,10 @@ var sensor = new i2c_mpu6050_1["default"](i2c1, address);
 var IMU = function () {
     setInterval(function () {
         sensor.read(function (err, data) {
-            if (err) {
-                throw err;
-            }
-            console.clear();
+            // if (err) {
+            // throw err;
+            // }
+            // console.clear();
             console.log(data);
         });
     }, 100);
