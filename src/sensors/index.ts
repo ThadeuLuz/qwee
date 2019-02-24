@@ -1,5 +1,6 @@
 import chalk from "chalk";
 
+import IMU from "./IMU";
 import Joystick, {
   getJoystickState,
   joystickInitialState,
@@ -14,6 +15,7 @@ import {
 
 // Initialize sensors
 Joystick();
+IMU();
 
 export interface State {
   joystick: JoystickState;

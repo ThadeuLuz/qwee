@@ -20,10 +20,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 exports.__esModule = true;
 var chalk_1 = __importDefault(require("chalk"));
+var IMU_1 = __importDefault(require("./IMU"));
 var Joystick_1 = __importStar(require("./Joystick"));
 var Logger_1 = require("./Logger");
 // Initialize sensors
 Joystick_1["default"]();
+IMU_1["default"]();
 exports.initialState = {
     joystick: Joystick_1.joystickInitialState,
     logs: Logger_1.loggerInitialState
